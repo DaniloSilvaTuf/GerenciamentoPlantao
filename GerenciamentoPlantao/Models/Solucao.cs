@@ -11,5 +11,15 @@
             Nome = nome;
             Ativo = true;
         }
+
+        public void InativarSolucao()
+        {
+            Ativo = false;
+        }
+
+        public void AtivarSolucao()
+        {
+            Ativo = true;
+        }
     }
 }

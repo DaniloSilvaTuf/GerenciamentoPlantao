@@ -11,5 +11,15 @@
             Nome = nome;
             Ativo = true;
         }
+
+        public void InativarCanal()
+        {
+            Ativo = false;
+        }
+
+        public void AtivarCanal()
+        {
+            Ativo = true;
+        }
     }
 }

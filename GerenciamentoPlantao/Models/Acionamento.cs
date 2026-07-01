@@ -37,5 +37,17 @@ namespace GerenciamentoPlantao.Models
             Apoio = apoio;
             SolucaoId = solucaoId;
         }
+
+        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId)
+        {
+            DataAcionamento = dataAcionamento;
+            CanalId = canalId;
+            UsuarioId = usuarioId;
+            EstabelecimentoId = estabelecimentoId;
+            SetorId = setorId;
+            CategoriaAcionamentoId = categoriaAcionamentoId;
+            Apoio = apoio;
+            SolucaoId = solucaoId;
+        }
     }
 }

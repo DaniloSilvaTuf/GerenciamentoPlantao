@@ -11,5 +11,15 @@
             Nome = nome;
             Ativo = true;
         }
+
+        public void InativarCategoria()
+        {
+            Ativo = false;
+        }
+
+        public void AtivarCategoria()
+        {
+            Ativo = true;
+        }
     }
 }

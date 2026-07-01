@@ -18,5 +18,15 @@ namespace GerenciamentoPlantao.Models
             Ativo = true;
             Perfil = perfil;
         }
+
+        public void InativarUsuario()
+        {
+            Ativo = false;
+        }
+
+        public void AtivarUsuario()
+        {
+            Ativo = true;
+        }
     }
 }
