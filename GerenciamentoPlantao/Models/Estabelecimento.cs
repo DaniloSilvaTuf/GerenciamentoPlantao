@@ -4,8 +4,8 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public bool Ativo { get; set; }
-        public ICollection<Setor> Setores { get; set; } = new List<Setor>();
+        public bool Ativo { get; private set; } = true;
+        public ICollection<Setor> Setores { get; private set; } = new List<Setor>();
 
         public Estabelecimento(string nome)
         {
@@ -13,33 +13,26 @@
             Ativo = true;
         }
 
+        public Estabelecimento() { }
+
         public void AddSetor(Setor setor)
         {
-            if (Setores.Any(s => s.Nome == setor.Nome))
+            if (Setores.Any(s => s.Nome.Equals(setor.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidOperationException("Setor com o mesmo nome já existe nesse Estabelecimento.");
+                throw new InvalidOperationException("Já existe um setor com esse nome.");
             }
+
             Setores.Add(setor);
         }
 
-        public void InativarSetor(Setor setor)
+        public void Ativar()
         {
-            if (!Setores.Contains(setor))
-            {
-                throw new InvalidOperationException("Setor não pertence a esse Estabelecimento.");
-            }
-
-            setor.Ativo = false;
+            Ativo = true;
         }
 
-        public void AtivarSetor(Setor setor)
+        public void Inativar()
         {
-            if (!Setores.Contains(setor))
-            {
-                throw new InvalidOperationException("Setor não pertence a esse Estabelecimento.");
-            }
-
-            setor.Ativo = true;
+            Ativo = false;
         }
     }
 }

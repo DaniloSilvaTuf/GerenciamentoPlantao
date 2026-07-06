@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Services\" />
+    <Folder Include="Views\Canais\" />
+    <Folder Include="Views\Acionamentos\" />
+    <Folder Include="Views\Usuarios\" />
   </ItemGroup>
 
   <ItemGroup>

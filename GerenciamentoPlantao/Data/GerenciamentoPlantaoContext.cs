@@ -22,23 +22,51 @@ namespace GerenciamentoPlantao.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Setor>()
+                .HasOne(s => s.Estabelecimento)
+                .WithMany(e => e.Setores)
+                .HasForeignKey(s => s.EstabelecimentoId)
+                .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<Acionamento>()
                 .HasOne(a => a.Estabelecimento)
                 .WithMany()
                 .HasForeignKey(a => a.EstabelecimentoId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Acionamento>()
                 .HasOne(a => a.Setor)
                 .WithMany()
                 .HasForeignKey(a => a.SetorId)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Setor>()
-                .HasOne(s => s.Estabelecimento)
-                .WithMany(e => e.Setores)
-                .HasForeignKey(s => s.EstabelecimentoId)
-                .OnDelete(DeleteBehavior.Restrict);
+            modelBuilder.Entity<Acionamento>()
+                .HasOne(a => a.Canal)
+                .WithMany()
+                .HasForeignKey(a => a.CanalId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Acionamento>()
+                .HasOne(a => a.Plantonista)
+                .WithMany()
+                .HasForeignKey(a => a.UsuarioId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Acionamento>()
+                .HasOne(a => a.CategoriaAcionamento)
+                .WithMany()
+                .HasForeignKey(a => a.CategoriaAcionamentoId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Acionamento>()
+                .HasOne(a => a.Solucao)
+                .WithMany()
+                .HasForeignKey(a => a.SolucaoId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Estabelecimento>()
+                .Property(e => e.Ativo)
+                .HasDefaultValue(true);
         }
     }
 }

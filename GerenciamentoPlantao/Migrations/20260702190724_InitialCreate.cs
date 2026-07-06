@@ -46,7 +46,7 @@ namespace GerenciamentoPlantao.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -114,8 +114,7 @@ namespace GerenciamentoPlantao.Migrations
                         name: "FK_Setores_Estabelecimentos_EstabelecimentoId",
                         column: x => x.EstabelecimentoId,
                         principalTable: "Estabelecimentos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -145,38 +144,32 @@ namespace GerenciamentoPlantao.Migrations
                         name: "FK_Acionamentos_Canais_CanalId",
                         column: x => x.CanalId,
                         principalTable: "Canais",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Acionamentos_CategoriasAcionamento_CategoriaAcionamentoId",
                         column: x => x.CategoriaAcionamentoId,
                         principalTable: "CategoriasAcionamento",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Acionamentos_Estabelecimentos_EstabelecimentoId",
                         column: x => x.EstabelecimentoId,
                         principalTable: "Estabelecimentos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Acionamentos_Setores_SetorId",
                         column: x => x.SetorId,
                         principalTable: "Setores",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Acionamentos_Solucoes_SolucaoId",
                         column: x => x.SolucaoId,
                         principalTable: "Solucoes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Acionamentos_Usuarios_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

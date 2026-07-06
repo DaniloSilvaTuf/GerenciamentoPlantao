@@ -135,7 +135,9 @@ namespace GerenciamentoPlantao.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Ativo")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Nome")
                         .IsRequired()
@@ -265,37 +267,37 @@ namespace GerenciamentoPlantao.Migrations
                     b.HasOne("GerenciamentoPlantao.Models.Canal", "Canal")
                         .WithMany()
                         .HasForeignKey("CanalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GerenciamentoPlantao.Models.CategoriaAcionamento", "CategoriaAcionamento")
                         .WithMany()
                         .HasForeignKey("CategoriaAcionamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GerenciamentoPlantao.Models.Estabelecimento", "Estabelecimento")
                         .WithMany()
                         .HasForeignKey("EstabelecimentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GerenciamentoPlantao.Models.Setor", "Setor")
                         .WithMany()
                         .HasForeignKey("SetorId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GerenciamentoPlantao.Models.Solucao", "Solucao")
                         .WithMany()
                         .HasForeignKey("SolucaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("GerenciamentoPlantao.Models.Usuario", "Plantonista")
                         .WithMany()
                         .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Canal");
@@ -316,7 +318,7 @@ namespace GerenciamentoPlantao.Migrations
                     b.HasOne("GerenciamentoPlantao.Models.Estabelecimento", "Estabelecimento")
                         .WithMany("Setores")
                         .HasForeignKey("EstabelecimentoId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Estabelecimento");
