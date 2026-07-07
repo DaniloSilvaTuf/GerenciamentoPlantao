@@ -9,6 +9,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GerenciamentoPlantaoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddScoped<EstabelecimentoService>();
 builder.Services.AddScoped<SetorService>();
+builder.Services.AddScoped<DepartamentoService>();
 
 var app = builder.Build();
 

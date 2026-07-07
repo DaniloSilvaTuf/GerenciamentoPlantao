@@ -17,6 +17,7 @@ namespace GerenciamentoPlantao.Data
         public DbSet<CategoriaAcionamento> CategoriasAcionamento { get; set; }
         public DbSet<Solucao> Solucoes { get; set; }
         public DbSet<Acionamento> Acionamentos { get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -67,6 +68,28 @@ namespace GerenciamentoPlantao.Data
             modelBuilder.Entity<Estabelecimento>()
                 .Property(e => e.Ativo)
                 .HasDefaultValue(true);
+
+            modelBuilder.Entity<Departamento>()
+                .Property(d => d.Ativo)
+                .HasDefaultValue(true);
+
+            modelBuilder.Entity<Canal>()
+                .HasOne(c => c.Departamento)
+                .WithMany(d => d.Canais)
+                .HasForeignKey(c => c.DepartamentoId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<CategoriaAcionamento>()
+                .HasOne(c => c.Departamento)
+                .WithMany(d => d.CategoriasAcionamentos)
+                .HasForeignKey(c => c.DepartamentoId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Solucao>()
+                .HasOne(s => s.Departamento)
+                .WithMany(d => d.Solucoes)
+                .HasForeignKey(s => s.DepartamentoId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

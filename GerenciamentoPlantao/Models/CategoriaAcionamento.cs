@@ -5,6 +5,8 @@
         public int Id { get; set; }
         public string Nome { get; set; }
         public bool Ativo { get; set; }
+        public int DepartamentoId { get; set; }
+        public Departamento Departamento { get; set; }
 
         public CategoriaAcionamento(string nome)
         {
@@ -12,12 +14,14 @@
             Ativo = true;
         }
 
-        public void InativarCategoria()
+        protected CategoriaAcionamento() { }
+
+        public void Inativar()
         {
             Ativo = false;
         }
 
-        public void AtivarCategoria()
+        public void Ativar()
         {
             Ativo = true;
         }

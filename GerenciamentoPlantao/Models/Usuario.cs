@@ -10,6 +10,8 @@ namespace GerenciamentoPlantao.Models
         public string NmUsuario { get; set; } = string.Empty;
         public bool Ativo { get; set; }
         public PerfilUsuario Perfil { get; set; }
+        public int DepartamentoId { get; set; }
+        public Departamento Departamento { get; set; }
 
         public Usuario(string descNome, string nmUsuario, PerfilUsuario perfil)
         {
@@ -19,12 +21,14 @@ namespace GerenciamentoPlantao.Models
             Perfil = perfil;
         }
 
-        public void InativarUsuario()
+        protected Usuario() { }
+
+        public void Inativar()
         {
             Ativo = false;
         }
 
-        public void AtivarUsuario()
+        public void Ativar()
         {
             Ativo = true;
         }

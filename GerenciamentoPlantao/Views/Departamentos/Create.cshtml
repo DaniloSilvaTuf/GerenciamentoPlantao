@@ -1,0 +1,44 @@
+﻿@model GerenciamentoPlantao.Models.Departamento
+
+@{
+    ViewData["Title"] = "Cadastrar Departamento";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-collection"></i> Cadastrar Departamento
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <div class="mb-3">
+
+                    <label asp-for="Nome" class="form-label fw-bold"></label>
+                    <input asp-for="Nome" class="form-control form-control-lg" placeholder="Digite o nome do departamento" />
+                    <span asp-validation-for="Nome" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy-fill"></i> Salvar
+                    </button>
+
+                    <a asp-action="Index" class="btn btn-outline-secondary">
+                        <i class="bi bi-arrow-left"></i> Voltar
+
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
