@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Canais\" />
     <Folder Include="Views\Acionamentos\" />
     <Folder Include="Views\Usuarios\" />
   </ItemGroup>

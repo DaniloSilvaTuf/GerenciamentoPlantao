@@ -12,6 +12,7 @@ builder.Services.AddScoped<SetorService>();
 builder.Services.AddScoped<DepartamentoService>();
 builder.Services.AddScoped<SolucaoService>();
 builder.Services.AddScoped<CategoriaService>();
+builder.Services.AddScoped<CanalService>();
 
 var app = builder.Build();
 

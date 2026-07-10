@@ -16,7 +16,7 @@ namespace GerenciamentoPlantao.Services
 
         public async Task<List<CategoriaAcionamento>> FindAllAsync()
         {
-            return await _context.CategoriasAcionamento.Include(s => s.Departamento).ToListAsync();
+            return await _context.CategoriasAcionamento.Include(c => c.Departamento).ToListAsync();
         }
 
         public async Task<CategoriaAcionamento?> FindByIdAsync(int id)
@@ -27,7 +27,7 @@ namespace GerenciamentoPlantao.Services
         public async Task CriarCategoriaAsync(int departamentoId, string nome)
         {
             var departamento = await _context.Departamentos
-                    .Include(d => d.Solucoes)
+                    .Include(d => d.CategoriasAcionamentos)
                     .FirstOrDefaultAsync(d => d.Id == departamentoId);
 
             if (departamento == null)
