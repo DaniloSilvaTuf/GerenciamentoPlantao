@@ -8,10 +8,11 @@
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
 
-        public CategoriaAcionamento(string nome)
+        public CategoriaAcionamento(string nome, int departamentoId)
         {
             Nome = nome;
             Ativo = true;
+            DepartamentoId = departamentoId;
         }
 
         protected CategoriaAcionamento() { }

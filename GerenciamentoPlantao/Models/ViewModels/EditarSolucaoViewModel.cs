@@ -2,13 +2,12 @@
 
 namespace GerenciamentoPlantao.Models.ViewModels
 {
-    public class EditarSetorViewModel
+    public class EditarSolucaoViewModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
         public bool Ativo { get; set; }
-        public int EstabelecimentoId { get; set; }
-        public IEnumerable<SelectListItem> Estabelecimentos { get; set; }
+        public int DepartamentoId { get; set; }
+        public IEnumerable<SelectListItem> Departamentos { get; set; }
     }
-
 }

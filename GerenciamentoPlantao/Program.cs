@@ -10,6 +10,8 @@ builder.Services.AddDbContext<GerenciamentoPlantaoContext>(options => options.Us
 builder.Services.AddScoped<EstabelecimentoService>();
 builder.Services.AddScoped<SetorService>();
 builder.Services.AddScoped<DepartamentoService>();
+builder.Services.AddScoped<SolucaoService>();
+builder.Services.AddScoped<CategoriaService>();
 
 var app = builder.Build();
 
