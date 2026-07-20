@@ -1,0 +1,60 @@
+﻿@model IEnumerable<GerenciamentoPlantao.Models.Acionamento>
+
+@{
+    ViewData["Title"] = "Acionamentos";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">
+                <i class="bi bi-telephone"></i> Acionamentos
+            </h3>
+
+            <a asp-action="Create" class="btn btn-light">
+                <i class="bi bi-plus-circle"></i> Cadastrar Novo
+            </a>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-light">
+                    <tr>
+                        <th>Data Acionamento</th>
+                        <th>Plantonista</th>
+                        <th>Estabelecimento</th>
+                        <th>Setor</th>
+                        <th>Categoria</th>
+                        <th>Apoio</th>
+
+                        <th class="text-end"> Ações </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.DataAcionamento</td>
+                            <td>@item.Plantonista?.DescNome</td>
+                            <td>@item.Estabelecimento?.Nome</td>
+                            <td>@item.Setor?.Nome</td>
+                            <td>@item.CategoriaAcionamento?.Nome</td>
+                            <td class="text-center">
+                                <input type="checkbox" disabled @(item.Apoio ? "checked" : "") />
+                            </td>
+                            <td class="text-end">
+
+                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

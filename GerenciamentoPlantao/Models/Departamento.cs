@@ -8,7 +8,7 @@
         public ICollection<Canal> Canais { get; set; } = new List<Canal>();
         public ICollection<CategoriaAcionamento> CategoriasAcionamentos { get; set; } = new List<CategoriaAcionamento>();
         public ICollection<Solucao> Solucoes { get; set; } = new List<Solucao>();
-        public ICollection<Usuario> Usuario { get; set; } = new List<Usuario>();
+        public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
 
         public Departamento(string nome)
         {
@@ -47,6 +47,15 @@
             }
 
             Solucoes.Add(solucao);
+        }
+
+        public void AddUsuario(Usuario usuario)
+        {
+            if (Usuarios.Any(u => u.NmUsuario.Equals(usuario.NmUsuario, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new InvalidOperationException("Já existe um usuário com esse nome.");
+            }
+            Usuarios.Add(usuario);
         }
 
         public void Ativar()

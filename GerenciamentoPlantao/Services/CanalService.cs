@@ -19,6 +19,11 @@ namespace GerenciamentoPlantao.Services
             return await _context.Canais.Include(c => c.Departamento).ToListAsync();
         }
 
+        public async Task<List<Canal>> FindAllActiveAsync()
+        {
+            return await _context.Canais.Where(c => c.Ativo).OrderBy(c => c.Nome).ToListAsync();
+        }
+
         public async Task<Canal?> FindByIdAsync(int id)
         {
             return await _context.Canais.FirstOrDefaultAsync(x => x.Id == id);

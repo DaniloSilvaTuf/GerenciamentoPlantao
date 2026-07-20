@@ -19,6 +19,11 @@ namespace GerenciamentoPlantao.Services
             return await _context.CategoriasAcionamento.Include(c => c.Departamento).ToListAsync();
         }
 
+        public async Task<List<CategoriaAcionamento>> FindAllActiveAsync()
+        {
+            return await _context.CategoriasAcionamento.Include(c => c.Departamento).Where(c => c.Ativo).ToListAsync();
+        }
+
         public async Task<CategoriaAcionamento?> FindByIdAsync(int id)
         {
             return await _context.CategoriasAcionamento.FirstOrDefaultAsync(x => x.Id == id);

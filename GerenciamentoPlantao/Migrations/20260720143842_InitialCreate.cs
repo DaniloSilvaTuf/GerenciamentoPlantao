@@ -12,31 +12,17 @@ namespace GerenciamentoPlantao.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Canais",
+                name: "Departamentos",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Canais", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CategoriasAcionamento",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CategoriasAcionamento", x => x.Id);
+                    table.PrimaryKey("PK_Departamentos", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -54,17 +40,63 @@ namespace GerenciamentoPlantao.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Canais",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    DepartamentoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Canais", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Canais_Departamentos_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamentos",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CategoriasAcionamento",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    DepartamentoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CategoriasAcionamento", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CategoriasAcionamento_Departamentos_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamentos",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Solucoes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false)
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    DepartamentoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Solucoes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Solucoes_Departamentos_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamentos",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -75,26 +107,22 @@ namespace GerenciamentoPlantao.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DescNome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NmUsuario = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefone = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Plantonista = table.Column<bool>(type: "bit", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false),
                     Perfil = table.Column<int>(type: "int", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                    DepartamentoId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Departamentos_DepartamentoId",
+                        column: x => x.DepartamentoId,
+                        principalTable: "Departamentos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -203,9 +231,29 @@ namespace GerenciamentoPlantao.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Canais_DepartamentoId",
+                table: "Canais",
+                column: "DepartamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CategoriasAcionamento_DepartamentoId",
+                table: "CategoriasAcionamento",
+                column: "DepartamentoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Setores_EstabelecimentoId",
                 table: "Setores",
                 column: "EstabelecimentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Solucoes_DepartamentoId",
+                table: "Solucoes",
+                column: "DepartamentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_DepartamentoId",
+                table: "Usuarios",
+                column: "DepartamentoId");
         }
 
         /// <inheritdoc />
@@ -231,6 +279,9 @@ namespace GerenciamentoPlantao.Migrations
 
             migrationBuilder.DropTable(
                 name: "Estabelecimentos");
+
+            migrationBuilder.DropTable(
+                name: "Departamentos");
         }
     }
 }

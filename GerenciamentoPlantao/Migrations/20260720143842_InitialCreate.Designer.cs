@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GerenciamentoPlantao.Migrations
 {
     [DbContext(typeof(GerenciamentoPlantaoContext))]
-    [Migration("20260702190724_InitialCreate")]
+    [Migration("20260720143842_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -100,11 +100,16 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
 
                     b.ToTable("Canais");
                 });
@@ -120,13 +125,40 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("DepartamentoId");
+
                     b.ToTable("CategoriasAcionamento");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Departamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Departamentos");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>
@@ -187,11 +219,16 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
 
                     b.ToTable("Solucoes");
                 });
@@ -204,63 +241,37 @@ namespace GerenciamentoPlantao.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
 
                     b.Property<string>("DescNome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NmUsuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Perfil")
                         .HasColumnType("int");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
+                    b.Property<bool>("Plantonista")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
+                    b.Property<string>("Telefone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
 
                     b.ToTable("Usuarios");
                 });
@@ -316,6 +327,28 @@ namespace GerenciamentoPlantao.Migrations
                     b.Navigation("Solucao");
                 });
 
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Canal", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany("Canais")
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.CategoriaAcionamento", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany("CategoriasAcionamentos")
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+                });
+
             modelBuilder.Entity("GerenciamentoPlantao.Models.Setor", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Estabelecimento", "Estabelecimento")
@@ -325,6 +358,39 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired();
 
                     b.Navigation("Estabelecimento");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Solucao", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany("Solucoes")
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Usuario", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany("Usuarios")
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Departamento");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Departamento", b =>
+                {
+                    b.Navigation("Canais");
+
+                    b.Navigation("CategoriasAcionamentos");
+
+                    b.Navigation("Solucoes");
+
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>

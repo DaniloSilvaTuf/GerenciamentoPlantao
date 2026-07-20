@@ -20,6 +20,11 @@ namespace GerenciamentoPlantao.Services
             return await _context.Setores.Include(s => s.Estabelecimento).ToListAsync();
         }
 
+        public async Task<List<Setor>> FindAllActiveAsync()
+        {
+            return await _context.Setores.Where(s => s.Ativo).OrderBy(s => s.Nome).ToListAsync();
+        }
+
         public async Task<Setor?> FindByIdAsync(int id)
         {
             return await _context.Setores.FirstOrDefaultAsync(x => x.Id == id);

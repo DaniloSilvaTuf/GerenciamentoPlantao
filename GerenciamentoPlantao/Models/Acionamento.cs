@@ -25,6 +25,10 @@ namespace GerenciamentoPlantao.Models
         public int SolucaoId { get; set; }
         public string? Observacao { get; set; }
 
+        public Acionamento()
+        {
+        }
+
         public Acionamento(DateTime dataAcionamento, DateTime dataRegistro, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId)
         {
             DataAcionamento = dataAcionamento;
@@ -38,7 +42,7 @@ namespace GerenciamentoPlantao.Models
             SolucaoId = solucaoId;
         }
 
-        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId)
+        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;
@@ -48,6 +52,9 @@ namespace GerenciamentoPlantao.Models
             CategoriaAcionamentoId = categoriaAcionamentoId;
             Apoio = apoio;
             SolucaoId = solucaoId;
+            Observacao = observacao;
+            Acionador = acionador;
+            NrAtendimento = nrAtendimento;
         }
     }
 }

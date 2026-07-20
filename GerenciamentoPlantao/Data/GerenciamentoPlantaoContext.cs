@@ -90,6 +90,12 @@ namespace GerenciamentoPlantao.Data
                 .WithMany(d => d.Solucoes)
                 .HasForeignKey(s => s.DepartamentoId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Usuario>()
+                .HasOne(u => u.Departamento)
+                .WithMany(d => d.Usuarios)
+                .HasForeignKey(u => u.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

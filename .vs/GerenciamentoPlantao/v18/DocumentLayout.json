@@ -3,20 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\canais\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\canais\\create.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\canais\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\canais\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\canais\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\canais\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\controllers\\acionamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\controllers\\acionamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +14,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Index.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Canais\\Index.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Index.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Canais\\Index.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAcAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-10T20:33:29.138Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Edit.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Canais\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Edit.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Canais\\Edit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-10T20:33:28.45Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Create.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Create.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Canais\\Create.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Canais\\Create.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Canais\\Create.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-10T20:33:27.668Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AgIAAFQAAAAAAAAAAAAAAGAAAAAhAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-07-10T20:16:13.966Z",
+              "Title": "AcionamentosController.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAQwFIAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-07-20T18:50:50.532Z",
               "EditorCaption": ""
             }
           ]

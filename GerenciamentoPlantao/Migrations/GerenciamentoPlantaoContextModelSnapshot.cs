@@ -238,14 +238,8 @@ namespace GerenciamentoPlantao.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
@@ -255,46 +249,21 @@ namespace GerenciamentoPlantao.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
 
                     b.Property<string>("NmUsuario")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Perfil")
                         .HasColumnType("int");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
+                    b.Property<bool>("Plantonista")
                         .HasColumnType("bit");
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
+                    b.Property<string>("Telefone")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -402,9 +371,9 @@ namespace GerenciamentoPlantao.Migrations
             modelBuilder.Entity("GerenciamentoPlantao.Models.Usuario", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
-                        .WithMany("Usuario")
+                        .WithMany("Usuarios")
                         .HasForeignKey("DepartamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Departamento");
@@ -418,7 +387,7 @@ namespace GerenciamentoPlantao.Migrations
 
                     b.Navigation("Solucoes");
 
-                    b.Navigation("Usuario");
+                    b.Navigation("Usuarios");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>
