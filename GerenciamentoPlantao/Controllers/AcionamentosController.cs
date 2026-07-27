@@ -149,7 +149,7 @@ namespace GerenciamentoPlantao.Controllers
                 vm.Plantonista = (await _usuarioService.FindAllActiveAsync()).Select(u => new SelectListItem
                 {
                     Value = u.Id.ToString(),
-                    Text = u.NmUsuario
+                    Text = u.UserName
                 });
                 vm.Canal = (await _canalService.FindAllActiveAsync()).Select(e => new SelectListItem
                 {

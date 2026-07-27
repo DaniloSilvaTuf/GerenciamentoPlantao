@@ -51,7 +51,7 @@
 
         public void AddUsuario(Usuario usuario)
         {
-            if (Usuarios.Any(u => u.NmUsuario.Equals(usuario.NmUsuario, StringComparison.OrdinalIgnoreCase)))
+            if (Usuarios.Any(u => u.UserName.Equals(usuario.UserName, StringComparison.OrdinalIgnoreCase)))
             {
                 throw new InvalidOperationException("Já existe um usuário com esse nome.");
             }

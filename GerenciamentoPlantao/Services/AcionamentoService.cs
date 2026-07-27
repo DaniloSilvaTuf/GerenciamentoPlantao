@@ -71,7 +71,7 @@ namespace GerenciamentoPlantao.Services
             acionamento.AtualizarAcionamento(
                 vm.DataAcionamento,
                 vm.CanalId,
-                vm.UsuarioId,
+                vm.UsuarioId,   
                 vm.EstabelecimentoId,
                 vm.SetorId,
                 vm.CategoriaId,

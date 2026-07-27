@@ -56,22 +56,22 @@ namespace GerenciamentoPlantao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _usuarioService.FindByIdAsync(id.Value);
+            var usuario = await _usuarioService.FindByIdAsync(id);
             var vm = new EditarUsuarioViewModel
             {
                 Id = usuario.Id,
                 DescNome = usuario.DescNome,
-                NmUsuario = usuario.NmUsuario,
+                NmUsuario = usuario.UserName,
                 DepartamentoId = usuario.DepartamentoId,
                 Email = usuario.Email,
-                Telefone = usuario.Telefone,
+                Telefone = usuario.PhoneNumber,
                 Plantonista = usuario.Plantonista,
                 Ativo = usuario.Ativo,
                 Departamentos = (await _departamentoService.FindAllActiveAsync()).Select(e => new SelectListItem
@@ -100,14 +100,14 @@ namespace GerenciamentoPlantao.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Inativar(int? id)
+        public async Task<IActionResult> Inativar(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _usuarioService.FindByIdAsync(id.Value);
+            var usuario = await _usuarioService.FindByIdAsync(id);
             if (usuario == null)
             {
                 return NotFound();
@@ -118,20 +118,20 @@ namespace GerenciamentoPlantao.Controllers
 
         [HttpPost, ActionName("Inativar")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> InativarConfirmado(int id)
+        public async Task<IActionResult> InativarConfirmado(string id)
         {
             await _usuarioService.InativarAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Ativar(int? id)
+        public async Task<IActionResult> Ativar(string? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var usuario = await _usuarioService.FindByIdAsync(id.Value);
+            var usuario = await _usuarioService.FindByIdAsync(id);
 
             if (usuario == null)
             {
@@ -143,7 +143,7 @@ namespace GerenciamentoPlantao.Controllers
 
         [HttpPost, ActionName("Ativar")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AtivarConfirmado(int id)
+        public async Task<IActionResult> AtivarConfirmado(string id)
         {
             await _usuarioService.AtivarAsync(id);
             return RedirectToAction(nameof(Index));

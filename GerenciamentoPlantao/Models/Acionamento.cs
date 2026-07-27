@@ -10,7 +10,7 @@ namespace GerenciamentoPlantao.Models
         public Canal Canal { get; set; }
         public int CanalId { get; set; }
         public Usuario Plantonista { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; } = string.Empty;
         public string? Acionador { get; set; }
         public int? NrAtendimento { get; set; }
         public Estabelecimento Estabelecimento { get; set; }
@@ -29,7 +29,7 @@ namespace GerenciamentoPlantao.Models
         {
         }
 
-        public Acionamento(DateTime dataAcionamento, DateTime dataRegistro, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId)
+        public Acionamento(DateTime dataAcionamento, DateTime dataRegistro, int canalId, string usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId)
         {
             DataAcionamento = dataAcionamento;
             DataRegistro = DateTime.Now;
@@ -42,7 +42,7 @@ namespace GerenciamentoPlantao.Models
             SolucaoId = solucaoId;
         }
 
-        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento)
+        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, string usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;

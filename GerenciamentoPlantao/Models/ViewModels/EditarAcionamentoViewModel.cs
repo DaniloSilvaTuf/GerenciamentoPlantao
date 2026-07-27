@@ -7,7 +7,7 @@ namespace GerenciamentoPlantao.Models.ViewModels
         public int Id { get; set; }
         public DateTime DataAcionamento { get; set; }
         public IEnumerable<SelectListItem> Plantonista { get; set; }
-        public int UsuarioId { get; set; }
+        public string UsuarioId { get; set; } = string.Empty;
         public IEnumerable<SelectListItem> Canal { get; set; }
         public int CanalId { get; set; }
         public string? Acionador { get; set; }

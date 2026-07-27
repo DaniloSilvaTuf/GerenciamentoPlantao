@@ -1,5 +1,7 @@
 using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +9,31 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<GerenciamentoPlantaoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddIdentity<Usuario, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequireLowercase = true;
+    options.Password.RequireUppercase = true;
+    options.Password.RequireNonAlphanumeric = true;
+    options.Password.RequiredLength = 8;
+
+    options.User.RequireUniqueEmail = true;
+
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+    options.Lockout.MaxFailedAccessAttempts = 5;
+    options.Lockout.AllowedForNewUsers = true;
+
+    options.SignIn.RequireConfirmedEmail = false;
+})
+    .AddEntityFrameworkStores<GerenciamentoPlantaoContext>()
+    .AddDefaultTokenProviders();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Conta/Login";
+    options.LogoutPath = "/Conta/Logout";
+    options.AccessDeniedPath = "/Conta/AcessoNegado";
+});
+
 builder.Services.AddScoped<EstabelecimentoService>();
 builder.Services.AddScoped<SetorService>();
 builder.Services.AddScoped<DepartamentoService>();
@@ -31,6 +58,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

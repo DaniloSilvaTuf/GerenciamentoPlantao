@@ -16,7 +16,7 @@ namespace GerenciamentoPlantao.Services
 
         public async Task<List<Usuario>> FindAllAsync()
         {
-            return await _context.Usuarios
+            return await _context.Users
                 .Include(u => u.Departamento)
                 .OrderBy(x => x.DescNome)
                 .ToListAsync();
@@ -24,12 +24,12 @@ namespace GerenciamentoPlantao.Services
 
         public async Task<List<Usuario>> FindAllActiveAsync()
         {
-            return await _context.Usuarios.Where(e => e.Ativo).OrderBy(e => e.DescNome).ToListAsync();
+            return await _context.Users.Where(e => e.Ativo).OrderBy(e => e.DescNome).ToListAsync();
         }
 
-        public async Task<Usuario?> FindByIdAsync(int id)
+        public async Task<Usuario?> FindByIdAsync(string id)
         {
-            return await _context.Usuarios
+            return await _context.Users
                 .Include(u => u.Departamento)
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
@@ -48,10 +48,10 @@ namespace GerenciamentoPlantao.Services
             var usuario = new Usuario
             {
                 DescNome = vm.DescNome,
-                NmUsuario = vm.NmUsuario,
+                UserName = vm.NmUsuario,
                 DepartamentoId = vm.DepartamentoId,
                 Email = vm.Email,
-                Telefone = vm.Telefone,
+                PhoneNumber = vm.Telefone,
                 Plantonista = vm.Plantonista,
             };
 
@@ -69,8 +69,9 @@ namespace GerenciamentoPlantao.Services
             }
 
             usuario.DescNome = vm.DescNome;
+            usuario.UserName = vm.NmUsuario;
             usuario.Email = vm.Email;
-            usuario.Telefone = vm.Telefone;
+            usuario.PhoneNumber = vm.Telefone;
             usuario.Plantonista = vm.Plantonista;
             usuario.Perfil = vm.Perfil;
             usuario.DepartamentoId = vm.DepartamentoId;
@@ -79,9 +80,9 @@ namespace GerenciamentoPlantao.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task InativarAsync(int id)
+        public async Task InativarAsync(string id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Users.FindAsync(id);
 
             if (usuario == null)
             {
@@ -92,9 +93,9 @@ namespace GerenciamentoPlantao.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task AtivarAsync(int id)
+        public async Task AtivarAsync(string id)
         {
-            var usuario = await _context.Usuarios.FindAsync(id);
+            var usuario = await _context.Users.FindAsync(id);
 
             if (usuario == null)
             {
@@ -105,9 +106,9 @@ namespace GerenciamentoPlantao.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<bool> ExisteAsync(int id)
+        public async Task<bool> ExisteAsync(string id)
         {
-            return await _context.Usuarios.AnyAsync(x => x.Id == id);
+            return await _context.Users.AnyAsync(x => x.Id == id);
         }
     }
 }

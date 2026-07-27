@@ -1,16 +1,16 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Data
 {
-    public class GerenciamentoPlantaoContext : DbContext
+    public class GerenciamentoPlantaoContext : IdentityDbContext<Usuario>
     {
         public GerenciamentoPlantaoContext(DbContextOptions<GerenciamentoPlantaoContext> options) : base(options)
         {
         }
 
-        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Canal> Canais { get; set; }
         public DbSet<Setor> Setores { get; set; }
         public DbSet<Estabelecimento> Estabelecimentos { get; set; }
@@ -49,7 +49,7 @@ namespace GerenciamentoPlantao.Data
 
             modelBuilder.Entity<Acionamento>()
                 .HasOne(a => a.Plantonista)
-                .WithMany()
+                .WithMany(u => u.Acionamentos)
                 .HasForeignKey(a => a.UsuarioId)
                 .OnDelete(DeleteBehavior.NoAction);
 

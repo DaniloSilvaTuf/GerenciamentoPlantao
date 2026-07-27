@@ -5,7 +5,7 @@ namespace GerenciamentoPlantao.Models.ViewModels
 {
     public class EditarUsuarioViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string DescNome { get; set; } = string.Empty;
         public string NmUsuario { get; set; } = string.Empty;
         public int DepartamentoId { get; set; }
