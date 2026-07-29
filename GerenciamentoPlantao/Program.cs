@@ -1,4 +1,5 @@
 using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Data.Seed;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Identity;
@@ -44,6 +45,11 @@ builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<AcionamentoService>();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    await DatabaseSeeder.SeedAsync(scope.ServiceProvider);
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

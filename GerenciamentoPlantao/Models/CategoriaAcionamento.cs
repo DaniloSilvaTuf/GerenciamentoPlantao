@@ -15,7 +15,7 @@
             DepartamentoId = departamentoId;
         }
 
-        protected CategoriaAcionamento() { }
+        public CategoriaAcionamento() { }
 
         public void Inativar()
         {

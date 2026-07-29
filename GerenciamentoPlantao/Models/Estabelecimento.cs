@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public bool Ativo { get; private set; } = true;
+        public bool Ativo { get; set; } = true;
         public ICollection<Setor> Setores { get; private set; } = new List<Setor>();
 
         public Estabelecimento(string nome)

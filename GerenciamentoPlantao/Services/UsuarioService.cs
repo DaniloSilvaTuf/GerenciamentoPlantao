@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Services
@@ -8,10 +9,12 @@ namespace GerenciamentoPlantao.Services
     public class UsuarioService
     {
         private readonly GerenciamentoPlantaoContext _context;
+        private readonly UserManager<Usuario> _userManager;
 
-        public UsuarioService(GerenciamentoPlantaoContext context)
+        public UsuarioService(GerenciamentoPlantaoContext context, UserManager<Usuario> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public async Task<List<Usuario>> FindAllAsync()
@@ -37,7 +40,6 @@ namespace GerenciamentoPlantao.Services
         public async Task InsertAsync(UsuarioFormViewModel vm)
         {
             var departamento = await _context.Departamentos
-                .Include(d => d.Usuarios)
                 .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
             if (departamento == null)
@@ -53,11 +55,18 @@ namespace GerenciamentoPlantao.Services
                 Email = vm.Email,
                 PhoneNumber = vm.Telefone,
                 Plantonista = vm.Plantonista,
+                Ativo = true,
+                Perfil = vm.Perfil
             };
 
-            usuario.Ativar();
-            departamento.AddUsuario(usuario);
-            await _context.SaveChangesAsync();
+            var resultado = await _userManager.CreateAsync(usuario, vm.Senha);
+
+            if(!resultado.Succeeded)
+            {
+                throw new Exception(string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description)));
+            }
+
+            await _userManager.AddToRoleAsync(usuario, usuario.Perfil.ToString());
         }
 
         public async Task UpdateAsync(EditarUsuarioViewModel vm)

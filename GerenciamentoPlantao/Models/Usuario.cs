@@ -1,7 +1,5 @@
 ﻿using GerenciamentoPlantao.Models.Enums;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace GerenciamentoPlantao.Models
 {
@@ -22,8 +20,8 @@ namespace GerenciamentoPlantao.Models
             Email = email;
             PhoneNumber = telefone;
             Plantonista = plantonista;
-            Ativo = true;
-            Perfil = 0;
+            Ativo = ativo;
+            Perfil = perfil;
             DepartamentoId = departamentoId;
         }
 

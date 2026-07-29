@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Enums;
 using GerenciamentoPlantao.Models.ViewModels;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -32,6 +33,12 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
+                }),
+
+                Perfis = Enum.GetValues<PerfilUsuario>().Select(p => new SelectListItem
+                {
+                    Value = p.ToString(),
+                    Text = p.ToString()
                 })
             };
 
@@ -48,6 +55,11 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
+                });
+                vm.Perfis = Enum.GetValues<PerfilUsuario>().Select(p => new SelectListItem
+                {
+                    Value = p.ToString(),
+                    Text = p.ToString()
                 });
                 return View(vm);
             }

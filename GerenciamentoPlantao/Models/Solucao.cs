@@ -15,7 +15,7 @@
             DepartamentoId = departamentoId;
         }
 
-        protected Solucao() { }
+        public Solucao() { }
 
         public void Inativar()
         {

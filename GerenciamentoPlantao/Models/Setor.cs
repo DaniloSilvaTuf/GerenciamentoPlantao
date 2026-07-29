@@ -9,7 +9,7 @@
         public Estabelecimento Estabelecimento { get;  set; } = null;
 
 
-        protected Setor() { }
+        public Setor() { }
 
         internal Setor(string nome, int estabelecimentoId)
         {

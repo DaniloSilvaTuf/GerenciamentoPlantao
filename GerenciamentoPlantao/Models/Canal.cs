@@ -14,7 +14,7 @@
             Ativo = true;
             DepartamentoId = departamentoId;
         }
-        protected Canal() { }
+        public Canal() { }
 
         public void Inativar()
         {
