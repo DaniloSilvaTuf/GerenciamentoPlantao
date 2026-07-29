@@ -3,6 +3,8 @@ using GerenciamentoPlantao.Models.ViewModels;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Constantes;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -15,8 +17,9 @@ namespace GerenciamentoPlantao.Controllers
         private readonly SetorService _setorService;
         private readonly SolucaoService _solucaoService;
         private readonly UsuarioService _usuarioService;
+        private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, UsuarioService usuarioService)
+        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, UsuarioService usuarioService, IUsuarioLogadoService usuarioLogadoService)
         {
             _acionamentoService = acionamentoService;
             _canalService = canalService;
@@ -25,6 +28,7 @@ namespace GerenciamentoPlantao.Controllers
             _setorService = setorService;
             _solucaoService = solucaoService;
             _usuarioService = usuarioService;
+            _usuarioLogadoService = usuarioLogadoService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,15 +37,13 @@ namespace GerenciamentoPlantao.Controllers
             return View(lista);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+
             var vm = new AcionamentoFormViewModel
             {
-                Plantonista = _usuarioService.FindAllActiveAsync().Result.Select(u => new SelectListItem
-                {
-                    Value = u.Id.ToString(),
-                    Text = u.DescNome
-                }),
+                NomePlantonista = usuario.DescNome,
                 Canal = _canalService.FindAllActiveAsync().Result.Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),
@@ -96,12 +98,7 @@ namespace GerenciamentoPlantao.Controllers
             {
                 Id = acionamento.Id,
                 DataAcionamento = acionamento.DataAcionamento,
-                UsuarioId = acionamento.UsuarioId,
-                Plantonista = (await _usuarioService.FindAllActiveAsync()).Select(u => new SelectListItem
-                {
-                    Value = u.Id.ToString(),
-                    Text = u.DescNome
-                }),
+                NomePlantonista = acionamento.Plantonista.DescNome,
                 CanalId = acionamento.CanalId,
                 Canal = (await _canalService.FindAllActiveAsync()).Select(e => new SelectListItem
                 {
@@ -146,11 +143,9 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (!ModelState.IsValid)
             {
-                vm.Plantonista = (await _usuarioService.FindAllActiveAsync()).Select(u => new SelectListItem
-                {
-                    Value = u.Id.ToString(),
-                    Text = u.UserName
-                });
+                var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+                vm.NomePlantonista = usuario?.DescNome ?? string.Empty;
+
                 vm.Canal = (await _canalService.FindAllActiveAsync()).Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),

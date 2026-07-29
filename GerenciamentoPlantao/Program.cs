@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<GerenciamentoPlantaoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddIdentity<Usuario, IdentityRole>(options =>
 {
@@ -43,6 +44,7 @@ builder.Services.AddScoped<CategoriaService>();
 builder.Services.AddScoped<CanalService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<AcionamentoService>();
+builder.Services.AddScoped<IUsuarioLogadoService, UsuarioLogadoService>();
 
 var app = builder.Build();
 

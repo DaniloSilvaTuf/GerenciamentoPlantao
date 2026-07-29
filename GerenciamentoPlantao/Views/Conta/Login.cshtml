@@ -1,55 +1,61 @@
 ﻿@model GerenciamentoPlantao.Models.ViewModels.LoginViewModel
 
 @{
+    Layout = "_LayoutLogin";
     ViewData["Title"] = "Login";
 }
 
-<div class="container mt-5">
+<div class="card shadow border-0" style="width:430px; border-radius:15px;">
 
-    <div class="row justify-content-center">
+    <div class="card-body p-5">
 
-        <div class="col-md-4">
+        <h2 class="text-center text-primary fw-bold mb-3">
+            Gerenciamento Plantão
+        </h2>
 
-            <div class="card shadow">
+        <p class="text-center text-secondary mb-4">
+            Bem-vindo ao Sistema Gerencial de Acionamentos.<br />
+            Entre com seu usuário e senha.
+        </p>
 
-                <div class="card-header text-center">
-                    <h3>Login</h3>
-                </div>
+        <form asp-action="Login" method="post">
 
-                <div class="card-body">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-                    <form asp-action="Login" method="post">
+            <div class="mb-4">
 
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <label asp-for="Username" class="form-label fw-semibold">
+                    Usuário
+                </label>
 
-                        <div class="mb-3">
-                            <label asp-for="Username"></label>
-                            <input asp-for="Username" class="form-control" />
-                            <span asp-validation-for="Username" class="text-danger"></span>
-                        </div>
+                <input asp-for="Username"
+                       class="form-control"
+                       autocomplete="username"
+                       autofocus />
 
-                        <div class="mb-3">
-                            <label asp-for="Password"></label>
-                            <input asp-for="Password" class="form-control" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-check mb-3">
-                            <input asp-for="RememberMe" class="form-check-input" />
-                            <label asp-for="RememberMe" class="form-check-label"></label>
-                        </div>
-
-                        <button class="btn btn-primary w-100">
-                            Entrar
-                        </button>
-
-                    </form>
-
-                </div>
+                <span asp-validation-for="Username" class="text-danger"></span>
 
             </div>
 
-        </div>
+            <div class="mb-4">
+
+                <label asp-for="Password" class="form-label fw-semibold">
+                    Senha
+                </label>
+
+                <input asp-for="Password"
+                       class="form-control"
+                       autocomplete="current-password" />
+
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100">
+                Entrar
+            </button>
+
+        </form>
 
     </div>
 
@@ -57,7 +63,5 @@
 
 @section Scripts
 {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    <partial name="_ValidationScriptsPartial" />
 }

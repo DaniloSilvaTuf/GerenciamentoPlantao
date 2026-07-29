@@ -1,5 +1,6 @@
 ﻿using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,12 +17,14 @@ namespace GerenciamentoPlantao.Controllers
             _userManager = userManager;
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Login()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel vm)
@@ -51,6 +54,19 @@ namespace GerenciamentoPlantao.Controllers
             ModelState.AddModelError("", "Nome de usuário ou senha inválidos.");
 
             return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(Login));
+        }
+
+        public IActionResult AcessoNegado()
+        {
+            return View();
         }
     }
 }

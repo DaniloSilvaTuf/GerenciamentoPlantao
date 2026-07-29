@@ -2,9 +2,11 @@
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GerenciamentoPlantao.Controllers
 {
+    [Authorize]
     public class CanaisController : Controller
     {   
         private readonly CanalService _canalService;

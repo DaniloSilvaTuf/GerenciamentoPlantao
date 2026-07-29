@@ -5,9 +5,11 @@ using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GerenciamentoPlantao.Controllers
 {
+    [Authorize]
     public class SetoresController : Controller
     {
 

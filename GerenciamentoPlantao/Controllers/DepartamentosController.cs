@@ -3,9 +3,11 @@ using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GerenciamentoPlantao.Controllers
 {
+    [Authorize]
     public class DepartamentosController : Controller
     {
 

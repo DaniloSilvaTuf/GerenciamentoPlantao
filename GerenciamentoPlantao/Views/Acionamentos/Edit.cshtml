@@ -38,19 +38,9 @@
 
                 <!-- Plantonista / Canal -->
                 <div class="row">
-
-                    <div class="col-md-6 mb-3">
-                        <label asp-for="UsuarioId" class="form-label fw-bold">
-                            Plantonista
-                        </label>
-
-                        <select asp-for="UsuarioId"
-                                asp-items="Model.Plantonista"
-                                class="form-select">
-                            <option value="">Selecione...</option>
-                        </select>
-
-                        <span asp-validation-for="UsuarioId" class="text-danger"></span>
+                    <div class="mb-3">
+                        <label asp-for="NomePlantonista" class="form-label">Plantonista</label>
+                        <input asp-for="NomePlantonista" class="form-control" readonly />
                     </div>
 
                     <div class="col-md-6 mb-3">

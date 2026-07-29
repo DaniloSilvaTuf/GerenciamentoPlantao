@@ -42,11 +42,10 @@ namespace GerenciamentoPlantao.Models
             SolucaoId = solucaoId;
         }
 
-        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, string usuarioId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento)
+        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;
-            UsuarioId = usuarioId;
             EstabelecimentoId = estabelecimentoId;
             SetorId = setorId;
             CategoriaAcionamentoId = categoriaAcionamentoId;
