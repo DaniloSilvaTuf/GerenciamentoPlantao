@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GerenciamentoPlantao")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+18e7ac168dedf4ed2d6fc93cf305ee579c9fd2ee")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+952036e267a2797bcc6493e4225736f2d38e0be9")]
 [assembly: System.Reflection.AssemblyProductAttribute("GerenciamentoPlantao")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GerenciamentoPlantao")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

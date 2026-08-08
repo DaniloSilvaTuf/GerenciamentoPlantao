@@ -1,19 +1,34 @@
 ﻿namespace GerenciamentoPlantao.Models
 {
-    public class Estabelecimento
+    public class Estabelecimento : EntidadeBase
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public bool Ativo { get; set; } = true;
+        public string Nome { get; set; } = string.Empty;
         public ICollection<Setor> Setores { get; private set; } = new List<Setor>();
 
-        public Estabelecimento(string nome)
+        public Estabelecimento(string nome, string usuarioId)
         {
             Nome = nome;
-            Ativo = true;
+            RegistrarCriacao(usuarioId);
+        }
+
+        public void Atualizar(string novoNome, string usuarioId)
+        {
+            Nome = novoNome;
+            RegistrarAtualizacao(usuarioId);
         }
 
         public Estabelecimento() { }
+
+        public void Ativar(string usuarioId)
+        {
+            RegistrarAtivacao(usuarioId);
+        }
+
+        public void Inativar(string usuarioId)
+        {
+            RegistrarInativacao(usuarioId);
+        }
 
         public void AddSetor(Setor setor)
         {
@@ -23,16 +38,6 @@
             }
 
             Setores.Add(setor);
-        }
-
-        public void Ativar()
-        {
-            Ativo = true;
-        }
-
-        public void Inativar()
-        {
-            Ativo = false;
         }
     }
 }

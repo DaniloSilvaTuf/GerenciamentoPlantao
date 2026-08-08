@@ -36,6 +36,9 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Apoio")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
                     b.Property<int>("CanalId")
                         .HasColumnType("int");
 
@@ -45,7 +48,13 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<DateTime>("DataAcionamento")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("DataRegistro")
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("DescProblema")
@@ -70,6 +79,15 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CanalId");
@@ -83,6 +101,12 @@ namespace GerenciamentoPlantao.Migrations
                     b.HasIndex("SolucaoId");
 
                     b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Acionamentos");
                 });
@@ -98,6 +122,15 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
@@ -105,9 +138,24 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Canais");
                 });
@@ -123,6 +171,15 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
@@ -130,9 +187,24 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("CategoriasAcionamento");
                 });
@@ -150,11 +222,35 @@ namespace GerenciamentoPlantao.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Departamentos");
                 });
@@ -172,11 +268,35 @@ namespace GerenciamentoPlantao.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Estabelecimentos");
                 });
@@ -192,6 +312,15 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("EstabelecimentoId")
                         .HasColumnType("int");
 
@@ -199,9 +328,24 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("EstabelecimentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Setores");
                 });
@@ -217,6 +361,15 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
 
@@ -224,9 +377,24 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Solucoes");
                 });
@@ -245,6 +413,15 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DepartamentoId")
                         .HasColumnType("int");
@@ -299,6 +476,15 @@ namespace GerenciamentoPlantao.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DepartamentoId");
@@ -310,6 +496,12 @@ namespace GerenciamentoPlantao.Migrations
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -485,6 +677,21 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Canal");
 
                     b.Navigation("CategoriaAcionamento");
@@ -496,6 +703,12 @@ namespace GerenciamentoPlantao.Migrations
                     b.Navigation("Setor");
 
                     b.Navigation("Solucao");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Canal", b =>
@@ -506,7 +719,28 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.CategoriaAcionamento", b =>
@@ -517,7 +751,76 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Departamento", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Setor", b =>
@@ -528,7 +831,28 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Estabelecimento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Solucao", b =>
@@ -539,7 +863,28 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Usuario", b =>
@@ -550,7 +895,28 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Services
@@ -8,81 +9,119 @@ namespace GerenciamentoPlantao.Services
     public class SolucaoService
     {
         private readonly GerenciamentoPlantaoContext _context;
+        private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public SolucaoService(GerenciamentoPlantaoContext context)
+        public SolucaoService(GerenciamentoPlantaoContext context, IUsuarioLogadoService usuarioLogadoService)
         {
             _context = context;
+            _usuarioLogadoService = usuarioLogadoService;
         }
 
         public async Task<List<Solucao>> FindAllAsync()
         {
-            return await _context.Solucoes.Include(s => s.Departamento).ToListAsync();
+            return await _context.Solucoes
+                .Include(s => s.Departamento)
+                .ToListAsync();
         }
 
         public async Task<List<Solucao>> FindAllActiveAsync()
         {
-            return await _context.Solucoes.Include(s => s.Departamento).Where(s => s.Ativo).ToListAsync();
+            return await _context.Solucoes
+                .Include(s => s.Departamento)
+                .Where(s => s.Ativo)
+                .ToListAsync();
         }
 
-        public async Task<Solucao?> FindByIdAsync(int id)
+        public async Task<Solucao> FindByIdAsync(int id)
         {
-            return await _context.Solucoes.FirstOrDefaultAsync(x => x.Id == id);
+            var solucao = await _context.Solucoes
+                .FirstOrDefaultAsync(x => x.Id == id);
+            
+            if (solucao == null)
+            {
+                throw new Exception("Solução não encontrada.");
+            }
+
+            return solucao;
         }
 
-        public async Task CriarSolucaoAsync(int departamentoId, string nome)
+        public async Task<Solucao> FindByIdWithAuditAsync(int id)
         {
+            var solucao = await _context.Solucoes
+                .Include(s => s.UsuarioInsert)
+                .Include(s => s.UsuarioUpdate)
+                .Include(s => s.UsuarioInativacao)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (solucao == null)
+            {
+                throw new Exception("Solução não encontrada.");
+            }
+            return solucao;
+        }
+
+        public async Task InserirSolucaoAsync(SolucaoFormViewModel vm)
+        {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var departamento = await _context.Departamentos
-                    .Include(d => d.Solucoes)
-                    .FirstOrDefaultAsync(d => d.Id == departamentoId);
+                .Include(d => d.Solucoes)
+                .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
-            if (departamento == null)
+            if (departamento == null) 
+            {
                 throw new Exception("Departamento não encontrado.");
+            }
 
-            var solucao = new Solucao(nome, departamentoId);
-            solucao.Ativar();
+            var solucao = new Solucao
+                (
+                    vm.Nome, 
+                    vm.DepartamentoId,
+                    usuario.Id
+                );
+
             departamento.AddSolucao(solucao);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(EditarSolucaoViewModel vm)
+        public async Task AlterarSolucaoAsync(EditarSolucaoViewModel vm)
         {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var solucao = await FindByIdAsync(vm.Id);
+            
+            var existe = await _context.Solucoes.AnyAsync(s => 
+                s.Id != vm.Id &&
+                s.DepartamentoId == vm.DepartamentoId &&
+                s.Nome == vm.Nome);
 
-
-            if (solucao == null)
+            if (existe)
             {
-                throw new Exception("Solução não encontrada");
+                throw new Exception("Já existe uma solução com esse nome.");
             }
 
-            solucao.Nome = vm.Nome;
-            solucao.DepartamentoId = vm.DepartamentoId;
-            _context.Update(solucao);
+            solucao.Atualizar
+                (
+                    vm.Nome,
+                    vm.DepartamentoId,
+                    usuario.Id
+                );
             await _context.SaveChangesAsync();
         }
 
         public async Task InativarAsync(int id)
         {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var solucao = await FindByIdAsync(id);
 
-            if (solucao == null)
-            {
-                throw new Exception("Solução não encontrada");
-            }
-
-            solucao.Ativo = false;
+            solucao.Inativar(usuario.Id);
             await _context.SaveChangesAsync();
         }
 
         public async Task AtivarAsync(int id)
         {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var solucao = await FindByIdAsync(id);
 
-            if (solucao == null)
-            {
-                throw new Exception("Solução não encontrada");
-            }
-
-            solucao.Ativo = true;
+            solucao.Ativar(usuario.Id);
             await _context.SaveChangesAsync();
         }
     }

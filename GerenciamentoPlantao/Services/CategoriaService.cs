@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Services
@@ -8,80 +9,112 @@ namespace GerenciamentoPlantao.Services
     public class CategoriaService
     {
         private readonly GerenciamentoPlantaoContext _context;
+        private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public CategoriaService(GerenciamentoPlantaoContext context)
+        public CategoriaService(GerenciamentoPlantaoContext context, IUsuarioLogadoService usuarioLogadoService)
         {
             _context = context;
+            _usuarioLogadoService = usuarioLogadoService;
         }
 
         public async Task<List<CategoriaAcionamento>> FindAllAsync()
         {
-            return await _context.CategoriasAcionamento.Include(c => c.Departamento).ToListAsync();
+            return await _context.CategoriasAcionamento
+                .Include(c => c.Departamento)
+                .ToListAsync();
         }
 
         public async Task<List<CategoriaAcionamento>> FindAllActiveAsync()
         {
-            return await _context.CategoriasAcionamento.Include(c => c.Departamento).Where(c => c.Ativo).ToListAsync();
+            return await _context.CategoriasAcionamento
+                .Include(c => c.Departamento)
+                .Where(c => c.Ativo)
+                .ToListAsync();
         }
 
-        public async Task<CategoriaAcionamento?> FindByIdAsync(int id)
+        public async Task<CategoriaAcionamento> FindByIdAsync(int id)
         {
-            return await _context.CategoriasAcionamento.FirstOrDefaultAsync(x => x.Id == id);
+            var categoria = await _context.CategoriasAcionamento
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (categoria == null)
+            {
+                throw new Exception("Categoria não encontrada.");
+            }
+
+            return categoria;
         }
 
-        public async Task CriarCategoriaAsync(int departamentoId, string nome)
+        public async Task<CategoriaAcionamento> FindByIdWithAuditAsync(int id)
         {
+            var categoria = await _context.CategoriasAcionamento
+                .Include(c => c.UsuarioInsert)
+                .Include(c => c.UsuarioUpdate)
+                .Include(c => c.UsuarioInativacao)
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (categoria == null)
+            {
+                throw new Exception("Categoria não encontrada.");
+            }
+            return categoria;
+        }
+
+        public async Task CriarCategoriaAsync(CategoriaFormViewModel vm)
+        {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+
             var departamento = await _context.Departamentos
                     .Include(d => d.CategoriasAcionamentos)
-                    .FirstOrDefaultAsync(d => d.Id == departamentoId);
+                    .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
             if (departamento == null)
                 throw new Exception("Departamento não encontrado.");
 
-            var categoria = new CategoriaAcionamento(nome, departamentoId);
-            categoria.Ativar();
+            var categoria = new CategoriaAcionamento
+            (
+                vm.Nome,
+                vm.DepartamentoId,
+                usuario.Id
+            );
             departamento.AddCategoria(categoria);
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(EditarCategoriaViewModel vm)
+        public async Task AlterarCategoriaAsync(EditarCategoriaViewModel vm)
         {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var categoria = await FindByIdAsync(vm.Id);
 
+            var existe = await _context.CategoriasAcionamento.AnyAsync(c =>
+                c.Id != vm.Id &&
+                c.DepartamentoId == vm.DepartamentoId &&
+                c.Nome == vm.Nome);
 
-            if (categoria == null)
+            if (existe)
             {
-                throw new Exception("Categoria não encontrada");
+                throw new Exception("Já existe uma categoria com o mesmo nome neste departamento.");
             }
 
-            categoria.Nome = vm.Nome;
-            categoria.DepartamentoId = vm.DepartamentoId;
-            _context.Update(categoria);
+            categoria.Atualizar
+            (
+                vm.Nome,
+                vm.DepartamentoId,
+                usuario.Id
+            );
             await _context.SaveChangesAsync();
         }
 
-        public async Task InativarAsync(int id)
+        public async Task InativarCategoriaAsync(int id)
         {
             var categoria = await FindByIdAsync(id);
-
-            if (categoria == null)
-            {
-                throw new Exception("Categoria não encontrada");
-            }
-
             categoria.Ativo = false;
             await _context.SaveChangesAsync();
         }
 
-        public async Task AtivarAsync(int id)
+        public async Task AtivarCategoriaAsync(int id)
         {
             var categoria = await FindByIdAsync(id);
-
-            if (categoria == null)
-            {
-                throw new Exception("Categoria não encontrada");
-            }
-
             categoria.Ativo = true;
             await _context.SaveChangesAsync();
         }

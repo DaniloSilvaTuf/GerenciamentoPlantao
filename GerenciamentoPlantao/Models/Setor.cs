@@ -1,31 +1,36 @@
 ﻿namespace GerenciamentoPlantao.Models
 {
-    public class Setor
+    public class Setor : EntidadeBase
     {
         public int Id { get; private set; }
         public string Nome { get;  set; } = string.Empty;
-        public bool Ativo { get;  set; }
         public int EstabelecimentoId { get;  set; }
-        public Estabelecimento Estabelecimento { get;  set; } = null;
+        public Estabelecimento Estabelecimento { get; set; } = null!;
 
+        public Setor(string nome, int estabelecimentoId, string usuarioId)
+        {
+            Nome = nome;
+            EstabelecimentoId = estabelecimentoId;
+            RegistrarCriacao(usuarioId);
+        }
+
+        public void AtualizarSetor(string nome, int estabelecimentoId, string usuarioId)
+        {
+            Nome = nome;
+            EstabelecimentoId = estabelecimentoId;
+            RegistrarAtualizacao(usuarioId);
+        }
 
         public Setor() { }
 
-        internal Setor(string nome, int estabelecimentoId)
+        public void Ativar(string usuarioId)
         {
-            Nome = nome;
-            Ativo = true;
-            EstabelecimentoId = estabelecimentoId;
+            RegistrarAtivacao(usuarioId);
         }
 
-        public void Ativar() 
+        public void Inativar(string usuarioId)
         {
-            Ativo = true;
-        }
-
-        public void Inativar()
-        {
-            Ativo = false;
+            RegistrarInativacao(usuarioId);
         }
     }
 }

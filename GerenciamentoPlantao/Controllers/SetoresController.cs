@@ -1,11 +1,12 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -55,19 +56,18 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _setorService.CriarSetorAsync(vm.EstabelecimentoId, vm.Nome);
+            await _setorService.InserirSetorAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var setor = await _setorService.FindByIdAsync(id.Value);
+            var setor = await _setorService.FindByIdWithAuditAsync(id.Value);
             var vm = new EditarSetorViewModel
             {
                 Id = setor.Id,
@@ -79,7 +79,14 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value= e.Id.ToString(),
                     Text = e.Nome
-                })
+                }),
+
+                DataInsert = setor.DataInsert,
+                UsuarioInsertNome = setor.UsuarioInsert?.DescNome,
+                DataUpdate = setor.DataUpdate,
+                UsuarioUpdateNome = setor.UsuarioUpdate?.DescNome,
+                DataInativacao = setor.DataInativacao,
+                UsuarioInativacaoNome = setor.UsuarioInativacao?.DescNome
             }; 
 
             return View(vm);
@@ -89,7 +96,6 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditarSetorViewModel vm)
         {
-
             if (!ModelState.IsValid)
             {
                 vm.Estabelecimentos = (await _estabelecimentoService.FindAllActiveAsync()).Select(e => new SelectListItem
@@ -99,7 +105,7 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _setorService.UpdateAsync(vm);
+            await _setorService.AlterarSetorAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -111,11 +117,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var setor = await _setorService.FindByIdAsync(id.Value);
-            if (setor == null)
-            {
-                return NotFound();
-            }
-
             return View(setor);
         }
 
@@ -135,12 +136,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var setor = await _setorService.FindByIdAsync(id.Value);
-
-            if (setor == null)
-            {
-                return NotFound();
-            }
-
             return View(setor);
         }
 

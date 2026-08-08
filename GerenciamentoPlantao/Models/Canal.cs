@@ -1,29 +1,37 @@
-﻿namespace GerenciamentoPlantao.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace GerenciamentoPlantao.Models
 {
-    public class Canal
+    public class Canal : EntidadeBase
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public bool Ativo { get; set; }
+        public string Nome { get; set; } = string.Empty;     
         public int DepartamentoId { get; set; }
-        public Departamento Departamento { get; set; }
+        public Departamento Departamento { get; set; } = null!;
 
-        public Canal(string nome, int departamentoId)
+        public Canal(string nome, int departamentoId, string usuarioId)
         {
             Nome = nome;
-            Ativo = true;
             DepartamentoId = departamentoId;
+            RegistrarCriacao(usuarioId);
         }
         public Canal() { }
 
-        public void Inativar()
+        public void Atualizar(string nome, int departamentoId, string usuarioId)
         {
-            Ativo = false;
+            Nome = nome;
+            DepartamentoId = departamentoId;
+            RegistrarAtualizacao(usuarioId);
         }
 
-        public void Ativar()
+        public void Inativar(string usuarioId)
         {
-            Ativo = true;
+            RegistrarInativacao(usuarioId);
+        }
+
+        public void Ativar(string usuarioId)
+        {
+            RegistrarAtivacao(usuarioId);
         }
     }
 }

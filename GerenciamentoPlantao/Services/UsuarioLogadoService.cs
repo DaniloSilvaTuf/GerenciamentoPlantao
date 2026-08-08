@@ -23,13 +23,16 @@ namespace GerenciamentoPlantao.Services
             return User?.Identity?.IsAuthenticated ?? false;
         }
 
-        public async Task<Usuario?> ObterUsuarioLogadoAsync()
+        public async Task<Usuario> ObterUsuarioLogadoAsync()
         {
-            if(!await EstaAutenticadoAsync())
+            var usuario = await _userManager.GetUserAsync(User!);
+
+            if (usuario == null)
             {
-                return null;
+                throw new Exception("Usuário logado não encontrado.");
             }
-            return await _userManager.GetUserAsync(User!);
+
+            return usuario;
         }
 
         public async Task<string?> ObterIdUsuarioAsync()

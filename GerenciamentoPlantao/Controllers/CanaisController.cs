@@ -1,8 +1,9 @@
-﻿using GerenciamentoPlantao.Models.ViewModels;
-using GerenciamentoPlantao.Services;
+﻿using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -51,19 +52,18 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _canalService.CriarCanalAsync(vm.DepartamentoId, vm.Nome);
+            await _canalService.CriarCanalAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var canal = await _canalService.FindByIdAsync(id.Value);
+            var canal = await _canalService.FindByIdWithAuditAsync(id.Value);
             var vm = new EditarCanalViewModel
             {
                 Id = canal.Id,
@@ -75,7 +75,14 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = d.Id.ToString(),
                     Text = d.Nome
-                })
+                }),
+                
+                DataInsert = canal.DataInsert,
+                UsuarioInsertNome = canal.UsuarioInsert?.DescNome,
+                DataUpdate = canal.DataUpdate,
+                UsuarioUpdateNome = canal.UsuarioUpdate?.DescNome,
+                DataInativacao = canal.DataInativacao,
+                UsuarioInativacaoNome = canal.UsuarioInativacao?.DescNome
             };
 
             return View(vm);
@@ -85,7 +92,6 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditarCanalViewModel vm)
         {
-
             if (!ModelState.IsValid)
             {
                 vm.Departamentos = (await _departamentoService.FindAllActiveAsync()).Select(d => new SelectListItem
@@ -95,7 +101,7 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _canalService.UpdateAsync(vm);
+            await _canalService.AlterarCanalAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,11 +113,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var canal = await _canalService.FindByIdAsync(id.Value);
-            if (canal == null)
-            {
-                return NotFound();
-            }
-
             return View(canal);
         }
 
@@ -119,7 +120,7 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InativarConfirmado(int id)
         {
-            await _canalService.InativarAsync(id);
+            await _canalService.InativarCanalAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -131,12 +132,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var canal = await _canalService.FindByIdAsync(id.Value);
-
-            if (canal == null)
-            {
-                return NotFound();
-            }
-
             return View(canal);
         }
 
@@ -144,7 +139,7 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AtivarConfirmado(int id)
         {
-            await _canalService.AtivarAsync(id);
+            await _canalService.AtivarCanalAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

@@ -1,10 +1,13 @@
 ﻿using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.Enums;
-using GerenciamentoPlantao.Models.ViewModels;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -14,11 +17,13 @@ namespace GerenciamentoPlantao.Controllers
 
         private readonly UsuarioService _usuarioService;
         private readonly DepartamentoService _departamentoService;
+        private readonly GerenciamentoPlantaoContext _context;
 
-        public UsuariosController(UsuarioService usuarioService, DepartamentoService departamentoService)
+        public UsuariosController(UsuarioService usuarioService, DepartamentoService departamentoService, GerenciamentoPlantaoContext context)
         {
             _usuarioService = usuarioService;
             _departamentoService = departamentoService;
+            _context = context;
         }
 
         public async Task<IActionResult> Index()
@@ -66,7 +71,7 @@ namespace GerenciamentoPlantao.Controllers
                 return View(vm);
             }
 
-            await _usuarioService.InsertAsync(vm);
+            await _usuarioService.CriarUsuarioAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -77,7 +82,8 @@ namespace GerenciamentoPlantao.Controllers
                 return NotFound();
             }
 
-            var usuario = await _usuarioService.FindByIdAsync(id);
+            var usuario = await _usuarioService.FindByIdWithAuditAsync(id);
+
             var vm = new EditarUsuarioViewModel
             {
                 Id = usuario.Id,
@@ -92,7 +98,15 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
-                })
+                }),
+
+                DataInsert = usuario.DataInsert,
+                UsuarioInsertNome = usuario.UsuarioInsert?.DescNome,
+                DataUpdate = usuario.DataUpdate,
+                UsuarioUpdateNome = usuario.UsuarioUpdate?.DescNome,
+                DataInativacao = usuario.DataInativacao,
+                UsuarioInativacaoNome = usuario.UsuarioInativacao?.DescNome,
+
             };
             return View(vm);
         }
@@ -110,7 +124,7 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _usuarioService.UpdateAsync(vm);
+            await _usuarioService.AlterarUsuarioAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 

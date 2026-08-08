@@ -1,5 +1,5 @@
 ﻿using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -31,6 +31,13 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return View(vm);
+            }
+
+            var usuario = await _userManager.FindByNameAsync(vm.Username);
+            if (usuario == null || !usuario.Ativo)
+            {
+                ModelState.AddModelError("", "Nome de usuário ou senha inválidos.");
                 return View(vm);
             }
 

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GerenciamentoPlantao.Models.ViewModels
+namespace GerenciamentoPlantao.Models.ViewModels.Adicionar
 {
     public class LoginViewModel
 

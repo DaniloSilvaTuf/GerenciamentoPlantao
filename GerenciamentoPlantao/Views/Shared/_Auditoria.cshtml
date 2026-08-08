@@ -1,0 +1,32 @@
+﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.EditarViewModelBase
+
+<div class="border-top mt-4 pt-3 text-muted small">
+
+    <div>
+        <strong>Criado em:</strong>
+        @Model.DataInsert.ToString("dd/MM/yyyy HH:mm")
+        por
+        @(Model.UsuarioInsertNome ?? "Usuário não identificado")
+    </div>
+
+    @if (Model.DataUpdate.HasValue)
+    {
+        <div>
+            <strong>Última alteração:</strong>
+            @Model.DataUpdate.Value.ToString("dd/MM/yyyy HH:mm")
+            por
+            @(Model.UsuarioUpdateNome ?? "Usuário não identificado")
+        </div>
+    }
+
+    @if (Model.DataInativacao.HasValue)
+    {
+        <div>
+            <strong>Inativado em:</strong>
+            @Model.DataInativacao.Value.ToString("dd/MM/yyyy HH:mm")
+            por
+            @(Model.UsuarioInativacaoNome ?? "Usuário não identificado")
+        </div>
+    }
+
+</div>

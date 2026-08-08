@@ -4,6 +4,8 @@ using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -31,14 +33,14 @@ namespace GerenciamentoPlantao.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Departamento departamento)
+        public async Task<IActionResult> Create(DepartamentoFormViewModel vm)
         {
             if (!ModelState.IsValid)
             {
-                return View(departamento);
+                return View(vm);
             }
 
-            await _departamentoService.InsertAsync(departamento);
+            await _departamentoService.InserirDepartamentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -49,30 +51,33 @@ namespace GerenciamentoPlantao.Controllers
                 return NotFound();
             }
 
-            var departamento = await _departamentoService.FindByIdAsync(id.Value);
-
-            if (departamento == null)
+            var departamento = await _departamentoService.FindByIdWithAuditAsync(id.Value);
+            var vm = new EditarDepartamentoViewModel
             {
-                return NotFound();
-            }
-            return View(departamento);
+                Id = departamento.Id,
+                Nome = departamento.Nome,
+                Ativo = departamento.Ativo,
+                UsuarioInsertNome = departamento.UsuarioInsert?.DescNome,
+                UsuarioUpdateNome = departamento.UsuarioUpdate?.DescNome,
+                UsuarioInativacaoNome = departamento.UsuarioInativacao?.DescNome,
+                DataInsert = departamento.DataInsert,
+                DataUpdate = departamento.DataUpdate,
+                DataInativacao = departamento.DataInativacao
+            };
+
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Departamento departamento)
+        public async Task<IActionResult> Edit(EditarDepartamentoViewModel vm)
         {
-            if (id != departamento.Id)
-            {
-                return NotFound();
-            }
-
             if (!ModelState.IsValid)
             {
-                return View(departamento);
+                return View(vm);
             }
 
-            await _departamentoService.UpdateAsync(departamento);
+            await _departamentoService.AlterarDepartamentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -84,11 +89,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var departamento = await _departamentoService.FindByIdAsync(id.Value);
-            if (departamento == null)
-            {
-                return NotFound();
-            }
-
             return View(departamento);
         }
 
@@ -108,12 +108,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var departamento = await _departamentoService.FindByIdAsync(id.Value);
-
-            if (departamento == null)
-            {
-                return NotFound();
-            }
-
             return View(departamento);
         }
 

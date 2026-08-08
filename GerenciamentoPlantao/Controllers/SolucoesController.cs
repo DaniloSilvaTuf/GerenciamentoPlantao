@@ -1,8 +1,10 @@
-﻿using GerenciamentoPlantao.Models.ViewModels;
-using GerenciamentoPlantao.Services;
+﻿using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Data;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -51,31 +53,37 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _solucaoService.CriarSolucaoAsync(vm.DepartamentoId, vm.Nome);
+            await _solucaoService.InserirSolucaoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
+            
+            var solucao = await _solucaoService.FindByIdWithAuditAsync(id.Value);
 
-            var solucao = await _solucaoService.FindByIdAsync(id.Value);
             var vm = new EditarSolucaoViewModel
             {
                 Id = solucao.Id,
                 Nome = solucao.Nome,
                 Ativo = solucao.Ativo,
                 DepartamentoId = solucao.DepartamentoId,
-
                 Departamentos = (await _departamentoService.FindAllActiveAsync()).Select(d => new SelectListItem
                 {
                     Value = d.Id.ToString(),
                     Text = d.Nome
-                })
+                }),
+
+                DataInsert = solucao.DataInsert,
+                UsuarioInsertNome = solucao.UsuarioInsert?.DescNome,
+                DataUpdate = solucao.DataUpdate,
+                UsuarioUpdateNome = solucao.UsuarioUpdate?.DescNome,
+                DataInativacao = solucao.DataInativacao,
+                UsuarioInativacaoNome = solucao.UsuarioInativacao?.DescNome
             };
 
             return View(vm);
@@ -95,7 +103,7 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _solucaoService.UpdateAsync(vm);
+            await _solucaoService.AlterarSolucaoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,10 +115,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var solucao = await _solucaoService.FindByIdAsync(id.Value);
-            if (solucao == null)
-            {
-                return NotFound();
-            }
 
             return View(solucao);
         }
@@ -131,11 +135,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var solucao = await _solucaoService.FindByIdAsync(id.Value);
-
-            if (solucao == null)
-            {
-                return NotFound();
-            }
 
             return View(solucao);
         }

@@ -4,6 +4,8 @@ using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -31,14 +33,14 @@ namespace GerenciamentoPlantao.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Estabelecimento estabelecimento)
+        public async Task<IActionResult> Create(EstabelecimentoFormViewModel vm)
         {
             if (!ModelState.IsValid) 
             {
-                return View(estabelecimento);
+                return View(vm);
             }
 
-            await _estabelecimentoService.InsertAsync(estabelecimento);
+            await _estabelecimentoService.InserirEstabelecimentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -49,30 +51,32 @@ namespace GerenciamentoPlantao.Controllers
                 return NotFound();
             }
 
-            var estabelecimento = await _estabelecimentoService.FindByIdAsync(id.Value);
-            
-            if(estabelecimento == null)
+            var estabelecimento = await _estabelecimentoService.FindByIdWithAuditAsync(id.Value);
+            var vm = new EditarEstabelecimentoViewModel
             {
-                return NotFound();
-            }
-            return View(estabelecimento);
+                Id = estabelecimento.Id,
+                Nome = estabelecimento.Nome,
+                Ativo = estabelecimento.Ativo,
+                DataInsert = estabelecimento.DataInsert,
+                UsuarioInsertNome = estabelecimento.UsuarioInsert?.DescNome,
+                DataUpdate = estabelecimento.DataUpdate,
+                UsuarioUpdateNome = estabelecimento.UsuarioUpdate?.DescNome,
+                DataInativacao = estabelecimento.DataInativacao,
+                UsuarioInativacaoNome = estabelecimento.UsuarioInativacao?.DescNome,
+            };
+            return View(vm);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Estabelecimento estabelecimento)
+        public async Task<IActionResult> Edit(EditarEstabelecimentoViewModel vm)
         {
-            if (id != estabelecimento.Id)
-            {
-                return NotFound();
-            }
-
             if (!ModelState.IsValid)
             {
-                return View(estabelecimento);
+                return View(vm);
             }
 
-            await _estabelecimentoService.UpdateAsync(estabelecimento);
+            await _estabelecimentoService.AlterarEstabelecimentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -84,11 +88,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var estabelecimento = await _estabelecimentoService.FindByIdAsync(id.Value);
-            if (estabelecimento == null)
-            {
-                return NotFound();
-            }
-
             return View(estabelecimento);
         }
 
@@ -108,12 +107,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var estabelecimento = await _estabelecimentoService.FindByIdAsync(id.Value);
-
-            if (estabelecimento == null)
-            {
-                return NotFound();
-            }
-
             return View(estabelecimento);
         }
 

@@ -1,13 +1,16 @@
-﻿using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
-using GerenciamentoPlantao.Services;
+﻿using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Constantes;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Controllers
 {
+    [Authorize(Roles = Roles.Plantonista)]
     public class AcionamentosController : Controller
     {
         private readonly AcionamentoService _acionamentoService;
@@ -16,10 +19,9 @@ namespace GerenciamentoPlantao.Controllers
         private readonly EstabelecimentoService _estabelecimentoService;
         private readonly SetorService _setorService;
         private readonly SolucaoService _solucaoService;
-        private readonly UsuarioService _usuarioService;
         private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, UsuarioService usuarioService, IUsuarioLogadoService usuarioLogadoService)
+        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, IUsuarioLogadoService usuarioLogadoService)
         {
             _acionamentoService = acionamentoService;
             _canalService = canalService;
@@ -27,7 +29,6 @@ namespace GerenciamentoPlantao.Controllers
             _estabelecimentoService = estabelecimentoService;
             _setorService = setorService;
             _solucaoService = solucaoService;
-            _usuarioService = usuarioService;
             _usuarioLogadoService = usuarioLogadoService;
         }
 
@@ -82,7 +83,7 @@ namespace GerenciamentoPlantao.Controllers
                 return View(vm);
             }
 
-            await _acionamentoService.InsertAsync(vm);
+            await _acionamentoService.InserirAcionamentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -93,7 +94,8 @@ namespace GerenciamentoPlantao.Controllers
                 return NotFound();
             }
 
-            var acionamento = await _acionamentoService.FindByIdAsync(id.Value);
+            var acionamento = await _acionamentoService.FindByIdWithAuditAsync(id.Value);
+            
             var vm = new EditarAcionamentoViewModel
             {
                 Id = acionamento.Id,
@@ -132,7 +134,13 @@ namespace GerenciamentoPlantao.Controllers
                     Text = s.Nome
                 }),
                 Apoio = acionamento.Apoio,
-                Observacao = acionamento.Observacao
+                Observacao = acionamento.Observacao,
+                
+                DataInsert = acionamento.DataInsert,
+                UsuarioInsertNome = acionamento.UsuarioInsert?.DescNome,
+                DataUpdate = acionamento.DataUpdate,
+                UsuarioUpdateNome = acionamento.UsuarioUpdate?.DescNome
+
             };
             return View(vm);
         }
@@ -173,10 +181,9 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _acionamentoService.UpdateAsync(vm);
+            await _acionamentoService.AlterarAcionamentoAsync(vm);
             return RedirectToAction(nameof(Index));
         }
-
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -185,12 +192,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var acionamento = await _acionamentoService.FindByIdAsync(id.Value);
-
-            if (acionamento == null)
-            {
-                return NotFound();
-            }
-
             return View(acionamento);
         }
 
@@ -198,7 +199,7 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            await _acionamentoService.DeleteAsync(id);
+            await _acionamentoService.RemoverAcionamentoAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

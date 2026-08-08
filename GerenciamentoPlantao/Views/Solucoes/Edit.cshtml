@@ -1,4 +1,4 @@
-﻿@model GerenciamentoPlantao.Models.ViewModels.EditarSolucaoViewModel
+﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.EditarSolucaoViewModel
 
 @{
     ViewData["Title"] = "Editar Solução";
@@ -101,6 +101,8 @@
                 </div>
 
             </form>
+
+            <partial name="_Auditoria" model="Model" />
 
         </div>
 

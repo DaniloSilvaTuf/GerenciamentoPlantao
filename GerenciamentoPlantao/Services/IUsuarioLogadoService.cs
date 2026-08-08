@@ -5,7 +5,7 @@ namespace GerenciamentoPlantao.Services
 {
     public interface IUsuarioLogadoService
     {
-        Task<Usuario?> ObterUsuarioLogadoAsync();
+        Task<Usuario> ObterUsuarioLogadoAsync();
         Task<string?> ObterIdUsuarioAsync();
         Task<int?> ObterDepartamentoIdAsync();
         Task<string?> ObterNomeUsuarioLogadoAsync();

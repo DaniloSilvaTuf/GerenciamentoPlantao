@@ -1,8 +1,9 @@
-﻿using GerenciamentoPlantao.Models.ViewModels;
-using GerenciamentoPlantao.Services;
+﻿using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -51,19 +52,18 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _categoriaService.CriarCategoriaAsync(vm.DepartamentoId, vm.Nome);
+            await _categoriaService.CriarCategoriaAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Edit(int? id)
         {
-
             if (id == null)
             {
                 return NotFound();
             }
 
-            var categoria = await _categoriaService.FindByIdAsync(id.Value);
+            var categoria = await _categoriaService.FindByIdWithAuditAsync(id.Value);
             var vm = new EditarCategoriaViewModel
             {
                 Id = categoria.Id,
@@ -75,7 +75,14 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = d.Id.ToString(),
                     Text = d.Nome
-                })
+                }),
+
+                DataInsert = categoria.DataInsert,
+                UsuarioInsertNome = categoria.UsuarioInsert?.DescNome,
+                DataUpdate = categoria.DataUpdate,
+                UsuarioUpdateNome = categoria.UsuarioUpdate?.DescNome,
+                DataInativacao = categoria.DataInativacao,
+                UsuarioInativacaoNome = categoria.UsuarioInativacao?.DescNome
             };
 
             return View(vm);
@@ -85,7 +92,6 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(EditarCategoriaViewModel vm)
         {
-
             if (!ModelState.IsValid)
             {
                 vm.Departamentos = (await _departamentoService.FindAllActiveAsync()).Select(d => new SelectListItem
@@ -95,7 +101,7 @@ namespace GerenciamentoPlantao.Controllers
                 });
             }
 
-            await _categoriaService.UpdateAsync(vm);
+            await _categoriaService.AlterarCategoriaAsync(vm);
             return RedirectToAction(nameof(Index));
         }
 
@@ -107,11 +113,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var categoria = await _categoriaService.FindByIdAsync(id.Value);
-            if (categoria == null)
-            {
-                return NotFound();
-            }
-
             return View(categoria);
         }
 
@@ -119,7 +120,7 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> InativarConfirmado(int id)
         {
-            await _categoriaService.InativarAsync(id);
+            await _categoriaService.InativarCategoriaAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
@@ -131,12 +132,6 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             var categoria = await _categoriaService.FindByIdAsync(id.Value);
-
-            if (categoria == null)
-            {
-                return NotFound();
-            }
-
             return View(categoria);
         }
 
@@ -144,7 +139,7 @@ namespace GerenciamentoPlantao.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AtivarConfirmado(int id)
         {
-            await _categoriaService.AtivarAsync(id);
+            await _categoriaService.AtivarCategoriaAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

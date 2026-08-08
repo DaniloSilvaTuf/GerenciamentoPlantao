@@ -1,30 +1,36 @@
 ﻿namespace GerenciamentoPlantao.Models
 {
-    public class CategoriaAcionamento
+    public class CategoriaAcionamento : EntidadeBase
     {
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public bool Ativo { get; set; }
+        public string Nome { get; set; } = string.Empty;
         public int DepartamentoId { get; set; }
-        public Departamento Departamento { get; set; }
+        public Departamento Departamento { get; set; } = null!;
 
-        public CategoriaAcionamento(string nome, int departamentoId)
+        public CategoriaAcionamento(string nome, int departamentoId, string usuarioId)
         {
             Nome = nome;
-            Ativo = true;
             DepartamentoId = departamentoId;
+            RegistrarCriacao(usuarioId);
+        }
+
+        public void Atualizar(string nome, int departamentoId, string usuarioId)
+        {
+            Nome = nome;
+            DepartamentoId = departamentoId;
+            RegistrarAtualizacao(usuarioId);
         }
 
         public CategoriaAcionamento() { }
 
-        public void Inativar()
+        public void Inativar(string usuarioId)
         {
-            Ativo = false;
+            RegistrarInativacao(usuarioId);
         }
 
-        public void Ativar()
+        public void Ativar(string usuarioId)
         {
-            Ativo = true;
+            RegistrarAtivacao(usuarioId);
         }
     }
 }

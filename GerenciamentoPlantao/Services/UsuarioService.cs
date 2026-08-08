@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Models.ViewModels;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,11 +11,13 @@ namespace GerenciamentoPlantao.Services
     {
         private readonly GerenciamentoPlantaoContext _context;
         private readonly UserManager<Usuario> _userManager;
+        private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public UsuarioService(GerenciamentoPlantaoContext context, UserManager<Usuario> userManager)
+        public UsuarioService(GerenciamentoPlantaoContext context, UserManager<Usuario> userManager, IUsuarioLogadoService usuarioLogadoService)
         {
             _context = context;
             _userManager = userManager;
+            _usuarioLogadoService = usuarioLogadoService;
         }
 
         public async Task<List<Usuario>> FindAllAsync()
@@ -30,15 +33,38 @@ namespace GerenciamentoPlantao.Services
             return await _context.Users.Where(e => e.Ativo).OrderBy(e => e.DescNome).ToListAsync();
         }
 
-        public async Task<Usuario?> FindByIdAsync(string id)
+        public async Task<Usuario> FindByIdAsync(string id)
         {
-            return await _context.Users
+            var usuario = await _context.Users
                 .Include(u => u.Departamento)
                 .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (usuario == null)
+            {
+                throw new Exception("Usuário não encontrado.");
+            }
+
+            return usuario;
         }
 
-        public async Task InsertAsync(UsuarioFormViewModel vm)
+        public async Task<Usuario> FindByIdWithAuditAsync(string id)
         {
+            var usuario = await _context.Users
+                .Include(u => u.UsuarioInsert)
+                .Include(u => u.UsuarioUpdate)
+                .Include(u => u.UsuarioInativacao)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (usuario == null)
+            {
+                throw new Exception("Usuário não encontrado.");
+            }
+            return usuario;
+        }
+
+        public async Task CriarUsuarioAsync(UsuarioFormViewModel vm)
+        {
+            var usuarioLogado = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
             var departamento = await _context.Departamentos
                 .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
@@ -48,42 +74,49 @@ namespace GerenciamentoPlantao.Services
             }
 
             var usuario = new Usuario
-            {
-                DescNome = vm.DescNome,
-                UserName = vm.NmUsuario,
-                DepartamentoId = vm.DepartamentoId,
-                Email = vm.Email,
-                PhoneNumber = vm.Telefone,
-                Plantonista = vm.Plantonista,
-                Ativo = true,
-                Perfil = vm.Perfil
-            };
+            (
+                vm.DescNome,
+                vm.NmUsuario,
+                vm.Email,
+                vm.Telefone,
+                vm.Plantonista,
+                vm.Perfil,
+                vm.DepartamentoId,
+                usuarioLogado.Id
+            );
 
             var resultado = await _userManager.CreateAsync(usuario, vm.Senha);
 
             if(!resultado.Succeeded)
             {
-                throw new Exception(string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description)));
+                var menssagem = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
+
+                throw new Exception(menssagem);
             }
 
             await _userManager.AddToRoleAsync(usuario, usuario.Perfil.ToString());
         }
 
-        public async Task UpdateAsync(EditarUsuarioViewModel vm)
+        public async Task AlterarUsuarioAsync(EditarUsuarioViewModel vm)
         {
+            var usuarioLogado = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+
             var usuario = await FindByIdAsync(vm.Id);
             if (usuario == null)
             {
                 throw new Exception("Usuário não encontrado.");
             }
 
-            usuario.DescNome = vm.DescNome;
-            usuario.UserName = vm.NmUsuario;
-            usuario.Email = vm.Email;
-            usuario.PhoneNumber = vm.Telefone;
-            usuario.Plantonista = vm.Plantonista;
-            usuario.Perfil = vm.Perfil;
-            usuario.DepartamentoId = vm.DepartamentoId;
+            usuario.Atualizar
+            (
+                vm.DescNome,
+                vm.Email,
+                vm.Telefone,
+                vm.Plantonista,
+                vm.Perfil,
+                vm.DepartamentoId,
+                usuarioLogado.Id
+            );
 
             _context.Update(usuario);
             await _context.SaveChangesAsync();
@@ -91,33 +124,20 @@ namespace GerenciamentoPlantao.Services
 
         public async Task InativarAsync(string id)
         {
-            var usuario = await _context.Users.FindAsync(id);
+            var usuarioLogado = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+            var usuario = await FindByIdAsync(id);
 
-            if (usuario == null)
-            {
-                throw new Exception("Usuário não encontrado.");
-            }
-
-            usuario.Inativar();
+            usuario.Inativar(usuarioLogado.Id);
             await _context.SaveChangesAsync();
         }
 
         public async Task AtivarAsync(string id)
         {
-            var usuario = await _context.Users.FindAsync(id);
+            var usuarioLogado = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+            var usuario = await FindByIdAsync(id);
 
-            if (usuario == null)
-            {
-                throw new Exception("Usuário não encontrado.");
-            }
-
-            usuario.Ativar();
+            usuario.Ativar(usuarioLogado.Id);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<bool> ExisteAsync(string id)
-        {
-            return await _context.Users.AnyAsync(x => x.Id == id);
         }
     }
 }
