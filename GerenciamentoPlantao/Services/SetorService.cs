@@ -1,7 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
 using Microsoft.EntityFrameworkCore;
-using GerenciamentoPlantao.Controllers;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 
@@ -38,7 +38,7 @@ namespace GerenciamentoPlantao.Services
             var setor = await _context.Setores.FirstOrDefaultAsync(x => x.Id == id);
             
             if (setor == null)
-                throw new Exception("Setor não encontrado.");
+                throw new NotFoundException("Setor não encontrado.");
             return setor;
         }
 
@@ -52,7 +52,7 @@ namespace GerenciamentoPlantao.Services
 
             if (setor == null)
             {
-                throw new Exception("Setor não encontrado.");
+                throw new NotFoundException("Setor não encontrado.");
             }
             return setor;
         }
@@ -65,8 +65,8 @@ namespace GerenciamentoPlantao.Services
                     .FirstOrDefaultAsync(e => e.Id == vm.EstabelecimentoId);
 
             if (estabelecimento == null)
-                throw new Exception("Estabelecimento não encontrado.");
-
+                throw new NotFoundException("Estabelecimento não encontrado.");
+                
             var setor = new Setor
                 (
                     vm.Nome,
@@ -90,7 +90,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe um setor com o mesmo nome neste estabelecimento.");
+                throw new BusinessException("Já existe um setor com o mesmo nome neste estabelecimento.");
             }
 
             setor.AtualizarSetor

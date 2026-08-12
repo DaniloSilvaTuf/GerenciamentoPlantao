@@ -1,4 +1,6 @@
-﻿namespace GerenciamentoPlantao.Models
+﻿using GerenciamentoPlantao.Exceptions;
+
+namespace GerenciamentoPlantao.Models
 {
     public class Estabelecimento : EntidadeBase
     {
@@ -34,7 +36,7 @@
         {
             if (Setores.Any(s => s.Nome.Equals(setor.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidOperationException("Já existe um setor com esse nome.");
+                throw new BusinessException("Já existe um setor com esse nome.");
             }
 
             Setores.Add(setor);

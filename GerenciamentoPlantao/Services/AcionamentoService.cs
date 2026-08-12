@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -44,8 +45,8 @@ namespace GerenciamentoPlantao.Services
 
             if (acionamento == null)
             {
-                throw new Exception("Acionamento não encontrado.");
-            }
+                throw new NotFoundException("Acionamento não encontrado.");
+            }   
 
             return acionamento;
         }
@@ -60,7 +61,7 @@ namespace GerenciamentoPlantao.Services
             
             if (acionamento == null)
             {
-                throw new Exception("Acionamento não encontrado.");
+                throw new NotFoundException("Acionamento não encontrado.");
             }
             return acionamento;
         }
@@ -94,7 +95,7 @@ namespace GerenciamentoPlantao.Services
 
             if (acionamento.UsuarioId != usuario.Id)
             {
-                throw new Exception("Você não tem permissão para editar este acionamento.");
+                throw new AccessDeniedException("Você não tem permissão para editar este acionamento.");
             }
             acionamento.AtualizarAcionamento(
                 vm.DataAcionamento,
@@ -123,7 +124,7 @@ namespace GerenciamentoPlantao.Services
 
             if (acionamento.UsuarioId != usuario.Id)
             {
-                throw new Exception("Você não tem permissão para excluir este acionamento.");
+                throw new AccessDeniedException("Você não tem permissão para excluir este acionamento.");
             }
 
             _context.Acionamentos.Remove(acionamento);

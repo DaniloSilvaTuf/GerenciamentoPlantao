@@ -1,5 +1,6 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,7 @@ namespace GerenciamentoPlantao.Services
             
             if (solucao == null)
             {
-                throw new Exception("Solução não encontrada.");
+                throw new NotFoundException("Solução não encontrada.");
             }
 
             return solucao;
@@ -55,7 +56,7 @@ namespace GerenciamentoPlantao.Services
 
             if (solucao == null)
             {
-                throw new Exception("Solução não encontrada.");
+                throw new NotFoundException("Solução não encontrada.");
             }
             return solucao;
         }
@@ -69,7 +70,7 @@ namespace GerenciamentoPlantao.Services
 
             if (departamento == null) 
             {
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             var solucao = new Solucao
@@ -95,7 +96,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe uma solução com esse nome.");
+                throw new BusinessException("Já existe uma solução com esse nome.");
             }
 
             solucao.Atualizar

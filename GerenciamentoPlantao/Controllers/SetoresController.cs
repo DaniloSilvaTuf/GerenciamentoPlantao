@@ -1,9 +1,8 @@
 ﻿using GerenciamentoPlantao.Data;
-using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -64,7 +63,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Setor não encontrado.");
             }
 
             var setor = await _setorService.FindByIdWithAuditAsync(id.Value);
@@ -113,7 +112,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Setor não encontrado.");
             }
 
             var setor = await _setorService.FindByIdAsync(id.Value);
@@ -132,7 +131,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Setor não encontrado.");
             }
 
             var setor = await _setorService.FindByIdAsync(id.Value);

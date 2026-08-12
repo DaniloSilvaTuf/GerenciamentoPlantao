@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -37,7 +38,7 @@ namespace GerenciamentoPlantao.Services
             var estabelecimento = await _context.Estabelecimentos.FirstOrDefaultAsync(x => x.Id == id);
             if (estabelecimento == null)
             {
-                throw new Exception("Estabelecimento não encontrado.");
+                throw new NotFoundException("Estabelecimento não encontrado.");
             }
             return estabelecimento;
         }
@@ -52,7 +53,7 @@ namespace GerenciamentoPlantao.Services
 
             if (estabelecimento == null)
             {
-                throw new Exception("Estabelecimento não encontrado.");
+                throw new NotFoundException("Estabelecimento não encontrado.");
             }
             return estabelecimento;
         }
@@ -64,7 +65,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe um estabelecimento com o mesmo nome.");
+                throw new BusinessException("Já existe um estabelecimento com o mesmo nome.");
             }
 
             var estabelecimento = new Estabelecimento
@@ -88,7 +89,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe um estabelecimento com o mesmo nome.");
+                throw new BusinessException("Já existe um estabelecimento com o mesmo nome.");
             }
 
             estabelecimento.Atualizar

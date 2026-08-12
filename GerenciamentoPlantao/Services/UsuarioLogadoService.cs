@@ -1,4 +1,5 @@
-﻿using GerenciamentoPlantao.Models;
+﻿using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
@@ -29,7 +30,7 @@ namespace GerenciamentoPlantao.Services
 
             if (usuario == null)
             {
-                throw new Exception("Usuário logado não encontrado.");
+                throw new NotFoundException("Usuário logado não encontrado.");
             }
 
             return usuario;

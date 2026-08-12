@@ -7,10 +7,11 @@ using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using GerenciamentoPlantao.Data;
 using Microsoft.EntityFrameworkCore;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Controllers
 {
-    [Authorize(Roles = Roles.Plantonista)]
+
     public class AcionamentosController : Controller
     {
         private readonly AcionamentoService _acionamentoService;
@@ -91,7 +92,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Acionamento não encontrado.");
             }
 
             var acionamento = await _acionamentoService.FindByIdWithAuditAsync(id.Value);
@@ -101,6 +102,7 @@ namespace GerenciamentoPlantao.Controllers
                 Id = acionamento.Id,
                 DataAcionamento = acionamento.DataAcionamento,
                 NomePlantonista = acionamento.Plantonista.DescNome,
+                UsuarioId = acionamento.UsuarioId,
                 CanalId = acionamento.CanalId,
                 Canal = (await _canalService.FindAllActiveAsync()).Select(e => new SelectListItem
                 {
@@ -188,7 +190,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Acionamento não encontrado.");
             }
 
             var acionamento = await _acionamentoService.FindByIdAsync(id.Value);

@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -41,7 +42,7 @@ namespace GerenciamentoPlantao.Services
 
             if (usuario == null)
             {
-                throw new Exception("Usuário não encontrado.");
+                throw new NotFoundException("Usuário não encontrado.");
             }
 
             return usuario;
@@ -57,7 +58,7 @@ namespace GerenciamentoPlantao.Services
 
             if (usuario == null)
             {
-                throw new Exception("Usuário não encontrado.");
+                throw new NotFoundException("Usuário não encontrado.");
             }
             return usuario;
         }
@@ -70,7 +71,7 @@ namespace GerenciamentoPlantao.Services
 
             if (departamento == null)
             {
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             var usuario = new Usuario
@@ -89,9 +90,9 @@ namespace GerenciamentoPlantao.Services
 
             if(!resultado.Succeeded)
             {
-                var menssagem = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
+                var mensagem = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
 
-                throw new Exception(menssagem);
+                throw new BusinessException(mensagem);
             }
 
             await _userManager.AddToRoleAsync(usuario, usuario.Perfil.ToString());
@@ -104,7 +105,7 @@ namespace GerenciamentoPlantao.Services
             var usuario = await FindByIdAsync(vm.Id);
             if (usuario == null)
             {
-                throw new Exception("Usuário não encontrado.");
+                throw new NotFoundException("Usuário não encontrado.");
             }
 
             usuario.Atualizar

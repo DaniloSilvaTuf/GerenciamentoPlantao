@@ -1,11 +1,9 @@
-﻿using GerenciamentoPlantao.Data;
-using GerenciamentoPlantao.Models;
-using GerenciamentoPlantao.Services;
+﻿using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -48,7 +46,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             var departamento = await _departamentoService.FindByIdWithAuditAsync(id.Value);
@@ -85,7 +83,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             var departamento = await _departamentoService.FindByIdAsync(id.Value);
@@ -104,7 +102,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             var departamento = await _departamentoService.FindByIdAsync(id.Value);

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -48,7 +49,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Estabelecimento não encontrado.");
             }
 
             var estabelecimento = await _estabelecimentoService.FindByIdWithAuditAsync(id.Value);
@@ -84,7 +85,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Estabelecimento não encontrado.");
             }
 
             var estabelecimento = await _estabelecimentoService.FindByIdAsync(id.Value);
@@ -103,7 +104,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Estabelecimento não encontrado.");
             }
 
             var estabelecimento = await _estabelecimentoService.FindByIdAsync(id.Value);

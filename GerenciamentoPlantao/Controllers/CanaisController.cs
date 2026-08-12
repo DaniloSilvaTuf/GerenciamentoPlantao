@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -60,7 +61,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Canal não encontrado.");
             }
 
             var canal = await _canalService.FindByIdWithAuditAsync(id.Value);
@@ -109,7 +110,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Canal não encontrado.");
             }
 
             var canal = await _canalService.FindByIdAsync(id.Value);
@@ -128,7 +129,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Canal não encontrado.");
             }
 
             var canal = await _canalService.FindByIdAsync(id.Value);

@@ -3,6 +3,7 @@ using GerenciamentoPlantao.Models;
 using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Services
 {
@@ -39,7 +40,7 @@ namespace GerenciamentoPlantao.Services
 
             if (canal == null)
             {
-                throw new Exception("Canal não encontrado.");
+                throw new NotFoundException("Canal não encontrado.");
             }
 
             return canal;
@@ -55,7 +56,7 @@ namespace GerenciamentoPlantao.Services
 
             if (canal == null)
             {
-                throw new Exception("Canal não encontrado.");
+                throw new NotFoundException("Canal não encontrado.");
             }
             return canal;
         }
@@ -68,7 +69,7 @@ namespace GerenciamentoPlantao.Services
                     .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
             if (departamento == null)
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
 
             var canal = new Canal
             (
@@ -93,7 +94,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe um canal com esse nome no departamento selecionado.");
+                throw new BusinessException("Já existe um canal com esse nome no departamento selecionado.");
             }
 
             canal.Atualizar

@@ -1,4 +1,4 @@
-﻿using GerenciamentoPlantao.Models;
+﻿using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models.Enums;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using GerenciamentoPlantao.Data;
-using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -79,7 +78,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Usuário não encontrado.");
             }
 
             var usuario = await _usuarioService.FindByIdWithAuditAsync(id);
@@ -132,14 +131,10 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Usuário não encontrado.");
             }
 
             var usuario = await _usuarioService.FindByIdAsync(id);
-            if (usuario == null)
-            {
-                return NotFound();
-            }
 
             return View(usuario);
         }
@@ -156,15 +151,10 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Usuário não encontrado.");
             }
 
             var usuario = await _usuarioService.FindByIdAsync(id);
-
-            if (usuario == null)
-            {
-                return NotFound();
-            }
 
             return View(usuario);
         }

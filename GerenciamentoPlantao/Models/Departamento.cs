@@ -1,4 +1,6 @@
-﻿namespace GerenciamentoPlantao.Models
+﻿using GerenciamentoPlantao.Exceptions;
+
+namespace GerenciamentoPlantao.Models
 {
     public class Departamento : EntidadeBase
     {
@@ -37,7 +39,7 @@
         {
             if (Canais.Any(c => c.Nome.Equals(canal.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidOperationException("Já existe um setor com esse nome.");
+                throw new BusinessException("Já existe um setor com esse nome.");
             }
 
             Canais.Add(canal);
@@ -47,7 +49,7 @@
         {
             if (CategoriasAcionamentos.Any(c => c.Nome.Equals(categoria.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidOperationException("Já existe uma categoria com esse nome.");
+                throw new BusinessException("Já existe uma categoria com esse nome.");
             }
 
             CategoriasAcionamentos.Add(categoria);
@@ -57,7 +59,7 @@
         {
             if (Solucoes.Any(s => s.Nome.Equals(solucao.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new InvalidOperationException("Já existe uma solução com esse nome.");
+                throw new BusinessException("Já existe uma solução com esse nome.");
             }
 
             Solucoes.Add(solucao);

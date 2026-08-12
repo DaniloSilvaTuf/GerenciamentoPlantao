@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Exceptions;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -60,7 +61,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Categoria não encontrada.");
             }
 
             var categoria = await _categoriaService.FindByIdWithAuditAsync(id.Value);
@@ -109,7 +110,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Categoria não encontrada.");
             }
 
             var categoria = await _categoriaService.FindByIdAsync(id.Value);
@@ -128,7 +129,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (id == null)
             {
-                return NotFound();
+                throw new NotFoundException("Categoria não encontrada.");
             }
 
             var categoria = await _categoriaService.FindByIdAsync(id.Value);

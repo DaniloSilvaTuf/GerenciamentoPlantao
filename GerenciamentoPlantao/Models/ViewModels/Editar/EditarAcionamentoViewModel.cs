@@ -12,6 +12,7 @@ namespace GerenciamentoPlantao.Models.ViewModels.Editar
         [DataType(DataType.DateTime)]
         public DateTime DataAcionamento { get; set; }
         public string NomePlantonista { get; set; } = string.Empty;
+        public string UsuarioId { get; set; }
 
         public int CanalId { get; set; }
         public IEnumerable<SelectListItem> Canal { get; set; } = null!;

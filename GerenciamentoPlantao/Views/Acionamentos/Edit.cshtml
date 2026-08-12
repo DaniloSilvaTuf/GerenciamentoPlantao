@@ -2,6 +2,9 @@
 
 @{
     ViewData["Title"] = "Editar Acionamento";
+
+    var usuarioLogadoId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var podeEditar = usuarioLogadoId == Model.UsuarioId;
 }
 
 <div class="container mt-4">
@@ -31,7 +34,8 @@
 
                     <input asp-for="DataAcionamento"
                            type="datetime-local"
-                           class="form-control form-control-lg" />
+                           class="form-control form-control-lg"
+                           readonly="@(!podeEditar)" />
 
                     <span asp-validation-for="DataAcionamento" class="text-danger"></span>
                 </div>
@@ -50,7 +54,8 @@
 
                         <select asp-for="CanalId"
                                 asp-items="Model.Canal"
-                                class="form-select">
+                                class="form-select"
+                                disabled="@(!podeEditar)">
                             <option value="">Selecione...</option>
                         </select>
 
@@ -68,7 +73,8 @@
                         </label>
 
                         <input asp-for="Acionador"
-                               class="form-control form-control-lg" />
+                               class="form-control form-control-lg"
+                               readonly="@(!podeEditar)" />
 
                         <span asp-validation-for="Acionador" class="text-danger"></span>
                     </div>
@@ -79,7 +85,8 @@
                         </label>
 
                         <input asp-for="NrAtendimento"
-                               class="form-control form-control-lg" />
+                               class="form-control form-control-lg"
+                               readonly="@(!podeEditar)" />
 
                         <span asp-validation-for="NrAtendimento" class="text-danger"></span>
                     </div>
@@ -94,7 +101,8 @@
 
                     <select asp-for="EstabelecimentoId"
                             asp-items="Model.Estabelecimento"
-                            class="form-select">
+                            class="form-select"
+                            disabled="@(!podeEditar)">
                         <option value="">Selecione...</option>
                     </select>
 
@@ -111,7 +119,8 @@
 
                         <select asp-for="SetorId"
                                 asp-items="Model.Setor"
-                                class="form-select">
+                                class="form-select"
+                                disabled="@(!podeEditar)">
                             <option value="">Selecione...</option>
                         </select>
 
@@ -125,7 +134,8 @@
 
                         <select asp-for="CategoriaId"
                                 asp-items="Model.Categoria"
-                                class="form-select">
+                                class="form-select"
+                                disabled="@(!podeEditar)">
                             <option value="">Selecione...</option>
                         </select>
 
@@ -142,7 +152,8 @@
 
                     <select asp-for="SolucaoId"
                             asp-items="Model.Solucao"
-                            class="form-select">
+                            class="form-select"
+                            disabled="@(!podeEditar)">
                         <option value="">Selecione...</option>
                     </select>
 
@@ -158,7 +169,8 @@
 
                     <div class="form-check">
                         <input asp-for="Apoio"
-                               class="form-check-input" />
+                               class="form-check-input"
+                               disabled="@(!podeEditar)" />
                         <label asp-for="Apoio"
                                class="form-check-label">
                             Necessitou de apoio
@@ -176,7 +188,8 @@
 
                     <textarea asp-for="Observacao"
                               rows="4"
-                              class="form-control"></textarea>
+                              class="form-control"
+                              readonly="@(!podeEditar)"></textarea>
 
                     <span asp-validation-for="Observacao" class="text-danger"></span>
 
@@ -184,18 +197,21 @@
 
                 <div class="d-flex gap-2">
 
-                    <button type="submit" class="btn btn-primary">
-                        <i class="bi bi-floppy-fill"></i>
-                        Salvar
-                    </button>
+                    @if (!podeEditar)
+                        {
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-floppy-fill"></i>
+                                Salvar
+                            </button>
 
-                    <button type="button"
+                            <button type="button"
                             class="btn btn-danger"
                             data-bs-toggle="modal"
                             data-bs-target="#modalExcluir">
-                        <i class="bi bi-trash-fill"></i>
-                        Excluir
-                    </button>
+                                <i class="bi bi-trash-fill"></i>
+                                Excluir
+                            </button>
+                        }
 
                     <a asp-action="Index"
                        class="btn btn-outline-secondary">
@@ -267,8 +283,6 @@
                     </button>
 
                 </form>
-
-                <partial name="_Auditoria" model="Model" />
 
             </div>
 

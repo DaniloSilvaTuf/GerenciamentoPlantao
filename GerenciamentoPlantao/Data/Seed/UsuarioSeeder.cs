@@ -37,9 +37,9 @@ namespace GerenciamentoPlantao.Data.Seed
 
             if (!resultado.Succeeded)
             {
-                throw new Exception(
-                    string.Join(Environment.NewLine,
-                        resultado.Errors.Select(e => e.Description)));
+                var erros = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
+
+                throw new Exception($"Erro ao criar usuário administrador durante o Seed.{Environment.NewLine}{erros}");
             }
 
             await userManager.AddToRoleAsync(usuario, Roles.Administrador);

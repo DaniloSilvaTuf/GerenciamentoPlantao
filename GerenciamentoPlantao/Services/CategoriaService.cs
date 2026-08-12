@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -39,7 +40,7 @@ namespace GerenciamentoPlantao.Services
 
             if (categoria == null)
             {
-                throw new Exception("Categoria não encontrada.");
+                throw new NotFoundException("Categoria não encontrada.");
             }
 
             return categoria;
@@ -55,7 +56,7 @@ namespace GerenciamentoPlantao.Services
 
             if (categoria == null)
             {
-                throw new Exception("Categoria não encontrada.");
+                throw new NotFoundException("Categoria não encontrada.");
             }
             return categoria;
         }
@@ -69,7 +70,7 @@ namespace GerenciamentoPlantao.Services
                     .FirstOrDefaultAsync(d => d.Id == vm.DepartamentoId);
 
             if (departamento == null)
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
 
             var categoria = new CategoriaAcionamento
             (
@@ -93,7 +94,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe uma categoria com o mesmo nome neste departamento.");
+                throw new BusinessException("Já existe uma categoria com o mesmo nome neste departamento.");
             }
 
             categoria.Atualizar

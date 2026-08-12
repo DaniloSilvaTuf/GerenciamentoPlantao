@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -39,7 +40,7 @@ namespace GerenciamentoPlantao.Services
 
             if (departamento == null)
             {
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
             }
 
             return departamento;
@@ -55,7 +56,7 @@ namespace GerenciamentoPlantao.Services
 
             if (departamento == null)
             {
-                throw new Exception("Departamento não encontrado.");
+                throw new NotFoundException("Departamento não encontrado.");
             }
             return departamento;
         }
@@ -67,7 +68,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe)
             {
-                throw new Exception("Já existe um departamento com o mesmo nome.");
+                throw new BusinessException("Já existe um departamento com o mesmo nome.");
             }
 
             var departamento = new Departamento
@@ -91,7 +92,7 @@ namespace GerenciamentoPlantao.Services
 
             if (existe) 
             {
-                throw new Exception("Já existe um departamento com o mesmo nome.");
+                throw new BusinessException("Já existe um departamento com o mesmo nome.");
             }
 
             departamento.Atualizar

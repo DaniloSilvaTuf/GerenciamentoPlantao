@@ -1,5 +1,6 @@
 using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Data.Seed;
+using GerenciamentoPlantao.Middleware;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
 using Microsoft.AspNetCore.Identity;
@@ -62,11 +63,16 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
 
+// Middleware para tratamento de exceções
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
