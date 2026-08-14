@@ -21,6 +21,7 @@ namespace GerenciamentoPlantao.Models
         public DateTime? DataInativacao { get; set; }
         public string? UsuarioInativacaoId { get; set; }
         public Usuario? UsuarioInativacao { get; set; }
+        public bool TrocaSenhaObrigatoria { get; set; }
 
         public Usuario(string descNome, string nmUsuario, string email, string telefone, bool plantonista, PerfilUsuario perfil, int departamentoId, string? usuarioInsertId)
         {
@@ -34,6 +35,7 @@ namespace GerenciamentoPlantao.Models
             DepartamentoId = departamentoId;
             UsuarioInsertId = usuarioInsertId;
             DataInsert = DateTime.Now;
+            TrocaSenhaObrigatoria = false;
         }
 
         public void Atualizar(string descNome, string email, string telefone, bool plantonista, PerfilUsuario perfil, int departamentoId, string? usuarioUpdateId)

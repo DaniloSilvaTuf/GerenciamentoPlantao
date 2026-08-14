@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Enums;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.AspNetCore.Identity;
@@ -121,6 +122,59 @@ namespace GerenciamentoPlantao.Services
 
             _context.Update(usuario);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task AlterarSenhaAsync(AlterarSenhaViewModel vm)
+        {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+
+            var resultado = await _userManager.ChangePasswordAsync(
+                usuario,
+                vm.SenhaAtual,
+                vm.NovaSenha);
+
+            if (!resultado.Succeeded)
+            {
+                var mensagem = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
+
+                throw new BusinessException(mensagem);
+            }
+
+            if(usuario.TrocaSenhaObrigatoria)
+            {
+                usuario.TrocaSenhaObrigatoria = false;
+                await _userManager.UpdateAsync(usuario);
+            }
+        }
+
+        public async Task AlterarSenhaAdmAsync(AlterarSenhaAdmViewModel vm)
+        {
+            var perfilUsuario = await _usuarioLogadoService.ObterPerfilUsuarioLogadoAsync();
+            var usuario = await FindByIdAsync(vm.UsuarioId);
+
+            if(perfilUsuario != PerfilUsuario.Administrador)
+            {
+                throw new AccessDeniedException("Você não tem permissão para alterar a senha do usuário.");
+            }
+
+            var token = await _userManager.GeneratePasswordResetTokenAsync(usuario);
+
+            var resultado = await _userManager.ResetPasswordAsync(
+                usuario,
+                token,
+                vm.NovaSenha);
+
+            if(!resultado.Succeeded)
+            {
+                var mensagem = string.Join(Environment.NewLine, resultado.Errors.Select(e => e.Description));
+
+                throw new BusinessException(mensagem);
+            }
+
+            usuario.TrocaSenhaObrigatoria = true;
+
+            await _userManager.UpdateAsync(usuario);
+
         }
 
         public async Task InativarAsync(string id)

@@ -1,6 +1,5 @@
 ﻿@model GerenciamentoPlantao.Models.ViewModels.Adicionar.UsuarioFormViewModel
 
-
 @{
     ViewData["Title"] = "Cadastrar Usuário";
 }
@@ -34,7 +33,6 @@
                     </span>
                 </div>
 
-
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
@@ -58,25 +56,131 @@
                         </span>
                     </div>
 
-                    <div class="mb-3">
-                        <label asp-for="Senha" class="form-label"></label>
-                        <input asp-for="Senha" class="form-control" />
-                        <span asp-validation-for="Senha" class="text-danger"></span>
-                    </div>
+                    <div class="col-md-6 mb-3">
 
-                    <div class="mb-3">
-                        <label asp-for="ConfirmarSenha" class="form-label"></label>
-                        <input asp-for="ConfirmarSenha" class="form-control" />
-                        <span asp-validation-for="ConfirmarSenha" class="text-danger"></span>
-                    </div>
+                        <label asp-for="Perfil"
+                               class="form-label fw-bold">
+                            Perfil
+                        </label>
 
-                    <div class="mb-3">
-                        <label asp-for="Perfil" class="form-label"></label>
-                        <select asp-for="Perfil" asp-items="Model.Perfis" class="form-select">
-                            <option value="">Selecione...</option>
+                        <select asp-for="Perfil"
+                                asp-items="Model.Perfis"
+                                class="form-select">
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
                         </select>
-                        <span asp-validation-for="Perfil" class="text-danger"></span>
+
+                        <span asp-validation-for="Perfil"
+                              class="text-danger">
+                        </span>
+
                     </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="Senha"
+                               class="form-label fw-bold">
+                            Senha
+                        </label>
+
+                        <div class="input-group">
+
+                            <input asp-for="Senha"
+                                   class="form-control"
+                                   id="senha" />
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary"
+                                    data-toggle-password="senha">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                        <span asp-validation-for="Senha"
+                              class="text-danger">
+                        </span>
+
+                        <div class="mt-2 small">
+
+                            <div id="reqTamanho" class="text-danger">
+                                <i class="bi bi-x-circle"></i>
+                                Mínimo de 8 caracteres
+                            </div>
+
+                            <div id="reqMaiuscula" class="text-danger">
+                                <i class="bi bi-x-circle"></i>
+                                Uma letra maiúscula
+                            </div>
+
+                            <div id="reqMinuscula" class="text-danger">
+                                <i class="bi bi-x-circle"></i>
+                                Uma letra minúscula
+                            </div>
+
+                            <div id="reqNumero" class="text-danger">
+                                <i class="bi bi-x-circle"></i>
+                                Um número
+                            </div>
+
+                            <div id="reqEspecial" class="text-danger">
+                                <i class="bi bi-x-circle"></i>
+                                Um caractere especial
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="ConfirmarSenha"
+                               class="form-label fw-bold">
+                            Confirmar Senha
+                        </label>
+
+                        <div class="input-group">
+
+                            <input asp-for="ConfirmarSenha"
+                                   class="form-control"
+                                   id="confirmarSenha" />
+
+                            <button type="button"
+                                    class="btn btn-outline-secondary"
+                                    data-toggle-password="confirmarSenha">
+
+                                <i class="bi bi-eye"></i>
+
+                            </button>
+
+                        </div>
+
+                        <span asp-validation-for="ConfirmarSenha"
+                              class="text-danger">
+                        </span>
+
+                        <div id="reqConfirmacao"
+                             class="small text-danger mt-2">
+
+                            <i class="bi bi-x-circle"></i>
+                            As senhas ainda não coincidem
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="row">
 
                     <div class="col-md-6 mb-3">
 
@@ -101,11 +205,6 @@
 
                     </div>
 
-                </div>
-
-
-                <div class="row">
-
                     <div class="col-md-6 mb-3">
 
                         <label asp-for="Email"
@@ -124,6 +223,9 @@
 
                     </div>
 
+                </div>
+
+                <div class="row">
 
                     <div class="col-md-6 mb-3">
 
@@ -144,7 +246,6 @@
 
                 </div>
 
-
                 <div class="mb-3">
 
                     <div class="form-check form-switch">
@@ -161,26 +262,25 @@
 
                 </div>
 
-
                 <div class="d-flex gap-2">
 
                     <button type="submit"
                             class="btn btn-primary">
 
-                        <i class="bi bi-floppy-fill"></i> Salvar
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar
 
                     </button>
-
 
                     <a asp-action="Index"
                        class="btn btn-outline-secondary">
 
-                        <i class="bi bi-arrow-left"></i> Voltar
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar
 
                     </a>
 
                 </div>
-
 
             </form>
 
@@ -189,35 +289,171 @@
     </div>
 </div>
 
-
 @section Scripts {
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
 
     <script>
-        // Remove espaços e deixa o usuário sempre em minúsculo
-        document.getElementById("NmUsuario").addEventListener("input", function() {
-            this.value = this.value
-                .toLowerCase()
-                .replace(/\s/g, '');
+
+        const senha = document.getElementById("senha");
+        const confirmarSenha = document.getElementById("confirmarSenha");
+
+        // MOSTRAR / OCULTAR SENHAS
+        document.querySelectorAll("[data-toggle-password]")
+            .forEach(botao => {
+
+                botao.addEventListener("click", function() {
+
+                    const inputId = this.getAttribute("data-toggle-password");
+                    const input = document.getElementById(inputId);
+                    const icone = this.querySelector("i");
+
+                    if (input.type === "password") {
+
+                        input.type = "text";
+
+                        icone.classList.remove("bi-eye");
+                        icone.classList.add("bi-eye-slash");
+
+                    }
+                    else {
+
+                        input.type = "password";
+
+                        icone.classList.remove("bi-eye-slash");
+                        icone.classList.add("bi-eye");
+
+                    }
+
+                });
+
+            });
+
+        // ALTERA VISUAL DOS REQUISITOS
+        function validarRequisito(id, valido) {
+
+            const elemento = document.getElementById(id);
+            const icone = elemento.querySelector("i");
+
+            if (valido) {
+
+                elemento.classList.remove("text-danger");
+                elemento.classList.add("text-success");
+
+                icone.classList.remove("bi-x-circle");
+                icone.classList.add("bi-check-circle-fill");
+
+            }
+            else {
+
+                elemento.classList.remove("text-success");
+                elemento.classList.add("text-danger");
+
+                icone.classList.remove("bi-check-circle-fill");
+                icone.classList.add("bi-x-circle");
+
+            }
+
+        }
+
+        // REQUISITOS DA SENHA
+        senha.addEventListener("input", function() {
+
+            const valor = senha.value;
+
+            validarRequisito(
+                "reqTamanho",
+                valor.length >= 8
+            );
+
+            validarRequisito(
+                "reqMaiuscula",
+                /[A-Z]/.test(valor)
+            );
+
+            validarRequisito(
+                "reqMinuscula",
+                /[a-z]/.test(valor)
+            );
+
+            validarRequisito(
+                "reqNumero",
+                /[0-9]/.test(valor)
+            );
+
+            validarRequisito(
+                "reqEspecial",
+                /[^A-Za-z0-9]/.test(valor)
+            );
+
+            validarConfirmacao();
+
         });
 
-        // Máscara de telefone
-        document.getElementById("Telefone").addEventListener("input", function() {
+        // CONFIRMAÇÃO
+        confirmarSenha.addEventListener("input", validarConfirmacao);
 
-            let valor = this.value.replace(/\D/g, '');
+        function validarConfirmacao() {
 
-            if (valor.length > 11)
-                valor = valor.substring(0, 11);
+            const iguais =
+                senha.value.length > 0 &&
+                senha.value === confirmarSenha.value;
 
-            if (valor.length > 6)
-                valor = valor.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-            else if (valor.length > 2)
-                valor = valor.replace(/^(\d{2})(\d+)/, '($1) $2');
+            const elemento = document.getElementById("reqConfirmacao");
 
-            this.value = valor;
+            validarRequisito("reqConfirmacao", iguais);
 
-        });
+            if (iguais) {
+
+                elemento.childNodes[elemento.childNodes.length - 1].textContent =
+                    " As senhas coincidem";
+
+            }
+            else {
+
+                elemento.childNodes[elemento.childNodes.length - 1].textContent =
+                    " As senhas ainda não coincidem";
+
+            }
+
+        }
+
+        // NOME DE USUÁRIO
+        document.getElementById("NmUsuario")
+            .addEventListener("input", function() {
+
+                this.value = this.value
+                    .toLowerCase()
+                    .replace(/\s/g, '');
+
+            });
+
+        // MÁSCARA DE TELEFONE
+        document.getElementById("Telefone")
+            .addEventListener("input", function() {
+
+                let valor = this.value.replace(/\D/g, '');
+
+                if (valor.length > 11)
+                    valor = valor.substring(0, 11);
+
+                if (valor.length > 6)
+                    valor = valor.replace(
+                        /^(\d{2})(\d{5})(\d{0,4}).*/,
+                        '($1) $2-$3'
+                    );
+
+                else if (valor.length > 2)
+                    valor = valor.replace(
+                        /^(\d{2})(\d+)/,
+                        '($1) $2'
+                    );
+
+                this.value = valor;
+
+            });
+
     </script>
 }

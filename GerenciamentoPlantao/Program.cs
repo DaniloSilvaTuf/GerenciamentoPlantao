@@ -3,6 +3,7 @@ using GerenciamentoPlantao.Data.Seed;
 using GerenciamentoPlantao.Middleware;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
+using GerenciamentoPlantao.Services.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,8 @@ builder.Services.AddScoped<CanalService>();
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<AcionamentoService>();
 builder.Services.AddScoped<IUsuarioLogadoService, UsuarioLogadoService>();
+builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<IUserClaimsPrincipalFactory<Usuario>, CustomClaimsPrincipalFactory>();
 
 var app = builder.Build();
 
@@ -73,10 +76,12 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 
+app.UseMiddleware<TrocaSenhaObrigatoriaMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Dashboard}/{action=Index}/{id?}");
 
 app.Run();

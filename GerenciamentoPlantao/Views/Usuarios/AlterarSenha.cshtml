@@ -1,0 +1,311 @@
+﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.AlterarSenhaViewModel
+
+@{
+    ViewData["Title"] = "Alterar Senha";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-key-fill"></i> Alterar Senha
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="AlterarSenha" method="post">
+
+                <input asp-for="UsuarioId" type="hidden" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <div class="row justify-content-center">
+
+                    <div class="col-md-8 col-lg-7">
+
+                        <!-- SENHA ATUAL -->
+                        <div class="mb-4">
+                            <label asp-for="SenhaAtual"
+                                   class="form-label fw-bold d-block text-center">
+                                Senha Atual
+                            </label>
+
+                            <div class="input-group">
+                                <input asp-for="SenhaAtual"
+                                       class="form-control"
+                                       id="senhaAtual" />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        data-toggle-password="senhaAtual">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="SenhaAtual"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+
+                        <!-- NOVA SENHA -->
+                        <div class="mb-4">
+
+                            <label asp-for="NovaSenha"
+                                   class="form-label fw-bold d-block text-center">
+                                Nova Senha
+                            </label>
+
+                            <div class="input-group">
+                                <input asp-for="NovaSenha"
+                                       class="form-control"
+                                       id="novaSenha" />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        data-toggle-password="novaSenha">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="NovaSenha"
+                                  class="text-danger">
+                            </span>
+
+                            <div class="mt-2 small">
+
+                                <div id="reqTamanho" class="text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Mínimo de 8 caracteres
+                                </div>
+
+                                <div id="reqMaiuscula" class="text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Uma letra maiúscula
+                                </div>
+
+                                <div id="reqMinuscula" class="text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Uma letra minúscula
+                                </div>
+
+                                <div id="reqNumero" class="text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Um número
+                                </div>
+
+                                <div id="reqEspecial" class="text-danger">
+                                    <i class="bi bi-x-circle"></i>
+                                    Um caractere especial
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONFIRMAR SENHA -->
+                        <div class="mb-4">
+
+                            <label asp-for="ConfirmarSenha"
+                                   class="form-label fw-bold d-block text-center">
+                                Confirmar Senha
+                            </label>
+
+                            <div class="input-group">
+                                <input asp-for="ConfirmarSenha"
+                                       class="form-control"
+                                       id="confirmarSenha" />
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        data-toggle-password="confirmarSenha">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
+
+                            <span asp-validation-for="ConfirmarSenha"
+                                  class="text-danger">
+                            </span>
+
+                            <div id="reqConfirmacao"
+                                 class="small text-danger mt-2">
+
+                                <i class="bi bi-x-circle"></i>
+                                As senhas ainda não coincidem
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- BOTÕES -->
+                        <div class="d-grid gap-3 mt-5">
+
+                            <button type="submit"
+                                    class="btn btn-primary btn-lg">
+
+                                <i class="bi bi-floppy-fill"></i>
+                                Salvar
+
+                            </button>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@Model.UsuarioId"
+                               class="btn btn-outline-danger btn-lg">
+
+                                <i class="bi bi-arrow-left"></i>
+                                Voltar
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+
+        const novaSenha = document.getElementById("novaSenha");
+        const confirmarSenha = document.getElementById("confirmarSenha");
+
+        // MOSTRAR / OCULTAR SENHAS
+        document.querySelectorAll("[data-toggle-password]")
+            .forEach(botao => {
+
+                botao.addEventListener("click", function() {
+
+                    const inputId = this.getAttribute("data-toggle-password");
+                    const input = document.getElementById(inputId);
+                    const icone = this.querySelector("i");
+
+                    if (input.type === "password") {
+
+                        input.type = "text";
+
+                        icone.classList.remove("bi-eye");
+                        icone.classList.add("bi-eye-slash");
+
+                    }
+                    else {
+
+                        input.type = "password";
+
+                        icone.classList.remove("bi-eye-slash");
+                        icone.classList.add("bi-eye");
+
+                    }
+
+                });
+
+            });
+
+
+        // ALTERA VISUAL DO REQUISITO
+        function validarRequisito(id, valido) {
+
+            const elemento = document.getElementById(id);
+            const icone = elemento.querySelector("i");
+
+            if (valido) {
+
+                elemento.classList.remove("text-danger");
+                elemento.classList.add("text-success");
+
+                icone.classList.remove("bi-x-circle");
+                icone.classList.add("bi-check-circle-fill");
+
+            }
+            else {
+
+                elemento.classList.remove("text-success");
+                elemento.classList.add("text-danger");
+
+                icone.classList.remove("bi-check-circle-fill");
+                icone.classList.add("bi-x-circle");
+
+            }
+
+        }
+
+
+        // VALIDA REQUISITOS DA NOVA SENHA
+        novaSenha.addEventListener("input", function() {
+
+            const senha = novaSenha.value;
+
+            validarRequisito(
+                "reqTamanho",
+                senha.length >= 8
+            );
+
+            validarRequisito(
+                "reqMaiuscula",
+                /[A-Z]/.test(senha)
+            );
+
+            validarRequisito(
+                "reqMinuscula",
+                /[a-z]/.test(senha)
+            );
+
+            validarRequisito(
+                "reqNumero",
+                /[0-9]/.test(senha)
+            );
+
+            validarRequisito(
+                "reqEspecial",
+                /[^A-Za-z0-9]/.test(senha)
+            );
+
+            validarConfirmacao();
+
+        });
+
+
+        // CONFERE SE AS SENHAS COINCIDEM
+        confirmarSenha.addEventListener("input", validarConfirmacao);
+
+
+        function validarConfirmacao() {
+
+            const iguais =
+                novaSenha.value.length > 0 &&
+                novaSenha.value === confirmarSenha.value;
+
+            const elemento = document.getElementById("reqConfirmacao");
+
+            validarRequisito("reqConfirmacao", iguais);
+
+            if (iguais) {
+                elemento.childNodes[elemento.childNodes.length - 1].textContent =
+                    " As senhas coincidem";
+            }
+            else {
+                elemento.childNodes[elemento.childNodes.length - 1].textContent =
+                    " As senhas ainda não coincidem";
+            }
+
+        }
+
+    </script>
+}

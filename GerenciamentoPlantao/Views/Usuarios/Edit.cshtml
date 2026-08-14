@@ -1,7 +1,14 @@
 ﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.EditarUsuarioViewModel
+@using GerenciamentoPlantao.Models.Enums;
 
 @{
     ViewData["Title"] = "Editar Usuário";
+
+    var usuarioLogadoId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+    var ehProprioUsuario = usuarioLogadoId == Model.Id;
+    var ehAdministrador = User.IsInRole("Administrador");
+
+    var podeAlterarSenha = ehProprioUsuario || ehAdministrador;
 }
 
 <div class="container mt-4">
@@ -23,14 +30,14 @@
 
                 <div class="mb-3">
                     <label asp-for="DescNome" class="form-label fw-bold"> Nome </label>
-                    <input asp-for="DescNome" class="form-control form-control-lg"/>
+                    <input asp-for="DescNome" class="form-control form-control-lg" readonly="@(!podeAlterarSenha)"/>
                     <span asp-validation-for="DescNome" class="text-danger"></span>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label asp-for="NmUsuario" class="form-label fw-bold"> Nome de Usuário </label>
-                        <input asp-for="NmUsuario" class="form-control form-control-lg" readonly/>
+                        <input asp-for="NmUsuario" class="form-control form-control-lg" readonly />
                         <span class="form-text"> O nome de usuário não pode ser alterado. </span>
                         <span asp-validation-for="NmUsuario" class="text-danger">
                         </span>
@@ -38,7 +45,7 @@
 
                     <div class="col-md-6 mb-3">
                         <label asp-for="DepartamentoId" class="form-label fw-bold"> Departamento </label>
-                        <select asp-for="DepartamentoId" asp-items="Model.Departamentos" class="form-select">
+                        <select asp-for="DepartamentoId" asp-items="Model.Departamentos" class="form-select" disabled="@(!podeAlterarSenha)">
                             <option value=""> Selecione um departamento </option>
                         </select>
                         <span asp-validation-for="DepartamentoId" class="text-danger"></span>
@@ -47,41 +54,78 @@
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
+                        <label asp-for="Perfil" class="form-label fw-bold"> Perfil </label>
+                        <select asp-for="Perfil" asp-items="Html.GetEnumSelectList<PerfilUsuario>()" class="form-select" disabled="@(!podeAlterarSenha)">
+                            <option value=""> Selecione um Perfil </option>
+                        </select>
+                        <span asp-validation-for="Perfil" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6 mb-3 d-flex align-items-end">
+                    @if (ehProprioUsuario)
+                    {
+                        <a asp-action="AlterarSenha"
+                           class="btn btn-primary w-100">
+
+                            <i class="bi bi-key-fill"></i>
+                            Alterar Senha
+
+                        </a>
+                    }
+                    else if (ehAdministrador)
+                    {
+                        <a asp-action="AlterarSenhaAdm"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-warning w-100">
+
+                            <i class="bi bi-key-fill"></i>
+                            Redefinir Senha
+
+                        </a>
+                    }
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
                         <label asp-for="Email" class="form-label fw-bold"> E-mail </label>
-                        <input asp-for="Email" type="email" class="form-control form-control-lg"/>
+                        <input asp-for="Email" type="email" class="form-control form-control-lg" readonly="@(!podeAlterarSenha)" />
                         <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label asp-for="Telefone" class="form-label fw-bold"> Telefone </label>
-                        <input asp-for="Telefone" class="form-control form-control-lg"/>
+                        <input asp-for="Telefone" class="form-control form-control-lg" readonly="@(!podeAlterarSenha)" />
                         <span asp-validation-for="Telefone" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <div class="form-check form-switch">
-                        <input asp-for="Plantonista" class="form-check-input" />
+                        <input asp-for="Plantonista" class="form-check-input" disabled="@(!podeAlterarSenha)" />
                         <label asp-for="Plantonista" class="form-check-label fw-bold"> Usuário Plantonista </label>
                     </div>
                 </div>
-                    <div class="mb-3">
-                        @if (Model.Ativo)
-                        {
-                            <span class="badge bg-success fs-6">
-                                <i class="bi bi-check-circle-fill"></i> Ativo
-                            </span>
-                        }
-                        else
-                        {
-                            <span class="badge bg-danger fs-6">
-                                <i class="bi bi-x-circle-fill"></i> Inativo
-                            </span>
-                        }
+                <div class="mb-3">
 
-                    </div>
-                    <div class="d-flex gap-2">
+                    @if (Model.Ativo)
+                    {
+                        <span class="badge bg-success fs-6">
+                            <i class="bi bi-check-circle-fill"></i> Ativo
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6">
+                            <i class="bi bi-x-circle-fill"></i> Inativo
+                        </span>
+                    }
 
+                </div>
+                <div class="d-flex gap-2">
+
+                    @if (podeAlterarSenha)
+                    {
                         <button type="submit" class="btn btn-primary">
                             <i class="bi bi-floppy-fill"></i> Salvar
 
@@ -99,6 +143,7 @@
                                 <i class="bi bi-check-circle-fill"></i> Ativar
                             </button>
                         }
+                    }
 
                     <a asp-action="Index" class="btn btn-outline-secondary">
                         <i class="bi bi-arrow-left"></i> Voltar

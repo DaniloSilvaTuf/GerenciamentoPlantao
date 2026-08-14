@@ -24,7 +24,13 @@ namespace GerenciamentoPlantao.Models.ViewModels.Editar
         
         public bool Plantonista { get; set; }
         public bool Ativo { get; set; }
+
+        [Required(ErrorMessage = "Selecione um Perfil")]
         public PerfilUsuario Perfil { get; set; }
+
         public IEnumerable<SelectListItem> Departamentos { get; set; } = null!;
+
+        public bool EhUsuarioLogado { get; set; }
+        public bool PodeRedefinirSenha { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace GerenciamentoPlantao.Models.ViewModels
+﻿namespace GerenciamentoPlantao.Models.ViewModels.Dashboard
 {
     public class DashboardViewModel
     {

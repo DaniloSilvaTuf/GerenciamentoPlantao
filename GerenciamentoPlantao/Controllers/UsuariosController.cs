@@ -1,12 +1,14 @@
-﻿using GerenciamentoPlantao.Exceptions;
+﻿using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.Enums;
-using GerenciamentoPlantao.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
-using GerenciamentoPlantao.Data;
+using GerenciamentoPlantao.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -15,14 +17,18 @@ namespace GerenciamentoPlantao.Controllers
     {
 
         private readonly UsuarioService _usuarioService;
+        private readonly IUsuarioLogadoService _usuarioLogadoService;
         private readonly DepartamentoService _departamentoService;
         private readonly GerenciamentoPlantaoContext _context;
+        private readonly SignInManager<Usuario> _signInManager;
 
-        public UsuariosController(UsuarioService usuarioService, DepartamentoService departamentoService, GerenciamentoPlantaoContext context)
+        public UsuariosController(UsuarioService usuarioService, DepartamentoService departamentoService, GerenciamentoPlantaoContext context, SignInManager<Usuario> signInManager, IUsuarioLogadoService usuarioLogadoService)
         {
             _usuarioService = usuarioService;
             _departamentoService = departamentoService;
             _context = context;
+            _signInManager = signInManager;
+            _usuarioLogadoService = usuarioLogadoService;
         }
 
         public async Task<IActionResult> Index()
@@ -124,6 +130,59 @@ namespace GerenciamentoPlantao.Controllers
             }
 
             await _usuarioService.AlterarUsuarioAsync(vm);
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> AlterarSenha(string? id)
+        {
+            var usuario = await _usuarioLogadoService.ObterUsuarioLogadoAsync();
+            var vm = new AlterarSenhaViewModel
+            {
+                UsuarioId = usuario.Id
+            };
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AlterarSenha (AlterarSenhaViewModel vm)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _usuarioService.AlterarSenhaAsync(vm);
+
+            TempData["Sucesso"] = "Senha alterada com sucesso.";
+
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Conta");
+        }
+
+        public async Task<IActionResult> AlterarSenhaAdm (string? id)
+        {
+            var vm = new AlterarSenhaAdmViewModel
+            {
+                UsuarioId = id
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AlterarSenhaAdm (AlterarSenhaAdmViewModel vm)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View();
+            }
+
+            await _usuarioService.AlterarSenhaAdmAsync(vm);
+
+            TempData["Sucesso"] = "Senha alterada com sucesso.";
+
             return RedirectToAction(nameof(Index));
         }
 

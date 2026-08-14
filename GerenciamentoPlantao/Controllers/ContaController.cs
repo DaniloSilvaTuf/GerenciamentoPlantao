@@ -47,10 +47,14 @@ namespace GerenciamentoPlantao.Controllers
                 vm.RememberMe,
                 lockoutOnFailure: true);
 
+            if(usuario.TrocaSenhaObrigatoria)
+            {
+                return RedirectToAction("AlterarSenha", "Usuarios");
+            }
+
             if (resultado.Succeeded)
             {
-                return RedirectToAction("Index", "Home");
-
+                return RedirectToAction("Index", "Dashboard");
             }
 
             if (resultado.IsLockedOut)

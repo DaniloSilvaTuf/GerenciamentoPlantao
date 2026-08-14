@@ -67,6 +67,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29udGFcTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Dashboard/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGFzaGJvYXJkXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Departamentos/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVwYXJ0YW1lbnRvc1xDcmVhdGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -139,6 +143,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29sdWNvZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Usuarios/AlterarSenha.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQWx0ZXJhclNlbmhhLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Usuarios/AlterarSenhaAdm.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQWx0ZXJhclNlbmhhQWRtLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Usuarios/Create.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -149,6 +161,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Usuarios/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/Usuarios/RedefinirSenha.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVXN1YXJpb3NcUmVkZWZpbmlyU2VuaGEuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Views/_ViewImports.cshtml]

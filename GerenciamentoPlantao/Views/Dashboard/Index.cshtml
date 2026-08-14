@@ -1,0 +1,74 @@
+﻿@model GerenciamentoPlantao.Models.ViewModels.Dashboard.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                Dashboard
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5 class="mb-3">
+                Quantidade de Acionamentos por Hora
+            </h5>
+
+            <div style="height: 350px;">
+                <canvas id="graficoPorHora"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const labels = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorHora.Select(x => x.Label)
+                    )
+                    );
+
+        const valores = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorHora.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctx = document.getElementById('graficoPorHora');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Quantidade de Acionamentos',
+                    data: valores,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    </script>
+}
