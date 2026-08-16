@@ -1,71 +1,87 @@
-## 🏥 Gerenciamento Plantão
+# 🏥 Gerenciamento de Plantão
 
-Sistema web desenvolvido em **ASP.NET Core MVC** para gerenciamento de plantões em unidades de saúde, permitindo o controle de estabelecimentos, setores e organização de escalas de trabalho.
+Sistema web desenvolvido em **C# com ASP.NET Core MVC** para registro e gerenciamento de acionamentos realizados durante plantões de atendimento.
+
+O projeto surgiu a partir de uma necessidade observada em um cenário real: centralizar e organizar informações dos atendimentos realizados durante os plantões, permitindo maior controle e facilitando futuras consultas e análises.
 
 ---
 
 ## 🚧 Status do projeto
 
-Este sistema encontra-se em desenvolvimento ativo.
+🟡 **Em desenvolvimento ativo**
 
-Funcionalidades estão sendo implementadas e aprimoradas diariamente, com foco em boas práticas de arquitetura, organização de código e evolução gradual do sistema.
+Novas funcionalidades, regras de negócio e melhorias estruturais continuam sendo implementadas conforme a evolução do projeto.
 
 ---
 
 ## 📌 Sobre o projeto
 
-O **GerenciamentoPlantao** tem como objetivo facilitar a administração de plantões em hospitais e clínicas, organizando de forma simples e eficiente:
+O **Gerenciamento de Plantão** permite registrar e administrar os acionamentos realizados durante um plantão, relacionando informações como:
 
-- Estabelecimentos (hospitais/unidades)
-- Setores internos (ex: UTI, Centro Cirúrgico, Postos)
-- Controle e organização dos plantões
+- Usuário responsável
+- Data do acionamento
+- Estabelecimento
+- Setor
+- Canal de atendimento
+- Categoria do acionamento
+- Solução aplicada
+- Necessidade de apoio
+- Observações e demais informações do atendimento
 
-O sistema foi desenvolvido com foco em aprendizado e prática de arquitetura MVC, separação de responsabilidades e boas práticas de desenvolvimento.
+Além do registro dos acionamentos, a aplicação possui cadastros auxiliares utilizados para organização e padronização das informações.
 
 ---
 
 ## 🚀 Funcionalidades
 
-- Cadastro de estabelecimentos
-- Cadastro e edição de setores
-- Ativação e inativação de registros (soft delete)
-- Relacionamento entre setores e estabelecimentos
-- Interface web para gerenciamento dos dados
-- Estrutura baseada em Service Layer
+### Acionamentos
+- Cadastro e gerenciamento de acionamentos
+- Associação com estabelecimento, setor, canal, categoria e solução
+- Registro do usuário responsável pelo acionamento
+- Controle de edição e exclusão de acordo com o usuário responsável
+
+### Cadastros
+- Estabelecimentos
+- Setores
+- Departamentos
+- Canais
+- Categorias
+- Soluções
+- Usuários
+
+### Usuários e segurança
+- Autenticação utilizando **ASP.NET Core Identity**
+- Gerenciamento de usuários
+- Perfis de acesso
+- Controle de permissões
+- Ativação e inativação de registros
 
 ---
 
 ## 🛠️ Tecnologias utilizadas
 
-- ASP.NET Core MVC
-- C#
-- Entity Framework Core
-- SQL Server
-- Razor Views
-- Bootstrap
+- **C#**
+- **.NET 8**
+- **ASP.NET Core MVC**
+- **ASP.NET Core Identity**
+- **Entity Framework Core**
+- **SQL Server**
+- **LINQ**
+- **Razor Views**
+- **Bootstrap**
+- **Git / GitHub**
 
 ---
 
-## 🧱 Arquitetura do projeto
+## 🧱 Arquitetura
 
-O projeto segue uma arquitetura em camadas:
+O projeto utiliza separação de responsabilidades entre diferentes componentes da aplicação:
 
-Controllers → Services → Data (DbContext) → Models
-
-Essa separação ajuda a manter o código organizado, escalável e fácil de manter.
-
----
-
-## 🗄️ Banco de dados
-
-O banco de dados é criado automaticamente durante a execução da aplicação.
-
-Não utiliza seed data fixa — todos os registros são inseridos dinamicamente durante o uso e testes da aplicação.
-
----
-
-## 👨‍💻 Autor
-
-Desenvolvido por Danilo Silva
-
-Projeto criado com foco em estudo e evolução no desenvolvimento backend com ASP.NET Core MVC.
+```text
+Controllers
+    ↓
+Services
+    ↓
+Entity Framework Core / DbContext
+    ↓
+SQL Server
