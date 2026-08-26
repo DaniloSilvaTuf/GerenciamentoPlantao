@@ -14,6 +14,8 @@
             </h4>
         </div>
 
+
+        <!-- GRÁFICO POR HORA -->
         <div class="card-body">
 
             <h5 class="mb-3">
@@ -26,49 +28,352 @@
 
         </div>
 
+
+        <!-- GRÁFICO POR DIA -->
+        <div class="card-body">
+
+            <h5 class="mb-3">
+                Quantidade de Acionamentos por Dia
+            </h5>
+
+            <div style="height: 350px;">
+                <canvas id="graficoPorDia"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- GRÁFICO POR MÊS -->
+        <div class="card-body">
+
+            <h5 class="mb-3">
+                Quantidade de Acionamentos por Mês
+            </h5>
+
+            <div style="height: 350px;">
+                <canvas id="graficoPorMes"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- CATEGORIA / SETOR -->
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+
+                    <h5 class="mb-3">
+                        Acionamentos por Categoria
+                    </h5>
+
+                    <div style="height: 350px;">
+                        <canvas id="graficoPorCategoria"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 mb-4">
+
+                    <h5 class="mb-3">
+                        Acionamentos por Setor
+                    </h5>
+
+                    <div style="height: 350px;">
+                        <canvas id="graficoPorSetor"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ESTABELECIMENTO / APOIO -->
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-4">
+
+                    <h5 class="mb-3">
+                        Acionamentos por Estabelecimento
+                    </h5>
+
+                    <div style="height: 350px;">
+                        <canvas id="graficoPorEstabelecimento"></canvas>
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 mb-4">
+
+                    <h5 class="mb-3">
+                        Necessidade de Apoio
+                    </h5>
+
+                    <div style="height: 350px;">
+                        <canvas id="graficoPorApoio"></canvas>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 </div>
+
 
 @section Scripts {
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script>
-        const labels = @Html.Raw(
+
+        // =========================================================
+        // GRÁFICO POR HORA
+        // =========================================================
+
+        const labelsHora = @Html.Raw(
                                     System.Text.Json.JsonSerializer.Serialize(
                                             Model.PorHora.Select(x => x.Label)
                     )
                     );
 
-        const valores = @Html.Raw(
+        const valoresHora = @Html.Raw(
                                     System.Text.Json.JsonSerializer.Serialize(
                                             Model.PorHora.Select(x => x.Valor)
                     )
                     );
 
-        const ctx = document.getElementById('graficoPorHora');
+        const ctxHora = document.getElementById('graficoPorHora');
 
-        new Chart(ctx, {
+        new Chart(ctxHora, {
             type: 'line',
             data: {
-                labels: labels,
+                labels: labelsHora,
                 datasets: [{
-                    label: 'Quantidade de Acionamentos',
-                    data: valores,
+                    label: 'Quantidade de Acionamentos por Hora',
+                    data: valoresHora,
                     tension: 0.3
                 }]
             },
             options: {
                 responsive: true,
-                maintainAspectRatio: false,
-
-                plugins: {
-                    legend: {
-                        display: true
-                    }
-                }
+                maintainAspectRatio: false
             }
         });
+
+
+        // =========================================================
+        // GRÁFICO POR DIA
+        // =========================================================
+
+        const labelsDia = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorDiaSemana.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresDia = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorDiaSemana.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxDia = document.getElementById('graficoPorDia');
+
+        new Chart(ctxDia, {
+            type: 'line',
+            data: {
+                labels: labelsDia,
+                datasets: [{
+                    label: 'Quantidade de Acionamentos por Dia',
+                    data: valoresDia,
+                    tension: 0.3
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+
+        // =========================================================
+        // GRÁFICO POR MÊS
+        // =========================================================
+
+        const labelsMes = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorMes.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresMes = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorMes.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxMes = document.getElementById('graficoPorMes');
+
+        new Chart(ctxMes, {
+            type: 'bar',
+            data: {
+                labels: labelsMes,
+                datasets: [{
+                    label: 'Quantidade de Acionamentos por Mês',
+                    data: valoresMes
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+
+        // =========================================================
+        // GRÁFICO POR CATEGORIA
+        // =========================================================
+
+        const labelsCategoria = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorCategoria.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresCategoria = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorCategoria.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxCategoria = document.getElementById('graficoPorCategoria');
+
+        new Chart(ctxCategoria, {
+            type: 'bar',
+            data: {
+                labels: labelsCategoria,
+                datasets: [{
+                    label: 'Quantidade de Acionamentos',
+                    data: valoresCategoria
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y'
+            }
+        });
+
+
+        // =========================================================
+        // GRÁFICO POR SETOR
+        // =========================================================
+
+        const labelsSetor = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorSetor.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresSetor = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorSetor.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxSetor = document.getElementById('graficoPorSetor');
+
+        new Chart(ctxSetor, {
+            type: 'bar',
+            data: {
+                labels: labelsSetor,
+                datasets: [{
+                    label: 'Quantidade de Acionamentos',
+                    data: valoresSetor
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y'
+            }
+        });
+
+
+        // =========================================================
+        // GRÁFICO POR ESTABELECIMENTO
+        // =========================================================
+
+        const labelsEstabelecimento = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorEstabelecimento.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresEstabelecimento = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.PorEstabelecimento.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxEstabelecimento =
+            document.getElementById('graficoPorEstabelecimento');
+
+        new Chart(ctxEstabelecimento, {
+            type: 'pie',
+            data: {
+                labels: labelsEstabelecimento,
+                datasets: [{
+                    data: valoresEstabelecimento
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+
+        // =========================================================
+        // GRÁFICO COM APOIO
+        // =========================================================
+
+        const labelsApoio = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ComApoio.Select(x => x.Label)
+                    )
+                    );
+
+        const valoresApoio = @Html.Raw(
+                                    System.Text.Json.JsonSerializer.Serialize(
+                                            Model.ComApoio.Select(x => x.Valor)
+                    )
+                    );
+
+        const ctxApoio = document.getElementById('graficoPorApoio');
+
+        new Chart(ctxApoio, {
+            type: 'pie',
+            data: {
+                labels: labelsApoio,
+                datasets: [{
+                    data: valoresApoio
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
     </script>
 }

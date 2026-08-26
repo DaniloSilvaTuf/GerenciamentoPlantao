@@ -8,6 +8,7 @@ using GerenciamentoPlantao.Models.ViewModels.Editar;
 using GerenciamentoPlantao.Data;
 using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -45,28 +46,25 @@ namespace GerenciamentoPlantao.Controllers
 
             var vm = new AcionamentoFormViewModel
             {
+                DataAcionamento = DateTime.Now,
                 NomePlantonista = usuario.DescNome,
-                Canal = _canalService.FindAllActiveAsync().Result.Select(e => new SelectListItem
+                Canal = (await _canalService.FindAllDepartmentActiveAsync(usuario.DepartamentoId)).Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
                 }),
-                Estabelecimento = _estabelecimentoService.FindAllActiveAsync().Result.Select(e => new SelectListItem
+                Estabelecimento = (await _estabelecimentoService.FindAllActiveAsync()).Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
                 }),
-                Setor = _setorService.FindAllActiveAsync().Result.Select(s => new SelectListItem
-                {
-                    Value = s.Id.ToString(),
-                    Text = s.Nome
-                }),
-                Categoria = _categoriaService.FindAllActiveAsync().Result.Select(c => new SelectListItem
+                Setor = new List<SelectListItem>(),
+                Categoria = (await _categoriaService.FindAllDepartmentActiveAsync(usuario.DepartamentoId)).Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = c.Nome
                 }),
-                Solucao = _solucaoService.FindAllActiveAsync().Result.Select(s => new SelectListItem
+                Solucao = (await _solucaoService.FindAllDepartmentActiveAsync(usuario.DepartamentoId)).Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
                     Text = s.Nome
@@ -104,7 +102,7 @@ namespace GerenciamentoPlantao.Controllers
                 NomePlantonista = acionamento.Plantonista.DescNome,
                 UsuarioId = acionamento.UsuarioId,
                 CanalId = acionamento.CanalId,
-                Canal = (await _canalService.FindAllActiveAsync()).Select(e => new SelectListItem
+                Canal = (await _canalService.FindAllDepartmentActiveAsync(acionamento.DepartamentoId)).Select(e => new SelectListItem
                 {
                     Value = e.Id.ToString(),
                     Text = e.Nome
@@ -118,19 +116,19 @@ namespace GerenciamentoPlantao.Controllers
                     Text = e.Nome
                 }),
                 SetorId = acionamento.SetorId,
-                Setor = (await _setorService.FindAllActiveAsync()).Select(s => new SelectListItem
+                Setor = (await _setorService.FindAllActiveEstabelecimentoAsync(acionamento.EstabelecimentoId)).Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
                     Text = s.Nome
                 }),
                 CategoriaId = acionamento.CategoriaAcionamentoId,
-                Categoria = (await _categoriaService.FindAllActiveAsync()).Select(c => new SelectListItem
+                Categoria = (await _categoriaService.FindAllDepartmentActiveAsync(acionamento.DepartamentoId)).Select(c => new SelectListItem
                 {
                     Value = c.Id.ToString(),
                     Text = c.Nome
                 }),
                 SolucaoId = acionamento.SolucaoId,
-                Solucao = (await _solucaoService.FindAllActiveAsync()).Select(s => new SelectListItem
+                Solucao = (await _solucaoService.FindAllDepartmentActiveAsync(acionamento.DepartamentoId)).Select(s => new SelectListItem
                 {
                     Value = s.Id.ToString(),
                     Text = s.Nome
@@ -203,6 +201,17 @@ namespace GerenciamentoPlantao.Controllers
         {
             await _acionamentoService.RemoverAcionamentoAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> ObterSetoresPorEstabelecimento(int estabelecimentoId)
+        {
+            var setores = (await _setorService.FindAllActiveEstabelecimentoAsync(estabelecimentoId)).Select(e => new 
+            {
+                Value = e.Id.ToString(),
+                Text = e.Nome
+            });
+
+            return Json(setores);
         }
     }
 }

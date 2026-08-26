@@ -13,10 +13,10 @@ namespace GerenciamentoPlantao.Models.ViewModels.Editar
         public DateTime DataAcionamento { get; set; }
         public string NomePlantonista { get; set; } = string.Empty;
         public string UsuarioId { get; set; }
-
+        public int DepartamentoId { get; set; }
         public int CanalId { get; set; }
         public IEnumerable<SelectListItem> Canal { get; set; } = null!;
-        
+    
         public string? Acionador { get; set; }
         public int? NrAtendimento { get; set; }
 

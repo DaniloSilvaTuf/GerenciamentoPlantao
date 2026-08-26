@@ -74,6 +74,7 @@ namespace GerenciamentoPlantao.Services
                 vm.DataAcionamento,
                 vm.CanalId,
                 usuario.Id,
+                usuario.DepartamentoId,
                 vm.Acionador,
                 vm.NrAtendimento,
                 vm.EstabelecimentoId,

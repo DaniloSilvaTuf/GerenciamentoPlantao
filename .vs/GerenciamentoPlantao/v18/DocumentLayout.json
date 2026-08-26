@@ -3,32 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\middleware\\trocasenhaobrigatoriamiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\middleware\\trocasenhaobrigatoriamiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\dashboard\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\middleware\\exceptionhandlingmiddleware.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\viewmodels\\dashboard\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\viewmodels\\dashboard\\dashboardviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\controllers\\usuarioscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\dashboardservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\controllers\\contacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\controllers\\contacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\acionamentos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\acionamentos\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\identity\\customclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\identity\\customclaimsprincipalfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\controllers\\dashboardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,97 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UsuariosController.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\UsuariosController.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Controllers\\UsuariosController.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\UsuariosController.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Controllers\\UsuariosController.cs",
-              "ViewState": "AgIAAIMAAAAAAAAAAIAwwJAAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-14T13:28:43.735Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Program.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Program.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Program.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Program.cs",
-              "ViewState": "AgIAAD8AAAAAAAAAAAAAAFEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-14T13:26:36.827Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ContaController.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\ContaController.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Controllers\\ContaController.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\ContaController.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Controllers\\ContaController.cs",
-              "ViewState": "AgIAAC4AAAAAAAAAAAAcwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-14T13:15:41.531Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CustomClaimsPrincipalFactory.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Identity\\CustomClaimsPrincipalFactory.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\Identity\\CustomClaimsPrincipalFactory.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Identity\\CustomClaimsPrincipalFactory.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Services\\Identity\\CustomClaimsPrincipalFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA+AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-14T12:51:47.019Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "Edit.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Acionamentos\\Edit.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Acionamentos\\Edit.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Acionamentos\\Edit.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Acionamentos\\Edit.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-08-14T12:49:07.362Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ExceptionHandlingMiddleware.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Middleware\\ExceptionHandlingMiddleware.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Middleware\\ExceptionHandlingMiddleware.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Middleware\\ExceptionHandlingMiddleware.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Middleware\\ExceptionHandlingMiddleware.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAwwAkAAAAAAAAAAAAAAA==",
+              "Title": "DashboardViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\ViewModels\\Dashboard\\DashboardViewModel.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\ViewModels\\Dashboard\\DashboardViewModel.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\ViewModels\\Dashboard\\DashboardViewModel.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\ViewModels\\Dashboard\\DashboardViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAABJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-13T20:31:50.345Z",
+              "WhenOpened": "2026-08-26T21:00:08.057Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "TrocaSenhaObrigatoriaMiddleware.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Middleware\\TrocaSenhaObrigatoriaMiddleware.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Middleware\\TrocaSenhaObrigatoriaMiddleware.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Middleware\\TrocaSenhaObrigatoriaMiddleware.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Middleware\\TrocaSenhaObrigatoriaMiddleware.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAowBMAAAANAAAAAAAAAA==",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Dashboard\\Index.cshtml",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Dashboard\\Index.cshtml",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Dashboard\\Index.cshtml",
+              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Dashboard\\Index.cshtml",
+              "ViewState": "AgIAAFkBAAAAAAAAAADwv3EBAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-08-26T20:12:54.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DashboardService.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\DashboardService.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\DashboardService.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\DashboardService.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Services\\DashboardService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-08-13T20:18:06.549Z",
+              "WhenOpened": "2026-08-26T19:37:22.416Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DashboardController.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\DashboardController.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Controllers\\DashboardController.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\DashboardController.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Controllers\\DashboardController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-08-26T19:37:12.407Z",
               "EditorCaption": ""
             }
           ]

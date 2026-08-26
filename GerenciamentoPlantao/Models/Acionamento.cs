@@ -10,6 +10,8 @@ namespace GerenciamentoPlantao.Models
         public int CanalId { get; set; }
         public Usuario Plantonista { get; set; } = null!;
         public string UsuarioId { get; set; } = string.Empty;
+        public Departamento Departamento { get; set; } = null!;
+        public int DepartamentoId { get; set; }
         public string? Acionador { get; set; }
         public int? NrAtendimento { get; set; }
         public Estabelecimento Estabelecimento { get; set; } = null!;
@@ -24,11 +26,12 @@ namespace GerenciamentoPlantao.Models
         public int SolucaoId { get; set; }
         public string? Observacao { get; set; }
 
-        public Acionamento(DateTime dataAcionamento, int canalId, string usuarioId, string? acionador, int? nrAtendimento, int estabelecimentoId, int setorId, int categoriaAcionamentoId, int solucaoId, bool apoio, string? observacao)
+        public Acionamento(DateTime dataAcionamento, int canalId, string usuarioId, int departamentoId, string? acionador, int? nrAtendimento, int estabelecimentoId, int setorId, int categoriaAcionamentoId, int solucaoId, bool apoio, string? observacao)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;
             UsuarioId = usuarioId;
+            DepartamentoId = departamentoId;
             Acionador = acionador;
             NrAtendimento = nrAtendimento;
             EstabelecimentoId = estabelecimentoId;

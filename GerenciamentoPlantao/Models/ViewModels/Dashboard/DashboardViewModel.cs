@@ -9,6 +9,9 @@
         public List<GraficoItemViewModel> PorMes { get; set; } = new();
         public List<GraficoItemViewModel> PorCategoria { get; set; } = new();
         public List<GraficoItemViewModel> PorSetor { get; set; } = new();
+        public List<GraficoItemViewModel> PorEstabelecimento { get; set; } = new();
+        public List<GraficoItemViewModel> ComApoio { get; set; } = new();
+
     }
 
     public class GraficoItemViewModel

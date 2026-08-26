@@ -33,6 +33,14 @@ namespace GerenciamentoPlantao.Services
                 .ToListAsync();
         }
 
+        public async Task<List<Setor>> FindAllActiveEstabelecimentoAsync(int estabelecimentoId)
+        {
+            return await _context.Setores
+                .Where(s => s.Ativo && s.EstabelecimentoId == estabelecimentoId)
+                .OrderBy(s => s.Nome)
+                .ToListAsync();
+        }
+
         public async Task<Setor> FindByIdAsync(int id)
         {
             var setor = await _context.Setores.FirstOrDefaultAsync(x => x.Id == id);

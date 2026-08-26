@@ -33,6 +33,14 @@ namespace GerenciamentoPlantao.Services
                 .ToListAsync();
         }
 
+        public async Task<List<Canal>> FindAllDepartmentActiveAsync(int departamentoId)
+        {
+            return await _context.Canais
+                .Where(c => c.Ativo && c.DepartamentoId == departamentoId)
+                .OrderBy(c => c.Nome)
+                .ToListAsync();
+        }
+
         public async Task<Canal> FindByIdAsync(int id)
         {
             var canal = await _context.Canais

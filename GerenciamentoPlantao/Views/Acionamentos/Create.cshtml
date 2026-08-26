@@ -19,132 +19,220 @@
 
             <form asp-action="Create">
 
-                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
-                <!-- Data -->
-                <div class="mb-3">
-                    <label asp-for="DataAcionamento" class="form-label fw-bold">
-                        Data do Acionamento
-                    </label>
-
-                    <input asp-for="DataAcionamento"
-                           type="datetime-local"
-                           class="form-control form-control-lg" />
-
-                    <span asp-validation-for="DataAcionamento" class="text-danger"></span>
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
                 </div>
 
-                <!-- Plantonista / Canal -->
+                <!-- Data / Plantonista -->
                 <div class="row">
-                    <div class="mb-3">
-                        <label asp-for="NomePlantonista" class="form-label">Plantonista</label>
-                        <input asp-for="NomePlantonista" class="form-control" readonly />
-                    </div>
+
                     <div class="col-md-6 mb-3">
-                        <label asp-for="CanalId" class="form-label fw-bold">
-                            Canal de Atendimento
+
+                        <label asp-for="DataAcionamento"
+                               class="form-label fw-bold">
+                            Data do Acionamento
                         </label>
 
-                        <select asp-for="CanalId"
-                                asp-items="Model.Canal"
-                                class="form-select">
-                            <option value="">Selecione...</option>
-                        </select>
+                        <input asp-for="DataAcionamento"
+                               type="text"
+                               class="form-control form-control-lg"
+                               id="dataAcionamento"
+                               asp-format="{0:dd/MM/yyyy HH:mm}"
+                               placeholder="dd/mm/aaaa hh:mm"
+                               maxlength="16"
+                               autocomplete="off" />
 
-                        <span asp-validation-for="CanalId" class="text-danger"></span>
+                        <span asp-validation-for="DataAcionamento"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="NomePlantonista"
+                               class="form-label">
+                            Plantonista
+                        </label>
+
+                        <input asp-for="NomePlantonista"
+                               class="form-control form-control-lg"
+                               readonly />
+
                     </div>
 
                 </div>
+
+
+                <!-- Canal -->
+                <div class="mb-3">
+
+                    <label asp-for="CanalId"
+                           class="form-label fw-bold">
+                        Canal de Atendimento
+                    </label>
+
+                    <select asp-for="CanalId"
+                            asp-items="Model.Canal"
+                            class="form-select">
+
+                        <option value="">
+                            Selecione...
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="CanalId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
 
                 <!-- Acionador / Nº Atendimento -->
                 <div class="row">
 
                     <div class="col-md-8 mb-3">
-                        <label asp-for="Acionador" class="form-label fw-bold">
+
+                        <label asp-for="Acionador"
+                               class="form-label fw-bold">
                             Acionador
                         </label>
 
                         <input asp-for="Acionador"
                                class="form-control form-control-lg" />
 
-                        <span asp-validation-for="Acionador" class="text-danger"></span>
+                        <span asp-validation-for="Acionador"
+                              class="text-danger">
+                        </span>
+
                     </div>
 
                     <div class="col-md-4 mb-3">
-                        <label asp-for="NrAtendimento" class="form-label fw-bold">
+
+                        <label asp-for="NrAtendimento"
+                               class="form-label fw-bold">
                             Nº Atendimento
                         </label>
 
                         <input asp-for="NrAtendimento"
+                               type="text"
+                               inputmode="numeric"
                                class="form-control form-control-lg" />
 
-                        <span asp-validation-for="NrAtendimento" class="text-danger"></span>
+                        <span asp-validation-for="NrAtendimento"
+                              class="text-danger">
+                        </span>
+
                     </div>
 
                 </div>
 
-                <!-- Estabelecimento -->
-                <div class="mb-3">
-                    <label asp-for="EstabelecimentoId" class="form-label fw-bold">
-                        Estabelecimento
-                    </label>
 
-                    <select asp-for="EstabelecimentoId"
-                            asp-items="Model.Estabelecimento"
-                            class="form-select">
-                        <option value="">Selecione...</option>
-                    </select>
-
-                    <span asp-validation-for="EstabelecimentoId" class="text-danger"></span>
-                </div>
-
-                <!-- Setor / Categoria -->
+                <!-- Estabelecimento / Setor -->
                 <div class="row">
 
                     <div class="col-md-6 mb-3">
-                        <label asp-for="SetorId" class="form-label fw-bold">
+
+                        <label asp-for="EstabelecimentoId"
+                               class="form-label fw-bold">
+                            Estabelecimento
+                        </label>
+
+                        <select asp-for="EstabelecimentoId"
+                                asp-items="Model.Estabelecimento"
+                                class="form-select">
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="EstabelecimentoId"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="SetorId"
+                               class="form-label fw-bold">
                             Setor
                         </label>
 
                         <select asp-for="SetorId"
                                 asp-items="Model.Setor"
-                                class="form-select">
-                            <option value="">Selecione...</option>
+                                class="form-select"
+                                disabled>
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
                         </select>
 
-                        <span asp-validation-for="SetorId" class="text-danger"></span>
+                        <span asp-validation-for="SetorId"
+                              class="text-danger">
+                        </span>
+
                     </div>
 
+                </div>
+
+
+                <!-- Categoria / Solução -->
+                <div class="row">
+
                     <div class="col-md-6 mb-3">
-                        <label asp-for="CategoriaId" class="form-label fw-bold">
+
+                        <label asp-for="CategoriaId"
+                               class="form-label fw-bold">
                             Categoria
                         </label>
 
                         <select asp-for="CategoriaId"
                                 asp-items="Model.Categoria"
                                 class="form-select">
-                            <option value="">Selecione...</option>
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
                         </select>
 
-                        <span asp-validation-for="CategoriaId" class="text-danger"></span>
+                        <span asp-validation-for="CategoriaId"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="SolucaoId"
+                               class="form-label fw-bold">
+                            Solução
+                        </label>
+
+                        <select asp-for="SolucaoId"
+                                asp-items="Model.Solucao"
+                                class="form-select">
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="SolucaoId"
+                              class="text-danger">
+                        </span>
+
                     </div>
 
                 </div>
 
-                <!-- Solução -->
-                <div class="mb-3">
-                    <label asp-for="SolucaoId" class="form-label fw-bold">
-                        Solução
-                    </label>
-
-                    <select asp-for="SolucaoId"
-                            asp-items="Model.Solucao"
-                            class="form-select">
-                        <option value="">Selecione...</option>
-                    </select>
-
-                    <span asp-validation-for="SolucaoId" class="text-danger"></span>
-                </div>
 
                 <!-- Apoio -->
                 <div class="mb-3">
@@ -166,36 +254,51 @@
 
                     </div>
 
-                    <span asp-validation-for="Apoio" class="text-danger"></span>
+                    <span asp-validation-for="Apoio"
+                          class="text-danger">
+                    </span>
 
                 </div>
+
 
                 <!-- Observações -->
                 <div class="mb-3">
 
-                    <label asp-for="Observacao" class="form-label fw-bold">
+                    <label asp-for="Observacao"
+                           class="form-label fw-bold">
                         Observações
                     </label>
 
                     <textarea asp-for="Observacao"
                               rows="4"
                               class="form-control"
-                              placeholder="Digite observações, se necessário"></textarea>
+                              placeholder="Digite observações, se necessário">
+                    </textarea>
 
-                    <span asp-validation-for="Observacao" class="text-danger"></span>
+                    <span asp-validation-for="Observacao"
+                          class="text-danger">
+                    </span>
 
                 </div>
 
+
+                <!-- Botões -->
                 <div class="d-flex gap-2">
 
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit"
+                            class="btn btn-primary">
+
                         <i class="bi bi-floppy-fill"></i>
                         Salvar
+
                     </button>
 
-                    <a asp-action="Index" class="btn btn-outline-secondary">
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
                         <i class="bi bi-arrow-left"></i>
                         Voltar
+
                     </a>
 
                 </div>
@@ -208,9 +311,89 @@
 
 </div>
 
-@section Scripts
-{
+
+@section Scripts {
+
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        document.getElementById("dataAcionamento")
+            .addEventListener("input", function () {
+
+                let valor = this.value.replace(/\D/g, '');
+
+                if (valor.length > 12) {
+                    valor = valor.substring(0, 12);
+                }
+
+                if (valor.length > 8) {
+
+                    valor = valor.replace(
+                        /^(\d{2})(\d{2})(\d{4})(\d{2})(\d{0,2}).*/,
+                        '$1/$2/$3 $4:$5'
+                    );
+
+                }
+                else if (valor.length > 4) {
+
+                    valor = valor.replace(
+                        /^(\d{2})(\d{2})(\d+)/,
+                        '$1/$2/$3'
+                    );
+
+                }
+                else if (valor.length > 2) {
+
+                    valor = valor.replace(
+                        /^(\d{2})(\d+)/,
+                        '$1/$2'
+                    );
+
+                }
+
+                this.value = valor;
+
+            });
+
+    </script>
+
+    <script>
+    document.getElementById("NrAtendimento")
+        .addEventListener("input", function () {
+            this.value = this.value.replace(/\D/g, '');
+        });
+    </script>
+
+    <script>
+        document.getElementById("EstabelecimentoId")
+        .addEventListener("change", async function () {
+            
+            const estabelecimentoId = this.value;
+            const setorSelect = document.getElementById("SetorId");
+
+            if(!estabelecimentoId){
+                setorSelect.innerHTML = '<option value="">Selecione...</option>';
+                setorSelect.disabled = true;
+                return;
+            }
+
+            const response = await fetch(`/Acionamentos/ObterSetoresPorEstabelecimento?estabelecimentoId=${estabelecimentoId}`);
+           
+            const setores = await response.json();
+            setorSelect.innerHTML = '<option value="">Selecione...</option>'
+
+            setores.forEach(setor => {
+                const option = document.createElement("option");
+                
+                option.value = setor.value;
+                option.text = setor.text;
+
+                setorSelect.appendChild(option);
+            });
+            setorSelect.disabled = false;
+        });
+    </script>
+
 }
