@@ -1,9 +1,11 @@
 ﻿using GerenciamentoPlantao.Data;
-using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GerenciamentoPlantao.Services
 {
@@ -18,11 +20,41 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogadoService = usuarioLogadoService;
         }
 
-        public async Task<List<Solucao>> FindAllAsync()
+        public async Task<PagedResult<Solucao>> FindAllAsync(int paginaAtual, int tamanhoPagina, string? busca, string? ordenarPor, string? direcao, int? departamentoId)
         {
-            return await _context.Solucoes
-                .Include(s => s.Departamento)
-                .ToListAsync();
+            IQueryable<Solucao> query = _context.Solucoes
+                .Include(s => s.Departamento);
+            
+            if (!string.IsNullOrEmpty(busca))
+            {
+                query = query.Where(s => s.Nome.Contains(busca));
+            }
+
+            if (departamentoId.HasValue)
+            {
+                query = query.Where(s => s.DepartamentoId == departamentoId.Value);
+            }
+
+            switch (ordenarPor)
+            {
+                case "nome":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(s => s.Nome) 
+                        : query.OrderBy(s => s.Nome);
+                    break;
+
+                case "departamento":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(s => s.Departamento.Nome) 
+                        : query.OrderBy(s => s.Departamento.Nome);
+                    break;
+
+                default:
+                    query = query.OrderBy(s => s.Nome);
+                    break;
+            }
+
+            return await PagedResult<Solucao>.CriarAsync(query, paginaAtual, tamanhoPagina);
         }
 
         public async Task<List<Solucao>> FindAllActiveAsync()

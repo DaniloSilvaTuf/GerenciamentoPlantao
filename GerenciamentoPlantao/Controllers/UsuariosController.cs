@@ -31,9 +31,20 @@ namespace GerenciamentoPlantao.Controllers
             _usuarioLogadoService = usuarioLogadoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? descNome, string? nmUsuario, int? departamentoId, int paginaAtual = 1)
         {
-            var lista = await _usuarioService.FindAllAsync();
+            var tamanhoPagina = 20;
+
+            var lista = await _usuarioService.FindAllAsync(paginaAtual, tamanhoPagina, descNome, nmUsuario, ordenarPor, direcao, departamentoId);
+
+            ViewBag.DescNome = descNome;
+            ViewBag.NmUsuario = nmUsuario;
+            ViewBag.DepartamentoId = departamentoId;
+            ViewBag.OrdenarPor = ordenarPor;
+            ViewBag.Direcao = direcao;
+
+            ViewBag.Departamentos = await _departamentoService.FindAllActiveAsync();
+
             return View(lista);
         }
 

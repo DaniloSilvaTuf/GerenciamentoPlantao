@@ -21,9 +21,11 @@ namespace GerenciamentoPlantao.Controllers
         private readonly EstabelecimentoService _estabelecimentoService;
         private readonly SetorService _setorService;
         private readonly SolucaoService _solucaoService;
+        private readonly DepartamentoService _departamentoService;
+        private readonly UsuarioService _usuarioService;
         private readonly IUsuarioLogadoService _usuarioLogadoService;
 
-        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, IUsuarioLogadoService usuarioLogadoService)
+        public AcionamentosController(AcionamentoService acionamentoService, CanalService canalService, CategoriaService categoriaService, EstabelecimentoService estabelecimentoService, SetorService setorService, SolucaoService solucaoService, IUsuarioLogadoService usuarioLogadoService, DepartamentoService departamentoService, UsuarioService usuarioService)
         {
             _acionamentoService = acionamentoService;
             _canalService = canalService;
@@ -32,11 +34,39 @@ namespace GerenciamentoPlantao.Controllers
             _setorService = setorService;
             _solucaoService = solucaoService;
             _usuarioLogadoService = usuarioLogadoService;
+            _departamentoService = departamentoService;
+            _usuarioService = usuarioService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, int paginaAtual = 1)
         {
-            var lista = await _acionamentoService.FindAllAsync();
+            var tamanhoPagina = 20;
+            var usuarioId = (await _usuarioLogadoService.ObterUsuarioLogadoAsync()).Id;
+            var usuario = await _usuarioService.FindByIdAsync(usuarioId);
+            var departamentoId = usuario.DepartamentoId;
+
+            var lista = await _acionamentoService.FindAllAsync(paginaAtual, tamanhoPagina, ordenarPor, direcao, plantonistaId, estabelecimentoId, categoriaId, setorId, departamentoId);
+
+            ViewBag.OrdenarPor = ordenarPor;
+            ViewBag.Direcao = direcao;
+            ViewBag.PlantonistaId = plantonistaId;
+            ViewBag.EstabelecimentoId = estabelecimentoId;
+            ViewBag.CategoriaId = categoriaId;
+            ViewBag.SetorId = setorId;
+
+            ViewBag.Estabelecimentos = await _estabelecimentoService.FindAllActiveAsync();
+            ViewBag.Categorias = await _categoriaService.FindAllDepartmentActiveAsync(departamentoId);
+            ViewBag.Plantonistas = await _usuarioService.FindAllPlantonistaAsync(departamentoId);
+
+            if(estabelecimentoId.HasValue)
+            {
+                ViewBag.Setores = await _setorService.FindAllActiveEstabelecimentoAsync(estabelecimentoId.Value);
+            }
+            else
+            {
+                ViewBag.Setores = new List<Setor>();
+            }
+
             return View(lista);
         }
 
@@ -212,6 +242,21 @@ namespace GerenciamentoPlantao.Controllers
             });
 
             return Json(setores);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarSetoresPorEstabelecimento(int estabelecimentoId)
+        {
+            var setores = await _setorService
+                .FindAllActiveEstabelecimentoAsync(estabelecimentoId);
+
+            var resultado = setores.Select(s => new
+            {
+                id = s.Id,
+                nome = s.Nome
+            });
+
+            return Json(resultado);
         }
     }
 }

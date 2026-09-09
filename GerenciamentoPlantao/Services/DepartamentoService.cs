@@ -1,6 +1,8 @@
-﻿using GerenciamentoPlantao.Data;
+﻿
+using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +21,35 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogadoService = usuarioLogadoService;
         }
 
-        public async Task<List<Departamento>> FindAllAsync()
+        public async Task<PagedResult<Departamento>> FindAllAsync(int paginaAtual, int tamanhoPagina, string? busca, string? ordenarPor, string? direcao)
         {
-            return await _context.Departamentos
-                .OrderBy(x => x.Nome)
-                .ToListAsync();
+            IQueryable<Departamento> query = _context.Departamentos;
+
+            if (!string.IsNullOrWhiteSpace(busca))
+            {
+                query = query.Where(x => x.Nome.Contains(busca));
+            }
+            
+            switch (ordenarPor)
+            {
+                case "nome":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(x => x.Nome) 
+                        : query.OrderBy(x => x.Nome);
+                    break;
+
+                case "ativo":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(x => x.Ativo) 
+                        : query.OrderBy(x => x.Ativo);
+                    break;
+
+                default:
+                    query = query.OrderBy(x => x.Nome);
+                    break;
+            }
+
+            return await PagedResult<Departamento>.CriarAsync(query, paginaAtual, tamanhoPagina);
         }
 
         public async Task<List<Departamento>> FindAllActiveAsync()

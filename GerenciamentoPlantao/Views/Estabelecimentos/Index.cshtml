@@ -1,7 +1,33 @@
-﻿@model IEnumerable<GerenciamentoPlantao.Models.Estabelecimento>
+﻿@model GerenciamentoPlantao.Models.Paginacao.PagedResult<GerenciamentoPlantao.Models.Estabelecimento>
 
 @{
     ViewData["Title"] = "Estabelecimentos";
+
+    var proximaDirecaoNome =
+        ViewBag.OrdenarPor == "nome" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoStatus =
+        ViewBag.OrdenarPor == "status" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var paginacao = new GerenciamentoPlantao.Models.ViewModels.PaginacaoViewModel
+    {
+        PaginaAtual = Model.PaginaAtual,
+        TotalPaginas = Model.TotalPaginas,
+        TotalItens = Model.TotalItens,
+        Action = "Index",
+        Controller = "Estabelecimentos",
+
+        ParametrosRota = new Dictionary<string, string?>
+        {
+            ["busca"] = ViewBag.Busca,
+            ["ordenarPor"] = ViewBag.OrdenarPor,
+            ["direcao"] = ViewBag.Direcao
+        }
+    };
 }
 
 <div class="container mt-4">
@@ -9,56 +35,203 @@
     <div class="card shadow-sm">
 
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
             <h3 class="mb-0">
-                <i class="bi bi-building"></i> Estabelecimentos
+                <i class="bi bi-building"></i>
+                Estabelecimentos
             </h3>
 
-            <a asp-action="Create" class="btn btn-light">
-                <i class="bi bi-plus-circle"></i> Cadastrar Novo
+            <a asp-action="Create"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+                Cadastrar Novo
+
             </a>
+
         </div>
 
         <div class="card-body">
-            <table class="table table-hover table-striped align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>@Html.DisplayNameFor(model => model.Nome)</th>
-                        <th>Status</th>
 
-                        <th class="text-end"> Ações </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+            <form asp-action="Index"
+                  method="get"
+                  class="row g-2 mb-3">
+
+                <div class="col-md-6">
+
+                    <input type="text"
+                           name="busca"
+                           value="@ViewBag.Busca"
+                           class="form-control"
+                           placeholder="Buscar estabelecimento..." />
+
+                </div>
+
+                <div class="col-auto">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                </div>
+
+                @if (!string.IsNullOrWhiteSpace(ViewBag.Busca))
+                {
+                    <div class="col-auto">
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            Limpar
+
+                        </a>
+
+                    </div>
+                }
+
+            </form>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-striped align-middle">
+
+                    <thead class="table-light">
+
                         <tr>
-                            <td>@item.Nome</td>
-                            <td>
-                                @if (item.Ativo)
-                                {
-                                    <span class="badge bg-success">
-                                        <i class="bi bi-check-circle-fill"></i> Ativo
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger">
-                                        <i class="bi bi-x-circle-fill"></i> Inativo
-                                    </span>
-                                }
-                            </td>
 
-                            <td class="text-end">
+                            <!-- NOME -->
+                            <th>
 
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                <a asp-action="Index"
+                                   asp-route-busca="@ViewBag.Busca"
+                                   asp-route-ordenarPor="nome"
+                                   asp-route-direcao="@proximaDirecaoNome"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
 
-                                    <i class="bi bi-pencil-square"></i> Editar
+                                    Nome
+
+                                    @if (ViewBag.OrdenarPor == "nome")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
                                 </a>
-                            </td>
+
+                            </th>
+
+                            <!-- STATUS -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-busca="@ViewBag.Busca"
+                                   asp-route-ordenarPor="status"
+                                   asp-route-direcao="@proximaDirecaoStatus"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Status
+
+                                    @if (ViewBag.OrdenarPor == "status")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
                         </tr>
-                    }
-                </tbody>
-            </table>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.Nome
+                                </td>
+
+                                <td>
+
+                                    @if (item.Ativo)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            Ativo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                            Inativo
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm">
+
+                                        <i class="bi bi-pencil-square"></i>
+                                        Editar
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <partial name="_Paginacao" model="paginacao" />
+
         </div>
+
     </div>
+
 </div>

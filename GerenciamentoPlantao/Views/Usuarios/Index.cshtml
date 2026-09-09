@@ -1,7 +1,40 @@
-﻿@model IEnumerable<GerenciamentoPlantao.Models.Usuario>
+﻿@model GerenciamentoPlantao.Models.Paginacao.PagedResult<GerenciamentoPlantao.Models.Usuario>
 
 @{
     ViewData["Title"] = "Usuários";
+
+    var proximaDirecaoNome =
+        ViewBag.OrdenarPor == "descNome" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoUsuario =
+        ViewBag.OrdenarPor == "nmUsuario" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoDepartamento =
+        ViewBag.OrdenarPor == "departamento" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var paginacao = new GerenciamentoPlantao.Models.ViewModels.PaginacaoViewModel
+    {
+        PaginaAtual = Model.PaginaAtual,
+        TotalPaginas = Model.TotalPaginas,
+        TotalItens = Model.TotalItens,
+        Action = "Index",
+        Controller = "Usuarios",
+
+        ParametrosRota = new Dictionary<string, string?>
+        {
+            ["descNome"] = ViewBag.DescNome,
+            ["nmUsuario"] = ViewBag.NmUsuario,
+            ["departamentoId"] = ViewBag.DepartamentoId?.ToString(),
+            ["ordenarPor"] = ViewBag.OrdenarPor,
+            ["direcao"] = ViewBag.Direcao
+        }
+    };
 }
 
 <div class="container mt-4">
@@ -9,60 +42,297 @@
     <div class="card shadow-sm">
 
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
             <h3 class="mb-0">
-                <i class="bi bi-people"></i> Usuários
+                <i class="bi bi-people"></i>
+                Usuários
             </h3>
 
-            <a asp-action="Create" class="btn btn-light">
-                <i class="bi bi-plus-circle"></i> Cadastrar Novo
+            <a asp-action="Create"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+                Cadastrar Novo
+
             </a>
+
         </div>
 
         <div class="card-body">
-            <table class="table table-hover table-striped align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Nome de Usuário</th>
-                        <th>Departamento</th>
-                        <th>Status</th>
 
-                        <th class="text-end"> Ações </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+            <form asp-action="Index"
+                  method="get"
+                  class="row g-2 mb-3">
+
+                <div class="col-md-4">
+
+                    <input type="text"
+                           name="descNome"
+                           value="@ViewBag.DescNome"
+                           class="form-control"
+                           placeholder="Nome do usuário..." />
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <input type="text"
+                           name="nmUsuario"
+                           value="@ViewBag.NmUsuario"
+                           class="form-control"
+                           placeholder="Usuário..." />
+
+                </div>
+
+                <div class="col-md-3">
+
+                    <select name="departamentoId"
+                            class="form-select">
+
+                        <option value="">
+                            Todos os departamentos
+                        </option>
+
+                        @foreach (var departamento in ViewBag.Departamentos)
+                        {
+                            if (ViewBag.DepartamentoId == departamento.Id)
+                            {
+                                <option value="@departamento.Id" selected>
+                                    @departamento.Nome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@departamento.Id">
+                                    @departamento.Nome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <div class="col-auto">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                </div>
+
+                @if (
+                    !string.IsNullOrWhiteSpace(ViewBag.DescNome) ||
+                    !string.IsNullOrWhiteSpace(ViewBag.NmUsuario) ||
+                    ViewBag.DepartamentoId != null)
+                {
+                    <div class="col-auto">
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            Limpar
+
+                        </a>
+
+                    </div>
+                }
+
+            </form>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-striped align-middle">
+
+                    <thead class="table-light">
+
                         <tr>
-                            <td>@item.DescNome</td>
-                            <td>@item.UserName</td>
-                            <td>@item.Departamento?.Nome</td>
-                            <td>
-                                @if (item.Ativo)
-                                {
-                                    <span class="badge bg-success">
-                                        <i class="bi bi-check-circle-fill"></i> Ativo
-                                    </span>
-                                }
-                                else
-                                {
-                                    <span class="badge bg-danger">
-                                        <i class="bi bi-x-circle-fill"></i> Inativo
-                                    </span>
-                                }
-                            </td>
 
-                            <td class="text-end">
+                            <!-- NOME -->
+                            <th>
 
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                                <a asp-action="Index"
+                                   asp-route-descNome="@ViewBag.DescNome"
+                                   asp-route-nmUsuario="@ViewBag.NmUsuario"
+                                   asp-route-departamentoId="@ViewBag.DepartamentoId"
+                                   asp-route-ordenarPor="descNome"
+                                   asp-route-direcao="@proximaDirecaoNome"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
 
-                                    <i class="bi bi-pencil-square"></i> Editar
+                                    Nome
+
+                                    @if (ViewBag.OrdenarPor == "descNome")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
                                 </a>
-                            </td>
+
+                            </th>
+
+                            <!-- NOME DE USUÁRIO -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-descNome="@ViewBag.DescNome"
+                                   asp-route-nmUsuario="@ViewBag.NmUsuario"
+                                   asp-route-departamentoId="@ViewBag.DepartamentoId"
+                                   asp-route-ordenarPor="nmUsuario"
+                                   asp-route-direcao="@proximaDirecaoUsuario"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Nome de Usuário
+
+                                    @if (ViewBag.OrdenarPor == "nmUsuario")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <!-- DEPARTAMENTO -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-descNome="@ViewBag.DescNome"
+                                   asp-route-nmUsuario="@ViewBag.NmUsuario"
+                                   asp-route-departamentoId="@ViewBag.DepartamentoId"
+                                   asp-route-ordenarPor="departamento"
+                                   asp-route-direcao="@proximaDirecaoDepartamento"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Departamento
+
+                                    @if (ViewBag.OrdenarPor == "departamento")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <!-- STATUS -->
+                            <th>
+                                Status
+                            </th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
                         </tr>
-                    }
-                </tbody>
-            </table>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.DescNome
+                                </td>
+
+                                <td>
+                                    @item.UserName
+                                </td>
+
+                                <td>
+                                    @item.Departamento?.Nome
+                                </td>
+
+                                <td>
+
+                                    @if (item.Ativo)
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="bi bi-check-circle-fill"></i>
+                                            Ativo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="bi bi-x-circle-fill"></i>
+                                            Inativo
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm">
+
+                                        <i class="bi bi-pencil-square"></i>
+                                        Editar
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <partial name="_Paginacao" model="paginacao" />
+
         </div>
+
     </div>
+
 </div>

@@ -2,10 +2,12 @@
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Models.Enums;
+using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace GerenciamentoPlantao.Services
 {
@@ -22,17 +24,65 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogadoService = usuarioLogadoService;
         }
 
-        public async Task<List<Usuario>> FindAllAsync()
+        public async Task<PagedResult<Usuario>> FindAllAsync(int paginaAtual, int tamanhoPagina, string? descNome, string? nmUsuario, string? ordenarPor, string? direcao, int? departamentoId)
         {
-            return await _context.Users
-                .Include(u => u.Departamento)
-                .OrderBy(x => x.DescNome)
-                .ToListAsync();
+            IQueryable<Usuario> query = _context.Users
+                .Include(u => u.Departamento);
+
+            if (!string.IsNullOrWhiteSpace(descNome))
+            {
+                query = query.Where(u => u.DescNome.Contains(descNome));
+            }
+
+            if (!string.IsNullOrWhiteSpace(nmUsuario))
+            {
+                query = query.Where(u => u.UserName != null && u.UserName.Contains(nmUsuario));
+            }
+
+            if (departamentoId.HasValue)
+            {
+                query = query.Where(u => u.DepartamentoId == departamentoId.Value);
+            }
+
+            switch (ordenarPor)
+            {
+                case "descNome":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(u => u.DescNome)
+                        : query.OrderBy(u => u.DescNome);
+                    break;
+                case "nmUsuario":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(u => u.UserName)
+                        : query.OrderBy(u => u.UserName);
+                    break;
+                case "departamento":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(u => u.Departamento.Nome)
+                        : query.OrderBy(u => u.Departamento.Nome);
+                    break;
+                case "perfil":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(u => u.Perfil)
+                        : query.OrderBy(u => u.Perfil);
+                    break;
+                default:
+                    query = query.OrderBy(u => u.DescNome);
+                    break;
+            }
+
+            return await PagedResult<Usuario>.CriarAsync(query, paginaAtual, tamanhoPagina);
+
         }
 
         public async Task<List<Usuario>> FindAllActiveAsync()
         {
             return await _context.Users.Where(e => e.Ativo).OrderBy(e => e.DescNome).ToListAsync();
+        }
+
+        public async Task<List<Usuario>> FindAllPlantonistaAsync(int departamentoId)
+        {
+            return await _context.Users.Where(e => e.Ativo && e.Plantonista && e.DepartamentoId == departamentoId).OrderBy(e => e.DescNome).ToListAsync();
         }
 
         public async Task<Usuario> FindByIdAsync(string id)

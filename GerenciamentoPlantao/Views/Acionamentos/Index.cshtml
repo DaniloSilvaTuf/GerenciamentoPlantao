@@ -1,7 +1,46 @@
-﻿@model IEnumerable<GerenciamentoPlantao.Models.Acionamento>
+﻿@model GerenciamentoPlantao.Models.Paginacao.PagedResult<GerenciamentoPlantao.Models.Acionamento>
 
 @{
     ViewData["Title"] = "Acionamentos";
+
+    var proximaDirecaoData =
+        ViewBag.OrdenarPor == "dataAcionamento" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoEstabelecimento =
+        ViewBag.OrdenarPor == "estabelecimento" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoSetor =
+        ViewBag.OrdenarPor == "setor" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var proximaDirecaoCategoria =
+        ViewBag.OrdenarPor == "categoria" && ViewBag.Direcao == "asc"
+            ? "desc"
+            : "asc";
+
+    var paginacao = new GerenciamentoPlantao.Models.ViewModels.PaginacaoViewModel
+    {
+        PaginaAtual = Model.PaginaAtual,
+        TotalPaginas = Model.TotalPaginas,
+        TotalItens = Model.TotalItens,
+        Action = "Index",
+        Controller = "Acionamentos",
+
+        ParametrosRota = new Dictionary<string, string?>
+        {
+            ["plantonistaId"] = ViewBag.PlantonistaId,
+            ["estabelecimentoId"] = ViewBag.EstabelecimentoId?.ToString(),
+            ["setorId"] = ViewBag.SetorId?.ToString(),
+            ["categoriaId"] = ViewBag.CategoriaId?.ToString(),
+            ["ordenarPor"] = ViewBag.OrdenarPor,
+            ["direcao"] = ViewBag.Direcao
+        }
+    };
 }
 
 <div class="container mt-4">
@@ -9,52 +48,493 @@
     <div class="card shadow-sm">
 
         <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
             <h3 class="mb-0">
-                <i class="bi bi-telephone"></i> Acionamentos
+                <i class="bi bi-telephone"></i>
+                Acionamentos
             </h3>
 
-            <a asp-action="Create" class="btn btn-light">
-                <i class="bi bi-plus-circle"></i> Cadastrar Novo
+            <a asp-action="Create"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+                Cadastrar Novo
+
             </a>
+
         </div>
 
         <div class="card-body">
-            <table class="table table-hover table-striped align-middle">
-                <thead class="table-light">
-                    <tr>
-                        <th>Data Acionamento</th>
-                        <th>Plantonista</th>
-                        <th>Estabelecimento</th>
-                        <th>Setor</th>
-                        <th>Categoria</th>
-                        <th>Apoio</th>
 
-                        <th class="text-end"> Ações </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+            <form asp-action="Index"
+                  method="get"
+                  class="row g-2 mb-3">
+
+                <!-- PLANTONISTA -->
+                <div class="col-md-3">
+
+                    <select name="plantonistaId"
+                            class="form-select">
+
+                        <option value="">
+                            Todos os plantonistas
+                        </option>
+
+                        @foreach (var plantonista in ViewBag.Plantonistas)
+                        {
+                            if (ViewBag.PlantonistaId == plantonista.Id)
+                            {
+                                <option value="@plantonista.Id" selected>
+                                    @plantonista.DescNome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@plantonista.Id">
+                                    @plantonista.DescNome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- ESTABELECIMENTO -->
+                <div class="col-md-3">
+
+                    <select name="estabelecimentoId"
+                            id="estabelecimentoId"
+                            class="form-select">
+
+                        <option value="">
+                            Todos os estabelecimentos
+                        </option>
+
+                        @foreach (var estabelecimento in ViewBag.Estabelecimentos)
+                        {
+                            if (ViewBag.EstabelecimentoId == estabelecimento.Id)
+                            {
+                                <option value="@estabelecimento.Id" selected>
+                                    @estabelecimento.Nome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@estabelecimento.Id">
+                                    @estabelecimento.Nome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- SETOR -->
+                <div class="col-md-3">
+
+                    <select name="setorId"
+                            id="setorId"
+                            class="form-select"
+                        @(ViewBag.EstabelecimentoId == null ? "disabled" : "")>
+
+                        <option value="">
+                            Todos os setores
+                        </option>
+
+                        @foreach (var setor in ViewBag.Setores)
+                        {
+                            if (ViewBag.SetorId == setor.Id)
+                            {
+                                <option value="@setor.Id" selected>
+                                    @setor.Nome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@setor.Id">
+                                    @setor.Nome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- CATEGORIA -->
+                <div class="col-md-3">
+
+                    <select name="categoriaId"
+                            class="form-select">
+
+                        <option value="">
+                            Todas as categorias
+                        </option>
+
+                        @foreach (var categoria in ViewBag.Categorias)
+                        {
+                            if (ViewBag.CategoriaId == categoria.Id)
+                            {
+                                <option value="@categoria.Id" selected>
+                                    @categoria.Nome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@categoria.Id">
+                                    @categoria.Nome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- BOTÃO BUSCAR -->
+                <div class="col-auto">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                </div>
+
+                <!-- BOTÃO LIMPAR -->
+                @if (
+                    !string.IsNullOrWhiteSpace(ViewBag.PlantonistaId) ||
+                    ViewBag.EstabelecimentoId != null ||
+                    ViewBag.SetorId != null ||
+                    ViewBag.CategoriaId != null)
+                {
+                    <div class="col-auto">
+
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            Limpar
+
+                        </a>
+
+                    </div>
+                }
+
+            </form>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover table-striped align-middle">
+
+                    <thead class="table-light">
+
                         <tr>
-                            <td>@item.DataAcionamento</td>
-                            <td>@item.Plantonista?.DescNome</td>
-                            <td>@item.Estabelecimento?.Nome</td>
-                            <td>@item.Setor?.Nome</td>
-                            <td>@item.CategoriaAcionamento?.Nome</td>
-                            <td class="text-center">
-                                <input type="checkbox" disabled @(item.Apoio ? "checked" : "") />
-                            </td>
-                            <td class="text-end">
 
-                                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-primary btn-sm">
+                            <!-- DATA -->
+                            <th>
 
-                                    <i class="bi bi-pencil-square"></i> Editar
+                                <a asp-action="Index"
+                                   asp-route-plantonistaId="@ViewBag.PlantonistaId"
+                                   asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
+                                   asp-route-setorId="@ViewBag.SetorId"
+                                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-ordenarPor="dataAcionamento"
+                                   asp-route-direcao="@proximaDirecaoData"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Data Acionamento
+
+                                    @if (ViewBag.OrdenarPor == "dataAcionamento")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
                                 </a>
-                            </td>
+
+                            </th>
+
+                            <!-- PLANTONISTA -->
+                            <th>
+                                Plantonista
+                            </th>
+
+                            <!-- ESTABELECIMENTO -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-plantonistaId="@ViewBag.PlantonistaId"
+                                   asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
+                                   asp-route-setorId="@ViewBag.SetorId"
+                                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-ordenarPor="estabelecimento"
+                                   asp-route-direcao="@proximaDirecaoEstabelecimento"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Estabelecimento
+
+                                    @if (ViewBag.OrdenarPor == "estabelecimento")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <!-- SETOR -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-plantonistaId="@ViewBag.PlantonistaId"
+                                   asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
+                                   asp-route-setorId="@ViewBag.SetorId"
+                                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-ordenarPor="setor"
+                                   asp-route-direcao="@proximaDirecaoSetor"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Setor
+
+                                    @if (ViewBag.OrdenarPor == "setor")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <!-- CATEGORIA -->
+                            <th>
+
+                                <a asp-action="Index"
+                                   asp-route-plantonistaId="@ViewBag.PlantonistaId"
+                                   asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
+                                   asp-route-setorId="@ViewBag.SetorId"
+                                   asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-ordenarPor="categoria"
+                                   asp-route-direcao="@proximaDirecaoCategoria"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Categoria
+
+                                    @if (ViewBag.OrdenarPor == "categoria")
+                                    {
+                                        if (ViewBag.Direcao == "asc")
+                                        {
+                                            <i class="bi bi-arrow-up"></i>
+                                        }
+                                        else
+                                        {
+                                            <i class="bi bi-arrow-down"></i>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <i class="bi bi-arrow-down-up text-muted"></i>
+                                    }
+
+                                </a>
+
+                            </th>
+
+                            <!-- APOIO -->
+                            <th class="text-center">
+                                Apoio
+                            </th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
                         </tr>
-                    }
-                </tbody>
-            </table>
+
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+
+                                <td>
+                                    @item.DataAcionamento.ToString("dd/MM/yyyy HH:mm")
+                                </td>
+
+                                <td>
+                                    @item.Plantonista?.DescNome
+                                </td>
+
+                                <td>
+                                    @item.Estabelecimento?.Nome
+                                </td>
+
+                                <td>
+                                    @item.Setor?.Nome
+                                </td>
+
+                                <td>
+                                    @item.CategoriaAcionamento?.Nome
+                                </td>
+
+                                <td class="text-center">
+
+                                    <input type="checkbox"
+                                           disabled
+                                    @(item.Apoio ? "checked" : "") />
+
+                                </td>
+
+                                <td class="text-end">
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.Id"
+                                       class="btn btn-outline-primary btn-sm">
+
+                                        <i class="bi bi-pencil-square"></i>
+                                        Editar
+
+                                    </a>
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <partial name="_Paginacao" model="paginacao" />
+
         </div>
+
     </div>
+
 </div>
+
+@section Scripts {
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+
+            const estabelecimentoSelect =
+                document.getElementById("estabelecimentoId");
+
+            const setorSelect =
+                document.getElementById("setorId");
+
+            estabelecimentoSelect.addEventListener("change", async function() {
+
+                const estabelecimentoId = this.value;
+
+                // Limpa os setores do estabelecimento anterior
+                setorSelect.innerHTML =
+                    '<option value="">Todos os setores</option>';
+
+                // Nenhum estabelecimento selecionado
+                if (!estabelecimentoId) {
+
+                    setorSelect.disabled = true;
+
+                    return;
+                }
+
+                // Desabilita enquanto carrega
+                setorSelect.disabled = true;
+
+                try {
+
+                    const url =
+                        '@Url.Action("BuscarSetoresPorEstabelecimento", "Acionamentos")'
+                        + '?estabelecimentoId='
+                        + encodeURIComponent(estabelecimentoId);
+
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error("Erro ao buscar setores.");
+                    }
+
+                    const setores = await response.json();
+
+                    setores.forEach(function(setor) {
+
+                        const option =
+                            document.createElement("option");
+
+                        option.value = setor.id;
+                        option.textContent = setor.nome;
+
+                        setorSelect.appendChild(option);
+                    });
+
+                    setorSelect.disabled = false;
+
+                }
+                catch (error) {
+
+                    console.error(
+                        "Erro ao carregar setores:",
+                        error
+                    );
+
+                    setorSelect.disabled = true;
+                }
+
+            });
+
+        });
+
+    </script>
+
+}

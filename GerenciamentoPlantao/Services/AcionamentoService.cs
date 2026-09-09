@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -19,17 +20,81 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogado = usuarioLogado;
         }
 
-        public async Task<List<Acionamento>> FindAllAsync()
+        public async Task<PagedResult<Acionamento>> FindAllAsync(
+            int paginaAtual, int tamanhoPagina, string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, int? departamentoId)
         {
-            return await _context.Acionamentos
+            IQueryable<Acionamento> query = _context.Acionamentos
                 .Include(a => a.Canal)
                 .Include(a => a.CategoriaAcionamento)
                 .Include(a => a.Estabelecimento)
                 .Include(a => a.Setor)
                 .Include(a => a.Solucao)
-                .Include(a => a.Plantonista)
-                .OrderByDescending(x => x.DataAcionamento)
-                .ToListAsync();
+                .Include(a => a.Plantonista);
+
+            if(!string.IsNullOrWhiteSpace(plantonistaId))
+            {
+                query = query.Where(a => a.UsuarioId == plantonistaId);
+            }
+
+            if(estabelecimentoId.HasValue)
+            {
+                query = query.Where(a => a.EstabelecimentoId == estabelecimentoId.Value);
+            }
+
+            if(categoriaId.HasValue)
+            {
+                query = query.Where(a => a.CategoriaAcionamentoId == categoriaId.Value);
+            }
+
+            if(setorId.HasValue)
+            {
+                query = query.Where(a => a.SetorId == setorId.Value);
+            }
+
+            if(departamentoId.HasValue)
+            {
+                query = query.Where(a => a.DepartamentoId == departamentoId.Value);
+            }
+
+            switch (ordenarPor)
+            {
+                case "dataAcionamento":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.DataAcionamento) 
+                        : query.OrderBy(a => a.DataAcionamento);
+                    break;
+
+                case "canal":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.Canal.Nome) 
+                        : query.OrderBy(a => a.Canal.Nome);
+                    break;
+
+                case "categoria":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.CategoriaAcionamento.Nome) 
+                        : query.OrderBy(a => a.CategoriaAcionamento.Nome);
+                    break;
+
+                case "estabelecimento":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.Estabelecimento.Nome) 
+                        : query.OrderBy(a => a.Estabelecimento.Nome);
+                    break;
+
+                case "setor":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.Setor.Nome) 
+                        : query.OrderBy(a => a.Setor.Nome);
+                    break;
+
+                default:
+                    query = query.OrderByDescending(a => a.DataAcionamento);
+                    break;
+            }
+
+            return await PagedResult<Acionamento>.CriarAsync(query, paginaAtual, tamanhoPagina);
+
         }
 
         public async Task<Acionamento> FindByIdAsync(int id)

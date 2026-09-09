@@ -21,9 +21,16 @@ namespace GerenciamentoPlantao.Controllers
             _estabelecimentoService = estabelecimentoService;
         }
 
-        public  async Task<IActionResult> Index()
+        public  async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? busca, int paginaAtual = 1)
         {
-            var lista = await _estabelecimentoService.FindAllAsync();
+            var tamanhoPagina = 20;
+
+            var lista = await _estabelecimentoService.FindAllAsync(paginaAtual, tamanhoPagina, busca, ordenarPor, direcao);
+
+            ViewBag.Busca = busca;
+            ViewBag.OrdenarPor = ordenarPor;
+            ViewBag.Direcao = direcao;
+
             return View(lista);
         }
 

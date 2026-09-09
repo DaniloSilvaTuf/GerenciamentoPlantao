@@ -1,9 +1,10 @@
 ﻿using GerenciamentoPlantao.Data;
-using GerenciamentoPlantao.Models;
-using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
+using Microsoft.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Services
 {
@@ -18,11 +19,41 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogadoService = usuarioLogadoService;
         }
 
-        public async Task<List<Setor>> FindAllAsync()
+        public async Task<PagedResult<Setor>> FindAllAsync(int paginaAtual, int tamanhoPagina, string? busca, string? ordenarPor, string? direcao, int? estabelecimentoId)
         {
-            return await _context.Setores
-                .Include(s => s.Estabelecimento)
-                .ToListAsync();
+            IQueryable<Setor> query = _context.Setores
+                .Include(s => s.Estabelecimento);
+
+            if (!string.IsNullOrEmpty(busca))
+            {
+                query = query.Where(s => s.Nome.Contains(busca));
+            }
+
+            if (estabelecimentoId.HasValue)
+            {
+                query = query.Where(s => s.EstabelecimentoId == estabelecimentoId.Value);
+            }
+            
+            switch (ordenarPor)
+            {
+                case "nome":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(s => s.Nome) 
+                        : query.OrderBy(s => s.Nome);
+                    break;
+
+                case "estabelecimento":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(s => s.Estabelecimento.Nome) 
+                        : query.OrderBy(s => s.Estabelecimento.Nome);
+                    break;
+
+                default:
+                    query = query.OrderBy(s => s.Nome);
+                    break;
+            }
+
+            return await PagedResult<Setor>.CriarAsync(query, paginaAtual, tamanhoPagina);
         }
 
         public async Task<List<Setor>> FindAllActiveAsync()

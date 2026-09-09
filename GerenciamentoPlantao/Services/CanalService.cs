@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
 using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models.Paginacao;
 
 namespace GerenciamentoPlantao.Services
 {
@@ -18,11 +19,46 @@ namespace GerenciamentoPlantao.Services
             _usuarioLogado = usuarioLogado;
         }
 
-        public async Task<List<Canal>> FindAllAsync()
+        public async Task<PagedResult<Canal>> FindAllAsync(int paginaAtual, int tamanhoPagina, string? busca, string? ordenarPor, string? direcao, int? departamentoId)
         {
-            return await _context.Canais
-                .Include(c => c.Departamento)
-                .ToListAsync();
+            IQueryable<Canal> query = _context.Canais
+                .Include(c => c.Departamento);
+
+            if (!string.IsNullOrWhiteSpace(busca))
+            {
+                query = query.Where(c => c.Nome.Contains(busca));
+            }
+            if (departamentoId.HasValue)
+            {
+                query = query.Where(c => c.DepartamentoId == departamentoId.Value);
+            }
+
+            switch (ordenarPor)
+            {
+                case "nome":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(c => c.Nome)
+                        : query.OrderBy(c => c.Nome);
+                    break;
+
+                case "departamento":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(c => c.Departamento.Nome)
+                        : query.OrderBy(c => c.Departamento.Nome);
+                    break;
+
+                case "status":
+                    query = direcao == "desc"
+                        ? query.OrderByDescending(c => c.Ativo)
+                        : query.OrderBy(c => c.Ativo);
+                    break;
+
+                default:
+                    query = query.OrderBy(c => c.Nome);
+                    break;
+            }
+
+            return await PagedResult<Canal>.CriarAsync(query, paginaAtual, tamanhoPagina);
         }
 
         public async Task<List<Canal>> FindAllActiveAsync()

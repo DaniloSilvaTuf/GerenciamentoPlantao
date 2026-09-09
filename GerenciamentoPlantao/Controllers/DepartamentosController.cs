@@ -18,10 +18,17 @@ namespace GerenciamentoPlantao.Controllers
             _departamentoService = departamentoService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? busca, int paginaAtual = 1)
         {
-            var lista = await _departamentoService.FindAllAsync();
-            return View(lista);
+            var tamanhoPagina = 20;
+
+            var lista = await _departamentoService.FindAllAsync(paginaAtual, tamanhoPagina, busca, ordenarPor, direcao);
+            
+            ViewBag.Busca = busca;
+            ViewBag.OrdenarPor = ordenarPor;
+            ViewBag.Direcao = direcao;
+
+            return View(lista); 
         }
 
         public IActionResult Create()
