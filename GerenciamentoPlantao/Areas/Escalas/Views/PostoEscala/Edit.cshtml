@@ -1,0 +1,160 @@
+﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.EditarPostoEscalaViewModel
+
+@{
+    ViewData["Title"] = "Editar Posto";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="mb-0">
+                <i class="bi bi-person-workspace"></i> Editar Posto
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Edit"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <input asp-for="Id"
+                       type="hidden" />
+
+                <input asp-for="DepartamentoId"
+                       type="hidden" />
+
+                <!-- NOME -->
+                <div class="mb-3">
+
+                    <label asp-for="Nome"
+                           class="form-label fw-bold">
+                        Nome do Posto
+                    </label>
+
+                    <input asp-for="Nome"
+                           class="form-control form-control-lg"
+                           autocomplete="off" />
+
+                    <span asp-validation-for="Nome"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Departamento
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           value="@Model.DepartamentoNome"
+                           readonly />
+
+                    <div class="form-text">
+                        O departamento do posto não pode ser alterado após o cadastro.
+                    </div>
+
+                </div>
+
+                <!-- STATUS -->
+                <div class="mb-3">
+
+                    @if (Model.Ativo)
+                    {
+                        <span class="badge bg-success fs-6">
+
+                            <i class="bi bi-check-circle-fill"></i>
+                            Ativo
+
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger fs-6">
+
+                            <i class="bi bi-x-circle-fill"></i>
+                            Inativo
+
+                        </span>
+                    }
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar
+
+                    </button>
+
+                    @if (Model.Ativo)
+                    {
+                        <button asp-action="Inativar"
+                                asp-route-id="@Model.Id"
+                                asp-route-departamentoId="@Model.DepartamentoId"
+                                formmethod="post"
+                                class="btn btn-danger">
+
+                            <i class="bi bi-ban-fill"></i>
+                            Inativar
+
+                        </button>
+                    }
+                    else
+                    {
+                        <button asp-action="Ativar"
+                                asp-route-id="@Model.Id"
+                                asp-route-departamentoId="@Model.DepartamentoId"
+                                formmethod="post"
+                                class="btn btn-success">
+
+                            <i class="bi bi-check-circle-fill"></i>
+                            Ativar
+
+                        </button>
+                    }
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <partial name="_Auditoria"
+                     model="Model" />
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

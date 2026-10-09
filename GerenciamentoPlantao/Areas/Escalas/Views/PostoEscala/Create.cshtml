@@ -1,0 +1,110 @@
+﻿@using GerenciamentoPlantao.Models.ViewModels.Adicionar
+@model PostoEscalaFormViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar Posto";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-person-workspace"></i> Cadastrar Posto
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <!-- NOME -->
+                <div class="mb-3">
+
+                    <label asp-for="Nome"
+                           class="form-label fw-bold">
+                        Nome do Posto
+                    </label>
+
+                    <input asp-for="Nome"
+                           class="form-control form-control-lg"
+                           autocomplete="off"
+                           placeholder="Digite o nome do posto" />
+
+                    <span asp-validation-for="Nome"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="mb-3">
+
+                    <label asp-for="DepartamentoId"
+                           class="form-label fw-bold">
+                        Departamento
+                    </label>
+
+                    <select asp-for="DepartamentoId"
+                            asp-items="Model.Departamentos"
+                            class="form-select">
+
+                        <option value="">
+                            Selecione um departamento
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="DepartamentoId"
+                          class="text-danger">
+                    </span>
+
+                    <span class="form-text">
+                        O departamento do posto não poderá ser alterado posteriormente.
+                    </span>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar
+
+                    </button>
+
+                    <a asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

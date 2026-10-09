@@ -35,6 +35,6 @@ namespace GerenciamentoPlantao.Models.ViewModels.Adicionar
         public string Telefone { get; set; } = string.Empty;
 
         public bool Plantonista { get; set; }
-        public IEnumerable<SelectListItem>? Departamentos { get; set; }
+        public IEnumerable<SelectListItem>? Departamentos { get; set; } = Enumerable.Empty<SelectListItem>();
     }
 }

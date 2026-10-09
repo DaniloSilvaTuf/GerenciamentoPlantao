@@ -20,7 +20,8 @@
              style="width:260px; min-height:100vh;">
 
             <h4 class="text-center fw-bold mb-4">
-                <a asp-controller="Dashboard"
+                <a asp-area=""
+                   asp-controller="Dashboard"
                    asp-action="Index"
                    class="text-white text-decoration-none">
 
@@ -36,88 +37,151 @@
 
             <ul class="nav flex-column gap-1">
 
-                <!-- Acionamentos -->
+                <!-- ACIONAMENTOS -->
                 <li class="nav-item">
                     <a class="nav-link text-white"
+                       asp-area=""
                        asp-controller="Acionamentos"
                        asp-action="Index">
+
                         <i class="bi bi-telephone"></i>
                         Acionamentos
+
                     </a>
                 </li>
 
-                <!-- Cadastros -->
+
+                <!-- ESCALA -->
+                <li class="nav-item">
+                    <a class="nav-link text-white"
+                       asp-area="Escalas"
+                       asp-controller="Escala"
+                       asp-action="Index">
+
+                        <i class="bi bi-calendar3"></i>
+                        Escala
+
+                    </a>
+                </li>
+
+
+                <!-- USUÁRIOS -->
+                <li class="nav-item">
+                    <a class="nav-link text-white"
+                       asp-area=""
+                       asp-controller="Usuarios"
+                       asp-action="Index">
+
+                        <i class="bi bi-people"></i>
+                        Usuários
+
+                    </a>
+                </li>
+
+
+                <!-- CADASTROS ESCALAS -->
                 <li class="nav-item">
 
                     <a class="nav-link text-white d-flex justify-content-between align-items-center"
                        data-bs-toggle="collapse"
-                       href="#menuCadastros"
-                       role="button">
+                       href="#menuCadastrosEscalas"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="menuCadastrosEscalas">
 
                         <span>
-                            <i class="bi bi-folder"></i>
-                            Cadastros
+                            <i class="bi bi-calendar2-week"></i>
+                            Cadastros Escalas
                         </span>
 
                         <i class="bi bi-chevron-down"></i>
 
                     </a>
 
-                    <div class="collapse" id="menuCadastros">
+                    <div class="collapse" id="menuCadastrosEscalas">
 
                         <ul class="nav flex-column ms-3 mt-2">
 
+                            <!-- APOIOS AOS PLANTONISTAS -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Estabelecimentos"
+                                   asp-area="Escalas"
+                                   asp-controller="ApoioPlantonistaEscala"
                                    asp-action="Index">
-                                    <i class="bi bi-building"></i>
-                                    Estabelecimentos
+
+                                    <i class="bi bi-person-check"></i>
+                                    Apoios aos Plantonistas
+
                                 </a>
                             </li>
 
+
+                            <!-- BLOCOS DE HORÁRIO -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Setores"
+                                   asp-area="Escalas"
+                                   asp-controller="BlocoHorarioEscala"
                                    asp-action="Index">
-                                    <i class="bi bi-diagram-3"></i>
-                                    Setores
+
+                                    <i class="bi bi-clock"></i>
+                                    Blocos de Horário
+
                                 </a>
                             </li>
 
+
+                            <!-- DATAS ESPECIAIS -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Departamentos"
+                                   asp-area="Escalas"
+                                   asp-controller="DataEspecialEscala"
                                    asp-action="Index">
-                                    <i class="bi bi-collection"></i>
-                                    Departamentos
+
+                                    <i class="bi bi-calendar-event"></i>
+                                    Datas Especiais
+
                                 </a>
                             </li>
 
+
+                            <!-- ESCALA BASE -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Canais"
+                                   asp-area="Escalas"
+                                   asp-controller="EscalaBase"
                                    asp-action="Index">
-                                    <i class="bi bi-chat-dots"></i>
-                                    Canais de Atendimento
+
+                                    <i class="bi bi-calendar-range"></i>
+                                    Escala Base
+
                                 </a>
                             </li>
 
+
+                            <!-- POSTOS -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="CategoriasAcionamento"
+                                   asp-area="Escalas"
+                                   asp-controller="PostoEscala"
                                    asp-action="Index">
-                                    <i class="bi bi-tags"></i>
-                                    Categorias de Acionamento
+
+                                    <i class="bi bi-person-workspace"></i>
+                                    Postos
+
                                 </a>
                             </li>
 
+
+                            <!-- REGRAS DE ROTAÇÃO -->
                             <li class="nav-item">
                                 <a class="nav-link text-white"
-                                   asp-controller="Solucoes"
+                                   asp-area="Escalas"
+                                   asp-controller="RegraRotacao"
                                    asp-action="Index">
-                                    <i class="bi bi-check2-circle"></i>
-                                    Soluções
+
+                                    <i class="bi bi-arrow-repeat"></i>
+                                    Regras de Rotação
+
                                 </a>
                             </li>
 
@@ -127,14 +191,117 @@
 
                 </li>
 
-                <!-- Usuários -->
+
+                <!-- CADASTROS GERAIS -->
                 <li class="nav-item">
-                    <a class="nav-link text-white"
-                       asp-controller="Usuarios"
-                       asp-action="Index">
-                        <i class="bi bi-people"></i>
-                        Usuários
+
+                    <a class="nav-link text-white d-flex justify-content-between align-items-center"
+                       data-bs-toggle="collapse"
+                       href="#menuCadastrosGerais"
+                       role="button"
+                       aria-expanded="false"
+                       aria-controls="menuCadastrosGerais">
+
+                        <span>
+                            <i class="bi bi-folder"></i>
+                            Cadastros Gerais
+                        </span>
+
+                        <i class="bi bi-chevron-down"></i>
+
                     </a>
+
+                    <div class="collapse" id="menuCadastrosGerais">
+
+                        <ul class="nav flex-column ms-3 mt-2">
+
+                            <!-- CANAIS DE ATENDIMENTO -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="Canais"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-chat-dots"></i>
+                                    Canais de Atendimento
+
+                                </a>
+                            </li>
+
+
+                            <!-- CATEGORIAS DE ACIONAMENTO -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="CategoriasAcionamento"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-tags"></i>
+                                    Categorias de Acionamento
+
+                                </a>
+                            </li>
+
+
+                            <!-- DEPARTAMENTOS -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="Departamentos"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-collection"></i>
+                                    Departamentos
+
+                                </a>
+                            </li>
+
+
+                            <!-- ESTABELECIMENTOS -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="Estabelecimentos"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-building"></i>
+                                    Estabelecimentos
+
+                                </a>
+                            </li>
+
+
+                            <!-- SETORES -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="Setores"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-diagram-3"></i>
+                                    Setores
+
+                                </a>
+                            </li>
+
+
+                            <!-- SOLUÇÕES -->
+                            <li class="nav-item">
+                                <a class="nav-link text-white"
+                                   asp-area=""
+                                   asp-controller="Solucoes"
+                                   asp-action="Index">
+
+                                    <i class="bi bi-check2-circle"></i>
+                                    Soluções
+
+                                </a>
+                            </li>
+
+                        </ul>
+
+                    </div>
+
                 </li>
 
             </ul>
@@ -167,7 +334,8 @@
 
                             <div>
 
-                                <a asp-controller="Usuarios"
+                                <a asp-area=""
+                                   asp-controller="Usuarios"
                                    asp-action="Edit"
                                    asp-route-id="@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value"
                                    class="d-flex align-items-center me-4 text-decoration-none text-dark">
@@ -190,7 +358,8 @@
 
                         </div>
 
-                        <form asp-controller="Conta"
+                        <form asp-area=""
+                              asp-controller="Conta"
                               asp-action="Logout"
                               method="post">
 
@@ -284,18 +453,20 @@
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
     @if (TempData["ErroMensagem"] != null)
     {
         <script>
-                document.addEventListener("DOMContentLoaded", function() {
-                    var modalErro = new bootstrap.Modal(
-                        document.getElementById("modalErro")
-                    );
+            document.addEventListener("DOMContentLoaded", function() {
+                var modalErro = new bootstrap.Modal(
+                    document.getElementById("modalErro")
+                );
 
-                    modalErro.show();
-                });
+                modalErro.show();
+            });
         </script>
     }
+
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

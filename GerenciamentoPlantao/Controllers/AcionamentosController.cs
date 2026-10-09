@@ -1,14 +1,16 @@
-﻿using GerenciamentoPlantao.Services;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Authorization;
-using GerenciamentoPlantao.Constantes;
-using GerenciamentoPlantao.Models.ViewModels.Adicionar;
-using GerenciamentoPlantao.Models.ViewModels.Editar;
+﻿using GerenciamentoPlantao.Constantes;
 using GerenciamentoPlantao.Data;
-using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Enums;
+using GerenciamentoPlantao.Models.ViewModels.Adicionar;
+using GerenciamentoPlantao.Models.ViewModels.Editar;
+using GerenciamentoPlantao.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Net.NetworkInformation;
 
 namespace GerenciamentoPlantao.Controllers
 {
@@ -38,14 +40,15 @@ namespace GerenciamentoPlantao.Controllers
             _usuarioService = usuarioService;
         }
 
-        public async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, int paginaAtual = 1)
+        public async Task<IActionResult> Index(string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, StatusAcionamento? statusAcionamento, int paginaAtual = 1)
         {
             var tamanhoPagina = 20;
             var usuarioId = (await _usuarioLogadoService.ObterUsuarioLogadoAsync()).Id;
             var usuario = await _usuarioService.FindByIdAsync(usuarioId);
             var departamentoId = usuario.DepartamentoId;
 
-            var lista = await _acionamentoService.FindAllAsync(paginaAtual, tamanhoPagina, ordenarPor, direcao, plantonistaId, estabelecimentoId, categoriaId, setorId, departamentoId);
+            var lista = await _acionamentoService.FindAllAsync(
+                paginaAtual, tamanhoPagina, ordenarPor, direcao, plantonistaId, estabelecimentoId, categoriaId, setorId, departamentoId, statusAcionamento);
 
             ViewBag.OrdenarPor = ordenarPor;
             ViewBag.Direcao = direcao;
@@ -53,6 +56,7 @@ namespace GerenciamentoPlantao.Controllers
             ViewBag.EstabelecimentoId = estabelecimentoId;
             ViewBag.CategoriaId = categoriaId;
             ViewBag.SetorId = setorId;
+            ViewBag.StatusAcionamento = statusAcionamento;
 
             ViewBag.Estabelecimentos = await _estabelecimentoService.FindAllActiveAsync();
             ViewBag.Categorias = await _categoriaService.FindAllDepartmentActiveAsync(departamentoId);
@@ -98,6 +102,11 @@ namespace GerenciamentoPlantao.Controllers
                 {
                     Value = s.Id.ToString(),
                     Text = s.Nome
+                }),
+                Status = Enum.GetValues<StatusAcionamento>().Select(s => new SelectListItem
+                {
+                    Value = s.ToString(),
+                    Text = s.ToString()
                 })
             };
             return View(vm);
@@ -109,6 +118,7 @@ namespace GerenciamentoPlantao.Controllers
         {
             if (!ModelState.IsValid)
             {
+
                 return View(vm);
             }
 
@@ -166,6 +176,13 @@ namespace GerenciamentoPlantao.Controllers
                 Apoio = acionamento.Apoio,
                 Observacao = acionamento.Observacao,
                 
+                StatusAcionamento = acionamento.StatusAcionamento,
+                Status = Enum.GetValues<StatusAcionamento>().Select(s => new SelectListItem
+                {
+                    Value = s.ToString(),
+                    Text = s.ToString()
+                }),
+
                 DataInsert = acionamento.DataInsert,
                 UsuarioInsertNome = acionamento.UsuarioInsert?.DescNome,
                 DataUpdate = acionamento.DataUpdate,
@@ -209,6 +226,12 @@ namespace GerenciamentoPlantao.Controllers
                     Value = s.Id.ToString(),
                     Text = s.Nome
                 });
+                vm.Status = Enum.GetValues<StatusAcionamento>().Select(s => new SelectListItem
+                {
+                    Value = s.ToString(),
+                    Text = s.ToString()
+                });
+                return View(vm);
             }
 
             await _acionamentoService.AlterarAcionamentoAsync(vm);

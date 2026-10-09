@@ -63,7 +63,6 @@
 
                 </div>
 
-
                 <!-- Canal -->
                 <div class="mb-3">
 
@@ -87,7 +86,6 @@
                     </span>
 
                 </div>
-
 
                 <!-- Acionador / Nº Atendimento -->
                 <div class="row">
@@ -127,7 +125,6 @@
                     </div>
 
                 </div>
-
 
                 <!-- Estabelecimento / Setor -->
                 <div class="row">
@@ -181,7 +178,6 @@
 
                 </div>
 
-
                 <!-- Categoria / Solução -->
                 <div class="row">
 
@@ -233,33 +229,58 @@
 
                 </div>
 
+                <!-- Status / Apoio -->
+                <div class="row">
 
-                <!-- Apoio -->
-                <div class="mb-3">
+                    <div class="col-md-6 mb-3">
 
-                    <label class="form-label fw-bold d-block">
-                        Apoio
-                    </label>
-
-                    <div class="form-check">
-
-                        <input asp-for="Apoio"
-                               class="form-check-input"
-                               type="checkbox" />
-
-                        <label asp-for="Apoio"
-                               class="form-check-label">
-                            Necessitou de apoio
+                        <label asp-for="StatusAcionamento"
+                               class="form-label fw-bold">
+                            Status
                         </label>
+
+                        <select asp-for="StatusAcionamento"
+                                asp-items="Model.Status"
+                                class="form-select">
+
+                            <option value="">
+                                Selecione...
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="StatusAcionamento"
+                              class="text-danger">
+                        </span>
 
                     </div>
 
-                    <span asp-validation-for="Apoio"
-                          class="text-danger">
-                    </span>
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-bold d-block">
+                            Apoio
+                        </label>
+
+                        <div class="form-check">
+
+                            <input asp-for="Apoio"
+                                   class="form-check-input"
+                                   type="checkbox" />
+
+                            <label asp-for="Apoio"
+                                   class="form-check-label">
+                                Necessitou de apoio
+                            </label>
+
+                        </div>
+
+                        <span asp-validation-for="Apoio"
+                              class="text-danger">
+                        </span>
+
+                    </div>
 
                 </div>
-
 
                 <!-- Observações -->
                 <div class="mb-3">
@@ -280,7 +301,6 @@
                     </span>
 
                 </div>
-
 
                 <!-- Botões -->
                 <div class="d-flex gap-2">
@@ -310,7 +330,6 @@
     </div>
 
 </div>
-
 
 @section Scripts {
 
@@ -356,44 +375,48 @@
                 this.value = valor;
 
             });
-
     </script>
 
     <script>
-    document.getElementById("NrAtendimento")
-        .addEventListener("input", function () {
-            this.value = this.value.replace(/\D/g, '');
-        });
+        document.getElementById("NrAtendimento")
+            .addEventListener("input", function () {
+                this.value = this.value.replace(/\D/g, '');
+            });
     </script>
 
     <script>
         document.getElementById("EstabelecimentoId")
-        .addEventListener("change", async function () {
-            
-            const estabelecimentoId = this.value;
-            const setorSelect = document.getElementById("SetorId");
+            .addEventListener("change", async function () {
 
-            if(!estabelecimentoId){
+                const estabelecimentoId = this.value;
+                const setorSelect = document.getElementById("SetorId");
+
+                if (!estabelecimentoId) {
+                    setorSelect.innerHTML = '<option value="">Selecione...</option>';
+                    setorSelect.disabled = true;
+                    return;
+                }
+
+                const response = await fetch(
+                    `/Acionamentos/ObterSetoresPorEstabelecimento?estabelecimentoId=${estabelecimentoId}`
+                );
+
+                const setores = await response.json();
+
                 setorSelect.innerHTML = '<option value="">Selecione...</option>';
-                setorSelect.disabled = true;
-                return;
-            }
 
-            const response = await fetch(`/Acionamentos/ObterSetoresPorEstabelecimento?estabelecimentoId=${estabelecimentoId}`);
-           
-            const setores = await response.json();
-            setorSelect.innerHTML = '<option value="">Selecione...</option>'
+                setores.forEach(setor => {
 
-            setores.forEach(setor => {
-                const option = document.createElement("option");
-                
-                option.value = setor.value;
-                option.text = setor.text;
+                    const option = document.createElement("option");
 
-                setorSelect.appendChild(option);
+                    option.value = setor.value;
+                    option.text = setor.text;
+
+                    setorSelect.appendChild(option);
+                });
+
+                setorSelect.disabled = false;
             });
-            setorSelect.disabled = false;
-        });
     </script>
 
 }

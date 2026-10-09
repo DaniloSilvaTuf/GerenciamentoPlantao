@@ -3,6 +3,7 @@ using GerenciamentoPlantao.Data.Seed;
 using GerenciamentoPlantao.Middleware;
 using GerenciamentoPlantao.Models;
 using GerenciamentoPlantao.Services;
+using GerenciamentoPlantao.Services.Escalas;
 using GerenciamentoPlantao.Services.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +50,10 @@ builder.Services.AddScoped<AcionamentoService>();
 builder.Services.AddScoped<IUsuarioLogadoService, UsuarioLogadoService>();
 builder.Services.AddScoped<DashboardService>();
 builder.Services.AddScoped<IUserClaimsPrincipalFactory<Usuario>, CustomClaimsPrincipalFactory>();
+builder.Services.AddScoped<PostoEscalaService>();
+builder.Services.AddScoped<BlocoHorarioEscalaService>();
+builder.Services.AddScoped<DataEspecialEscalaService>();
+builder.Services.AddScoped<RegraRotacaoEscalaService>();
 
 var app = builder.Build();
 
@@ -79,6 +84,10 @@ app.UseAuthentication();
 app.UseMiddleware<TrocaSenhaObrigatoriaMiddleware>();
 
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",

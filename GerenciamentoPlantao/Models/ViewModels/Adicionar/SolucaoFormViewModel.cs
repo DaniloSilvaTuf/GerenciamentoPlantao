@@ -10,6 +10,6 @@ namespace GerenciamentoPlantao.Models.ViewModels.Adicionar
         public string Nome { get; set; } = string.Empty;
 
         public int DepartamentoId { get; set; }
-        public IEnumerable<SelectListItem> Departamentos { get; set; } = null!;
+        public IEnumerable<SelectListItem> Departamentos { get; set; } = Enumerable.Empty<SelectListItem>();
     }
 }

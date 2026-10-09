@@ -1,6 +1,7 @@
 ﻿using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Enums;
 using GerenciamentoPlantao.Models.Paginacao;
 using GerenciamentoPlantao.Models.ViewModels.Adicionar;
 using GerenciamentoPlantao.Models.ViewModels.Editar;
@@ -21,7 +22,7 @@ namespace GerenciamentoPlantao.Services
         }
 
         public async Task<PagedResult<Acionamento>> FindAllAsync(
-            int paginaAtual, int tamanhoPagina, string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, int? departamentoId)
+            int paginaAtual, int tamanhoPagina, string? ordenarPor, string? direcao, string? plantonistaId, int? estabelecimentoId, int? categoriaId, int? setorId, int? departamentoId, StatusAcionamento? statusAcionamento)
         {
             IQueryable<Acionamento> query = _context.Acionamentos
                 .Include(a => a.Canal)
@@ -56,6 +57,11 @@ namespace GerenciamentoPlantao.Services
                 query = query.Where(a => a.DepartamentoId == departamentoId.Value);
             }
 
+            if (statusAcionamento.HasValue)
+            {
+                query = query.Where(a => a.StatusAcionamento == statusAcionamento.Value);
+            }
+
             switch (ordenarPor)
             {
                 case "dataAcionamento":
@@ -87,6 +93,11 @@ namespace GerenciamentoPlantao.Services
                         ? query.OrderByDescending(a => a.Setor.Nome) 
                         : query.OrderBy(a => a.Setor.Nome);
                     break;
+                case "status":
+                    query = direcao == "desc" 
+                        ? query.OrderByDescending(a => a.StatusAcionamento) 
+                        : query.OrderBy(a => a.StatusAcionamento);
+                    break;
 
                 default:
                     query = query.OrderByDescending(a => a.DataAcionamento);
@@ -94,7 +105,6 @@ namespace GerenciamentoPlantao.Services
             }
 
             return await PagedResult<Acionamento>.CriarAsync(query, paginaAtual, tamanhoPagina);
-
         }
 
         public async Task<Acionamento> FindByIdAsync(int id)
@@ -147,7 +157,8 @@ namespace GerenciamentoPlantao.Services
                 vm.CategoriaId,
                 vm.SolucaoId,
                 vm.Apoio,
-                vm.Observacao
+                vm.Observacao,
+                vm.StatusAcionamento
             );
 
             _context.Acionamentos.Add(acionamento);
@@ -175,7 +186,8 @@ namespace GerenciamentoPlantao.Services
                 vm.Acionador,
                 vm.NrAtendimento,
                 DateTime.Now,
-                usuario.Id
+                usuario.Id,
+                vm.StatusAcionamento
             );
 
             _context.Acionamentos.Update(acionamento);

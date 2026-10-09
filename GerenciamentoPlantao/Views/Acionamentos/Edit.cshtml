@@ -232,30 +232,56 @@
 
                 </div>
 
-                <!-- Apoio -->
-                <div class="mb-3">
+                <!-- Status / Apoio -->
+                <div class="row">
 
-                    <label class="form-label fw-bold d-block">
-                        Apoio
-                    </label>
+                    <div class="col-md-6 mb-3">
 
-                    <div class="form-check">
-
-                        <input asp-for="Apoio"
-                               class="form-check-input"
-                               type="checkbox"
-                               disabled="@(!podeEditar)" />
-
-                        <label asp-for="Apoio"
-                               class="form-check-label">
-                            Necessitou de apoio
+                        <label asp-for="StatusAcionamento"
+                               class="form-label fw-bold">
+                            Status
                         </label>
+
+                        <select asp-for="StatusAcionamento"
+                                asp-items="Model.Status"
+                                class="form-select"
+                                disabled="@(!podeEditar)">
+
+                            <option value="">Selecione...</option>
+
+                        </select>
+
+                        <span asp-validation-for="StatusAcionamento"
+                              class="text-danger">
+                        </span>
 
                     </div>
 
-                    <span asp-validation-for="Apoio"
-                          class="text-danger">
-                    </span>
+                    <div class="col-md-6 mb-3">
+
+                        <label class="form-label fw-bold d-block">
+                            Apoio
+                        </label>
+
+                        <div class="form-check">
+
+                            <input asp-for="Apoio"
+                                   class="form-check-input"
+                                   type="checkbox"
+                                   disabled="@(!podeEditar)" />
+
+                            <label asp-for="Apoio"
+                                   class="form-check-label">
+                                Necessitou de apoio
+                            </label>
+
+                        </div>
+
+                        <span asp-validation-for="Apoio"
+                              class="text-danger">
+                        </span>
+
+                    </div>
 
                 </div>
 
@@ -439,12 +465,15 @@
                         return;
                     }
 
-                    const response = await fetch(`/Acionamentos/ObterSetoresPorEstabelecimento?estabelecimentoId=${estabelecimentoId}`);
+                    const response = await fetch(
+                        `/Acionamentos/ObterSetoresPorEstabelecimento?estabelecimentoId=${estabelecimentoId}`
+                    );
 
                     const setores = await response.json();
                     setorSelect.innerHTML = '<option value="">Selecione...</option>';
 
                     setores.forEach(setor => {
+
                         const option = document.createElement("option");
 
                         option.value = setor.value;
@@ -452,6 +481,7 @@
 
                         setorSelect.appendChild(option);
                     });
+
                     setorSelect.disabled = false;
                 });
         </script>

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using GerenciamentoPlantao.Models.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 
@@ -38,5 +39,9 @@ namespace GerenciamentoPlantao.Models.ViewModels.Editar
         
         public bool Apoio { get; set; }
         public string? Observacao { get; set; }
+
+        [Required(ErrorMessage = "Selecione um status.")]
+        public StatusAcionamento StatusAcionamento { get; set; }
+        public IEnumerable<SelectListItem> Status { get; set; } = Enumerable.Empty<SelectListItem>();
     }
 }

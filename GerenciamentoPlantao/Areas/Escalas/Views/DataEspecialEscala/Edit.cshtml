@@ -1,0 +1,137 @@
+﻿@model GerenciamentoPlantao.Models.ViewModels.Editar.EditarDataEspecialFormViewModel
+
+@{
+    ViewData["Title"] = "Editar Data Especial";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3 class="mb-0">
+                <i class="bi bi-calendar-event"></i> Editar Data Especial
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <form asp-area="Escalas"
+                  asp-controller="DataEspecialEscala"
+                  asp-action="Edit"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <input asp-for="Id"
+                       type="hidden" />
+
+                <input asp-for="DepartamentoId"
+                       type="hidden" />
+
+                <!-- DESCRIÇÃO -->
+                <div class="mb-3">
+
+                    <label asp-for="Descricao"
+                           class="form-label fw-bold">
+                        Descrição
+                    </label>
+
+                    <input asp-for="Descricao"
+                           class="form-control form-control-lg"
+                           autocomplete="off"
+                           placeholder="Ex.: Natal, Ano Novo, Aniversário da Cidade..." />
+
+                    <span asp-validation-for="Descricao"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Departamento
+                    </label>
+
+                    <input type="text"
+                           class="form-control"
+                           value="@Model.DepartamentoNome"
+                           readonly />
+
+                    <div class="form-text">
+                        O departamento da data especial não pode ser alterado após o cadastro.
+                    </div>
+
+                </div>
+
+                <!-- DATA ESPECIAL -->
+                <div class="mb-3">
+
+                    <label asp-for="NovaData"
+                           class="form-label fw-bold">
+                        Data Especial
+                    </label>
+
+                    <input asp-for="NovaData"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="NovaData"
+                          class="text-danger">
+                    </span>
+
+                    <div class="form-text">
+                        Informe a data que será considerada especial na geração das escalas.
+                    </div>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar
+
+                    </button>
+
+                    <a asp-area="Escalas"
+                       asp-controller="DataEspecialEscala"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+            <!-- AUDITORIA -->
+            <partial name="_Auditoria"
+                     model="Model" />
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

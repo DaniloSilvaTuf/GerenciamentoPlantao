@@ -1,0 +1,201 @@
+﻿@using GerenciamentoPlantao.Models.ViewModels.Adicionar
+@using GerenciamentoPlantao.Models.Enums
+@model BlocoHorarioEscalaViewModel
+
+@{
+    ViewData["Title"] = "Cadastrar Bloco de Horário";
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-clock-history"></i> Cadastrar Bloco de Horário
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-area="Escalas"
+                  asp-controller="BlocoHorarioEscala"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="alert alert-danger">
+                </div>
+
+                <!-- NOME -->
+                <div class="mb-3">
+
+                    <label asp-for="Nome"
+                           class="form-label fw-bold">
+                        Nome do Bloco
+                    </label>
+
+                    <input asp-for="Nome"
+                           class="form-control form-control-lg"
+                           autocomplete="off"
+                           placeholder="Digite o nome do bloco" />
+
+                    <span asp-validation-for="Nome"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="mb-3">
+
+                    <label asp-for="DepartamentoId"
+                           class="form-label fw-bold">
+                        Departamento
+                    </label>
+
+                    <select asp-for="DepartamentoId"
+                            asp-items="Model.Departamentos"
+                            class="form-select">
+
+                        <option value="">
+                            Selecione um departamento
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="DepartamentoId"
+                          class="text-danger">
+                    </span>
+
+                    <span class="form-text">
+                        O departamento do bloco não poderá ser alterado posteriormente.
+                    </span>
+
+                </div>
+
+                <!-- DIAS DA SEMANA -->
+                <div class="mb-3">
+
+                    <label class="form-label fw-bold">
+                        Dias da Semana
+                    </label>
+
+                    <div class="border rounded p-3">
+
+                        <div class="d-flex flex-wrap gap-4">
+
+                            @foreach (TipoDiaSemana dia in Enum.GetValues(typeof(TipoDiaSemana)))
+                            {
+                                <div class="form-check">
+
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="DiasSemana"
+                                           value="@((int)dia)"
+                                           id="dia-@((int)dia)"
+                                           checked="@(Model.DiasSemana.Contains(dia))" />
+
+                                    <label class="form-check-label"
+                                           for="dia-@((int)dia)">
+                                        @dia
+                                    </label>
+
+                                </div>
+                            }
+
+                        </div>
+
+                    </div>
+
+                    <span asp-validation-for="DiasSemana"
+                          class="text-danger">
+                    </span>
+
+                    <span class="form-text">
+                        Selecione todos os dias em que este bloco de horário será utilizado.
+                    </span>
+
+                </div>
+
+                <!-- HORÁRIOS -->
+                <div class="row">
+
+                    <!-- HORA INICIAL -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="HoraInicio"
+                               class="form-label fw-bold">
+                            Hora Inicial
+                        </label>
+
+                        <input asp-for="HoraInicio"
+                               type="time"
+                               class="form-control" />
+
+                        <span asp-validation-for="HoraInicio"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                    <!-- HORA FINAL -->
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="HoraFim"
+                               class="form-label fw-bold">
+                            Hora Final
+                        </label>
+
+                        <input asp-for="HoraFim"
+                               type="time"
+                               class="form-control" />
+
+                        <span asp-validation-for="HoraFim"
+                              class="text-danger">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex gap-2">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar
+
+                    </button>
+
+                    <a asp-area="Escalas"
+                       asp-controller="BlocoHorarioEscala"
+                       asp-action="Index"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Voltar
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

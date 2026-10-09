@@ -61,6 +61,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = d.Id.ToString(),
                     Text = d.Nome
                 });
+                return View(vm);
             }
 
             await _solucaoService.InserirSolucaoAsync(vm);

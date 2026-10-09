@@ -138,6 +138,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = e.Id.ToString(),
                     Text = e.Nome
                 });
+                return View(vm);
             }
 
             await _usuarioService.AlterarUsuarioAsync(vm);

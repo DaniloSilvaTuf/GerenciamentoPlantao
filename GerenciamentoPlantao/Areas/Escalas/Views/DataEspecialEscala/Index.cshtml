@@ -1,0 +1,316 @@
+﻿@model GerenciamentoPlantao.Models.Paginacao.PagedResult<GerenciamentoPlantao.Models.Escala.DataEspecialEscala>
+
+@{
+    ViewData["Title"] = "Datas Especiais";
+
+    string busca = ViewBag.Busca as string ?? "";
+    string ordenarPor = ViewBag.OrdenarPor as string ?? "";
+    string direcao = ViewBag.Direcao as string ?? "";
+    int? departamentoId = ViewBag.DepartamentoId;
+
+    string ProximaDirecao(string coluna)
+    {
+        if (ordenarPor == coluna && direcao != "desc")
+            return "desc";
+
+        return "asc";
+    }
+
+    string IconeOrdenacao(string coluna)
+    {
+        if (ordenarPor != coluna)
+            return "bi-arrow-down-up";
+
+        return direcao == "desc"
+            ? "bi-arrow-down"
+            : "bi-arrow-up";
+    }
+
+    var paginacao = new GerenciamentoPlantao.Models.ViewModels.PaginacaoViewModel
+    {
+        PaginaAtual = Model.PaginaAtual,
+        TotalPaginas = Model.TotalPaginas,
+        TotalItens = Model.TotalItens,
+        Action = "Index",
+        Controller = "DataEspecialEscala",
+
+        ParametrosRota = new Dictionary<string, string?>
+        {
+            ["busca"] = busca,
+            ["departamentoId"] = departamentoId?.ToString(),
+            ["ordenarPor"] = ordenarPor,
+            ["direcao"] = direcao
+        }
+    };
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <!-- CABEÇALHO -->
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+            <h3 class="mb-0">
+                <i class="bi bi-calendar-event me-2"></i>
+                Datas Especiais
+            </h3>
+
+            <a asp-area="Escalas"
+               asp-controller="DataEspecialEscala"
+               asp-action="Create"
+               class="btn btn-light">
+
+                <i class="bi bi-plus-circle"></i>
+                Cadastrar Novo
+
+            </a>
+
+        </div>
+
+        <div class="card-body">
+
+            <!-- FILTROS -->
+            <form asp-area="Escalas"
+                  asp-controller="DataEspecialEscala"
+                  asp-action="Index"
+                  method="get"
+                  class="row g-2 mb-3">
+
+                <input type="hidden"
+                       name="ordenarPor"
+                       value="@ordenarPor" />
+
+                <input type="hidden"
+                       name="direcao"
+                       value="@direcao" />
+
+                <!-- BUSCA -->
+                <div class="col-md-5">
+
+                    <input type="text"
+                           name="busca"
+                           value="@busca"
+                           class="form-control"
+                           placeholder="Digite a descrição da data especial..." />
+
+                </div>
+
+                <!-- DEPARTAMENTO -->
+                <div class="col-md-4">
+
+                    <select name="departamentoId"
+                            class="form-select">
+
+                        <option value="">
+                            Todos os departamentos
+                        </option>
+
+                        @foreach (var departamento in ViewBag.Departamentos)
+                        {
+                            if (departamentoId == departamento.Id)
+                            {
+                                <option value="@departamento.Id" selected>
+                                    @departamento.Nome
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@departamento.Id">
+                                    @departamento.Nome
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
+                <!-- BOTÃO BUSCAR -->
+                <div class="col-auto">
+
+                    <button type="submit"
+                            class="btn btn-primary">
+
+                        <i class="bi bi-search"></i>
+                        Buscar
+
+                    </button>
+
+                </div>
+
+                <!-- BOTÃO LIMPAR -->
+                @if (!string.IsNullOrWhiteSpace(busca) || departamentoId != null)
+                {
+                    <div class="col-auto">
+
+                        <a asp-area="Escalas"
+                           asp-controller="DataEspecialEscala"
+                           asp-action="Index"
+                           class="btn btn-outline-secondary">
+
+                            Limpar
+
+                        </a>
+
+                    </div>
+                }
+
+            </form>
+
+            <!-- TABELA -->
+            <div class="table-responsive">
+
+                <table class="table table-hover table-striped align-middle">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <!-- DESCRIÇÃO -->
+                            <th>
+
+                                <a asp-area="Escalas"
+                                   asp-controller="DataEspecialEscala"
+                                   asp-action="Index"
+                                   asp-route-busca="@busca"
+                                   asp-route-departamentoId="@departamentoId"
+                                   asp-route-ordenarPor="descricao"
+                                   asp-route-direcao="@ProximaDirecao("descricao")"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Descrição
+
+                                    <i class="bi @IconeOrdenacao("descricao") @(ordenarPor == "descricao" ? "" : "text-muted")"></i>
+
+                                </a>
+
+                            </th>
+
+                            <!-- DEPARTAMENTO -->
+                            <th>
+
+                                <a asp-area="Escalas"
+                                   asp-controller="DataEspecialEscala"
+                                   asp-action="Index"
+                                   asp-route-busca="@busca"
+                                   asp-route-departamentoId="@departamentoId"
+                                   asp-route-ordenarPor="departamento"
+                                   asp-route-direcao="@ProximaDirecao("departamento")"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Departamento
+
+                                    <i class="bi @IconeOrdenacao("departamento") @(ordenarPor == "departamento" ? "" : "text-muted")"></i>
+
+                                </a>
+
+                            </th>
+
+                            <!-- DATA -->
+                            <th>
+
+                                <a asp-area="Escalas"
+                                   asp-controller="DataEspecialEscala"
+                                   asp-action="Index"
+                                   asp-route-busca="@busca"
+                                   asp-route-departamentoId="@departamentoId"
+                                   asp-route-ordenarPor="data"
+                                   asp-route-direcao="@ProximaDirecao("data")"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Data
+
+                                    <i class="bi @IconeOrdenacao("data") @(ordenarPor == "data" ? "" : "text-muted")"></i>
+
+                                </a>
+
+                            </th>
+
+                            <!-- AÇÕES -->
+                            <th class="text-end">
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        @if (!Model.Items.Any())
+                        {
+                            <tr>
+
+                                <td colspan="4"
+                                    class="text-center text-muted py-4">
+
+                                    Nenhuma data especial encontrada.
+
+                                </td>
+
+                            </tr>
+                        }
+                        else
+                        {
+                            @foreach (var item in Model.Items)
+                            {
+                                <tr>
+
+                                    <!-- DESCRIÇÃO -->
+                                    <td>
+                                        @item.Descricao
+                                    </td>
+
+                                    <!-- DEPARTAMENTO -->
+                                    <td>
+                                        @item.Departamento?.Nome
+                                    </td>
+
+                                    <!-- DATA -->
+                                    <td>
+                                        @item.Data.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <!-- AÇÕES -->
+                                    <td class="text-end">
+
+                                        <a asp-area="Escalas"
+                                           asp-controller="DataEspecialEscala"
+                                           asp-action="Edit"
+                                           asp-route-id="@item.Id"
+                                           asp-route-departamentoId="@item.DepartamentoId"
+                                           class="btn btn-outline-primary btn-sm">
+
+                                            <i class="bi bi-pencil-square"></i>
+                                            Editar
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- PAGINAÇÃO -->
+            <partial name="_Paginacao"
+                     model="paginacao" />
+
+        </div>
+
+    </div>
+
+</div>

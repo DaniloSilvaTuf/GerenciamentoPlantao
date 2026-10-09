@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Web;
+﻿using GerenciamentoPlantao.Models.Enums;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace GerenciamentoPlantao.Models
 {
@@ -25,8 +26,9 @@ namespace GerenciamentoPlantao.Models
         public Solucao Solucao { get; set; } = null!;
         public int SolucaoId { get; set; }
         public string? Observacao { get; set; }
+        public StatusAcionamento StatusAcionamento { get; set; }
 
-        public Acionamento(DateTime dataAcionamento, int canalId, string usuarioId, int departamentoId, string? acionador, int? nrAtendimento, int estabelecimentoId, int setorId, int categoriaAcionamentoId, int solucaoId, bool apoio, string? observacao)
+        public Acionamento(DateTime dataAcionamento, int canalId, string usuarioId, int departamentoId, string? acionador, int? nrAtendimento, int estabelecimentoId, int setorId, int categoriaAcionamentoId, int solucaoId, bool apoio, string? observacao, StatusAcionamento statusAcionamento)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;
@@ -42,11 +44,12 @@ namespace GerenciamentoPlantao.Models
             Observacao = observacao;
             DataInsert = DateTime.Now;
             UsuarioInsertId = usuarioId;
+            StatusAcionamento = statusAcionamento;
         }
 
         public Acionamento() { }
 
-        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento, DateTime dataUpdate, string usuarioUpdateId)
+        public void AtualizarAcionamento(DateTime dataAcionamento, int canalId, int estabelecimentoId, int setorId, int categoriaAcionamentoId, bool apoio, int solucaoId, string? observacao, string? acionador, int? nrAtendimento, DateTime dataUpdate, string usuarioUpdateId, StatusAcionamento statusAcionamento)
         {
             DataAcionamento = dataAcionamento;
             CanalId = canalId;
@@ -60,6 +63,7 @@ namespace GerenciamentoPlantao.Models
             NrAtendimento = nrAtendimento;
             DataUpdate = dataUpdate;
             UsuarioUpdateId = usuarioUpdateId;
+            StatusAcionamento = statusAcionamento;
         }
     }
 }

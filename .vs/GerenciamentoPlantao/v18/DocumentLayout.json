@@ -3,28 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\views\\acionamentos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\views\\acionamentos\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\escalabaseregrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\escalabaseregrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\categoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\categoriaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\escalabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\escalabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\controllers\\acionamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\controllers\\acionamentoscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\regrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\regrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\usuarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\acionamentoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\acionamentoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\setorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\setorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\regrarotacaohorario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\regrarotacaohorario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,84 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CategoriaService.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\CategoriaService.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\CategoriaService.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\CategoriaService.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Services\\CategoriaService.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAADwv0YAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-09T01:46:25.913Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Acionamentos\\Index.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Views\\Acionamentos\\Index.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Views\\Acionamentos\\Index.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Views\\Acionamentos\\Index.cshtml",
-              "ViewState": "AgIAAPoBAAAAAAAAAADwvw8CAAAdAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-09T01:25:21.842Z",
+              "Title": "EscalaBaseRegraRotacao.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAA9wA8AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-09T18:51:23.775Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "SetorService.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\SetorService.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\SetorService.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\SetorService.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Services\\SetorService.cs",
-              "ViewState": "AgIAADUAAAAAAAAAAAAIwEQAAAApAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "EscalaBase.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAA0wBwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-09T01:21:36.981Z",
+              "WhenOpened": "2026-10-09T18:50:18.789Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "UsuarioService.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\UsuarioService.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\UsuarioService.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\UsuarioService.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Services\\UsuarioService.cs",
-              "ViewState": "AgIAAEMAAAAAAAAAAADwv1gAAAAJAAAAAAAAAA==",
+              "Title": "RegraRotacaoHorario.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-09T01:14:16.722Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "AcionamentoService.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\AcionamentoService.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\AcionamentoService.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\AcionamentoService.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Services\\AcionamentoService.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAAAC0AAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-09T00:24:07.575Z",
+              "WhenOpened": "2026-10-09T17:38:43.773Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "AcionamentosController.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Controllers\\AcionamentosController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAkwDkAAABVAAAAAAAAAA==",
+              "Title": "RegraRotacao.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-09T00:24:02.728Z",
+              "WhenOpened": "2026-10-09T17:36:04.852Z",
               "EditorCaption": ""
             }
           ]

@@ -37,6 +37,7 @@
             ["estabelecimentoId"] = ViewBag.EstabelecimentoId?.ToString(),
             ["setorId"] = ViewBag.SetorId?.ToString(),
             ["categoriaId"] = ViewBag.CategoriaId?.ToString(),
+            ["statusAcionamento"] = ViewBag.StatusAcionamento?.ToString(),
             ["ordenarPor"] = ViewBag.OrdenarPor,
             ["direcao"] = ViewBag.Direcao
         }
@@ -193,6 +194,37 @@
 
                 </div>
 
+                <!-- STATUS -->
+                <div class="col-md-3">
+
+                    <select name="statusAcionamento"
+                            class="form-select">
+
+                        <option value="">
+                            Todos os status
+                        </option>
+
+                        @foreach (var status in Enum.GetValues<GerenciamentoPlantao.Models.Enums.StatusAcionamento>())
+                        {
+                            if (ViewBag.StatusAcionamento != null &&
+                                ViewBag.StatusAcionamento.ToString() == status.ToString())
+                            {
+                                <option value="@status" selected>
+                                    @status
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@status">
+                                    @status
+                                </option>
+                            }
+                        }
+
+                    </select>
+
+                </div>
+
                 <!-- BOTÃO BUSCAR -->
                 <div class="col-auto">
 
@@ -211,7 +243,8 @@
                     !string.IsNullOrWhiteSpace(ViewBag.PlantonistaId) ||
                     ViewBag.EstabelecimentoId != null ||
                     ViewBag.SetorId != null ||
-                    ViewBag.CategoriaId != null)
+                    ViewBag.CategoriaId != null ||
+                    ViewBag.StatusAcionamento != null)
                 {
                     <div class="col-auto">
 
@@ -243,6 +276,7 @@
                                    asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
                                    asp-route-setorId="@ViewBag.SetorId"
                                    asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-statusAcionamento="@ViewBag.StatusAcionamento"
                                    asp-route-ordenarPor="dataAcionamento"
                                    asp-route-direcao="@proximaDirecaoData"
                                    asp-route-paginaAtual="1"
@@ -284,6 +318,7 @@
                                    asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
                                    asp-route-setorId="@ViewBag.SetorId"
                                    asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-statusAcionamento="@ViewBag.StatusAcionamento"
                                    asp-route-ordenarPor="estabelecimento"
                                    asp-route-direcao="@proximaDirecaoEstabelecimento"
                                    asp-route-paginaAtual="1"
@@ -320,6 +355,7 @@
                                    asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
                                    asp-route-setorId="@ViewBag.SetorId"
                                    asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-statusAcionamento="@ViewBag.StatusAcionamento"
                                    asp-route-ordenarPor="setor"
                                    asp-route-direcao="@proximaDirecaoSetor"
                                    asp-route-paginaAtual="1"
@@ -356,6 +392,7 @@
                                    asp-route-estabelecimentoId="@ViewBag.EstabelecimentoId"
                                    asp-route-setorId="@ViewBag.SetorId"
                                    asp-route-categoriaId="@ViewBag.CategoriaId"
+                                   asp-route-statusAcionamento="@ViewBag.StatusAcionamento"
                                    asp-route-ordenarPor="categoria"
                                    asp-route-direcao="@proximaDirecaoCategoria"
                                    asp-route-paginaAtual="1"
@@ -382,6 +419,11 @@
 
                                 </a>
 
+                            </th>
+
+                            <!-- STATUS -->
+                            <th>
+                                Status
                             </th>
 
                             <!-- APOIO -->
@@ -421,6 +463,10 @@
 
                                 <td>
                                     @item.CategoriaAcionamento?.Nome
+                                </td>
+
+                                <td>
+                                    @item.StatusAcionamento
                                 </td>
 
                                 <td class="text-center">

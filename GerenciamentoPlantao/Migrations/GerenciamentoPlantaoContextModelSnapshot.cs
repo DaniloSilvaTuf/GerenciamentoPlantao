@@ -78,6 +78,9 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<int>("SolucaoId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StatusAcionamento")
+                        .HasColumnType("int");
+
                     b.Property<string>("UsuarioId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -258,6 +261,737 @@ namespace GerenciamentoPlantao.Migrations
                     b.HasIndex("UsuarioUpdateId");
 
                     b.ToTable("Departamentos");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.ApoioPlantonistaEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ApoioUsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly>("DataFim")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DataInicio")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PlantonistaUsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApoioUsuarioId");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("PlantonistaUsuarioId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("ApoiosPlantonistasEscala");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.BlocoHorarioEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiaSemana")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("HoraFim")
+                        .HasColumnType("time");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("BlocosHorarioEscala");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("BlocoHorarioEscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PostoEscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostoEscalaId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("BlocoHorarioEscalaId", "PostoEscalaId")
+                        .IsUnique();
+
+                    b.ToTable("BlocosHorarioPostosEscala");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.DataEspecialEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly>("Data")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("DepartamentoId", "Data")
+                        .IsUnique();
+
+                    b.ToTable("DatasEspeciaisEscala");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBase", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DataInicio")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("EscalasBase");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBaseItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("BlocoHorarioPostoEscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EscalaBaseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlocoHorarioPostoEscalaId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("EscalaBaseId", "BlocoHorarioPostoEscalaId")
+                        .IsUnique();
+
+                    b.ToTable("EscalasBaseItems");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBaseRegraRotacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EscalaBaseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RegraRotacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegraRotacaoId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("EscalaBaseId", "RegraRotacaoId")
+                        .IsUnique();
+
+                    b.ToTable("EscalasBaseRegrasRotacao");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaGerada", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateOnly>("DataFim")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateOnly>("DataInicio")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EscalaBaseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("EscalaBaseId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("EscalasGeradas");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaGeradaItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataHoraFim")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataHoraInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EscalaGeradaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NomePosto")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PostoEscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscalaGeradaId");
+
+                    b.HasIndex("PostoEscalaId");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("EscalasGeradasItems");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.HistoricoAlteracaoEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EscalaGeradaItemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NovoUsuarioId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioAnteriorId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EscalaGeradaItemId");
+
+                    b.HasIndex("NovoUsuarioId");
+
+                    b.HasIndex("UsuarioAnteriorId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("HistoricosAlteracaoEscala");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.PostoEscala", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DepartamentoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("PostosEscalas");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacao", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("BlocoHorarioPostoEscalaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DepartamentoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Obrigatoria")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Ordem")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlocoHorarioPostoEscalaId")
+                        .IsUnique();
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("DepartamentoId", "Ordem")
+                        .IsUnique();
+
+                    b.ToTable("RegrasRotacao");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacaoHorario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DataInativacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataInsert")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataUpdate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DiaSemana")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Duracao")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("HoraInicio")
+                        .HasColumnType("time");
+
+                    b.Property<int>("RegraRotacaoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioInativacaoId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioInsertId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioUpdateId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RegraRotacaoId");
+
+                    b.HasIndex("UsuarioInativacaoId");
+
+                    b.HasIndex("UsuarioInsertId");
+
+                    b.HasIndex("UsuarioUpdateId");
+
+                    b.ToTable("RegrasRotacaoHorarios");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>
@@ -815,6 +1549,526 @@ namespace GerenciamentoPlantao.Migrations
                     b.Navigation("UsuarioUpdate");
                 });
 
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.ApoioPlantonistaEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "ApoioUsuario")
+                        .WithMany()
+                        .HasForeignKey("ApoioUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "PlantonistaUsuario")
+                        .WithMany()
+                        .HasForeignKey("PlantonistaUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ApoioUsuario");
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("PlantonistaUsuario");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.BlocoHorarioEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.BlocoHorarioEscala", "BlocoHorarioEscala")
+                        .WithMany()
+                        .HasForeignKey("BlocoHorarioEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.PostoEscala", "PostoEscala")
+                        .WithMany()
+                        .HasForeignKey("PostoEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("BlocoHorarioEscala");
+
+                    b.Navigation("PostoEscala");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.DataEspecialEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBase", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBaseItem", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", "BlocoHorarioPostoEscala")
+                        .WithMany()
+                        .HasForeignKey("BlocoHorarioPostoEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.EscalaBase", "EscalaBase")
+                        .WithMany("EscalaBaseItems")
+                        .HasForeignKey("EscalaBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("BlocoHorarioPostoEscala");
+
+                    b.Navigation("EscalaBase");
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBaseRegraRotacao", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.EscalaBase", "EscalaBase")
+                        .WithMany("RegrasRotacao")
+                        .HasForeignKey("EscalaBaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.RegraRotacao", "RegraRotacao")
+                        .WithMany()
+                        .HasForeignKey("RegraRotacaoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("EscalaBase");
+
+                    b.Navigation("RegraRotacao");
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaGerada", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.EscalaBase", "EscalaBase")
+                        .WithMany()
+                        .HasForeignKey("EscalaBaseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("EscalaBase");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaGeradaItem", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.EscalaGerada", "EscalaGerada")
+                        .WithMany("EscalaGeradaItems")
+                        .HasForeignKey("EscalaGeradaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.PostoEscala", "PostoEscala")
+                        .WithMany()
+                        .HasForeignKey("PostoEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("EscalaGerada");
+
+                    b.Navigation("PostoEscala");
+
+                    b.Navigation("Usuario");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.HistoricoAlteracaoEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.EscalaGeradaItem", "EscalaGeradaItem")
+                        .WithMany()
+                        .HasForeignKey("EscalaGeradaItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "NovoUsuario")
+                        .WithMany()
+                        .HasForeignKey("NovoUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioAnterior")
+                        .WithMany()
+                        .HasForeignKey("UsuarioAnteriorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("EscalaGeradaItem");
+
+                    b.Navigation("NovoUsuario");
+
+                    b.Navigation("UsuarioAnterior");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.PostoEscala", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacao", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", "BlocoHorarioPostoEscala")
+                        .WithMany()
+                        .HasForeignKey("BlocoHorarioPostoEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
+                        .WithMany()
+                        .HasForeignKey("DepartamentoId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("BlocoHorarioPostoEscala");
+
+                    b.Navigation("Departamento");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacaoHorario", b =>
+                {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.RegraRotacao", "RegraRotacao")
+                        .WithMany("Horarios")
+                        .HasForeignKey("RegraRotacaoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInativacaoId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInsert")
+                        .WithMany()
+                        .HasForeignKey("UsuarioInsertId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioUpdate")
+                        .WithMany()
+                        .HasForeignKey("UsuarioUpdateId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("RegraRotacao");
+
+                    b.Navigation("UsuarioInativacao");
+
+                    b.Navigation("UsuarioInsert");
+
+                    b.Navigation("UsuarioUpdate");
+                });
+
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
@@ -995,6 +2249,23 @@ namespace GerenciamentoPlantao.Migrations
                     b.Navigation("Solucoes");
 
                     b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaBase", b =>
+                {
+                    b.Navigation("EscalaBaseItems");
+
+                    b.Navigation("RegrasRotacao");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.EscalaGerada", b =>
+                {
+                    b.Navigation("EscalaGeradaItems");
+                });
+
+            modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacao", b =>
+                {
+                    b.Navigation("Horarios");
                 });
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Estabelecimento", b =>

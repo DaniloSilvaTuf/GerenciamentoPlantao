@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.EntityFrameworkCore;
 using GerenciamentoPlantao.Models;
+using GerenciamentoPlantao.Models.Escala;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace GerenciamentoPlantao.Data
@@ -18,6 +19,20 @@ namespace GerenciamentoPlantao.Data
         public DbSet<Solucao> Solucoes { get; set; }
         public DbSet<Acionamento> Acionamentos { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<EscalaBase> EscalasBase { get; set; }
+        public DbSet<EscalaBaseItem> EscalasBaseItems { get; set; }
+        public DbSet<EscalaBaseRegraRotacao> EscalasBaseRegrasRotacao { get; set; }
+        public DbSet<EscalaGerada> EscalasGeradas { get; set; }
+        public DbSet<EscalaGeradaItem> EscalasGeradasItems { get; set; }
+        public DbSet<HistoricoAlteracaoEscala> HistoricosAlteracaoEscala { get; set; }
+        public DbSet<PostoEscala> PostosEscalas { get; set; }
+        public DbSet<RegraRotacao> RegrasRotacao { get; set; }
+        public DbSet<RegraRotacaoHorario> RegrasRotacaoHorarios { get; set; }
+        public DbSet<BlocoHorarioEscala> BlocosHorarioEscala { get; set; }
+        public DbSet<BlocoHorarioPostoEscala> BlocosHorarioPostosEscala { get; set; }
+        public DbSet<DataEspecialEscala> DatasEspeciaisEscala { get; set; }
+        public DbSet<ApoioPlantonistaEscala> ApoiosPlantonistasEscala { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -96,7 +111,7 @@ namespace GerenciamentoPlantao.Data
                 .WithMany(d => d.Usuarios)
                 .HasForeignKey(u => u.DepartamentoId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             /* Relacionamentos Usuários */
             modelBuilder.Entity<Canal>()
                 .HasOne(c => c.UsuarioInsert)
@@ -241,6 +256,250 @@ namespace GerenciamentoPlantao.Data
                 .WithMany()
                 .HasForeignKey(u => u.UsuarioInativacaoId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            /* ESCALAS */
+            modelBuilder.Entity<ApoioPlantonistaEscala>()
+                .HasOne(a => a.ApoioUsuario)
+                .WithMany()
+                .HasForeignKey(a => a.ApoioUsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ApoioPlantonistaEscala>()
+                .HasOne(a => a.PlantonistaUsuario)
+                .WithMany()
+                .HasForeignKey(a => a.PlantonistaUsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<HistoricoAlteracaoEscala>()
+                .HasOne(h => h.UsuarioAnterior)
+                .WithMany()
+                .HasForeignKey(h => h.UsuarioAnteriorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<HistoricoAlteracaoEscala>()
+                .HasOne(h => h.NovoUsuario)
+                .WithMany()
+                .HasForeignKey(h => h.NovoUsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BlocoHorarioPostoEscala>()
+                .HasIndex(b => new
+                {
+                    b.BlocoHorarioEscalaId,
+                    b.PostoEscalaId
+                })
+                .IsUnique();
+
+            modelBuilder.Entity<DataEspecialEscala>()
+                .HasIndex(d => new
+                {
+                    d.DepartamentoId,
+                    d.Data
+                })
+                .IsUnique();
+
+            modelBuilder.Entity<EscalaBaseItem>()
+                .HasIndex(e => new
+                {
+                    e.EscalaBaseId,
+                    e.BlocoHorarioPostoEscalaId
+                })
+                .IsUnique();
+
+            modelBuilder.Entity<EscalaBaseRegraRotacao>()
+                .HasIndex(e => new
+                {
+                    e.EscalaBaseId,
+                    e.RegraRotacaoId
+                })
+                .IsUnique();
+
+            modelBuilder.Entity<RegraRotacao>()
+                .HasIndex(r => new
+                {
+                    r.DepartamentoId,
+                    r.Ordem
+                })
+                .IsUnique();
+
+            modelBuilder.Entity<RegraRotacao>()
+                .HasIndex(r => r.BlocoHorarioPostoEscalaId)
+                .IsUnique();
+
+            modelBuilder.Entity<RegraRotacaoHorario>()
+                .Property(r => r.Duracao)
+                .HasConversion(
+                    duracao => (int)duracao.TotalMinutes,
+                    minutos => TimeSpan.FromMinutes(minutos));
+
+            modelBuilder.Entity<RegraRotacaoHorario>()
+                .HasOne(h => h.RegraRotacao)
+                .WithMany(r => r.Horarios)
+                .HasForeignKey(h => h.RegraRotacaoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EscalaGeradaItem>()
+                .HasOne(i => i.EscalaGerada)
+                .WithMany(e => e.EscalaGeradaItems)
+                .HasForeignKey(i => i.EscalaGeradaId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<HistoricoAlteracaoEscala>()
+                .HasOne(h => h.EscalaGeradaItem)
+                .WithMany()
+                .HasForeignKey(h => h.EscalaGeradaItemId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EscalaGeradaItem>()
+                .HasOne(i => i.PostoEscala)
+                .WithMany()
+                .HasForeignKey(i => i.PostoEscalaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBaseItem>()
+                .HasOne(i => i.EscalaBase)
+                .WithMany(e => e.EscalaBaseItems)
+                .HasForeignKey(i => i.EscalaBaseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EscalaBaseRegraRotacao>()
+                .HasOne(r => r.EscalaBase)
+                .WithMany(e => e.RegrasRotacao)
+                .HasForeignKey(r => r.EscalaBaseId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<EscalaGerada>()
+                .HasOne(e => e.EscalaBase)
+                .WithMany()
+                .HasForeignKey(e => e.EscalaBaseId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RegraRotacao>()
+                .HasOne(r => r.BlocoHorarioPostoEscala)
+                .WithMany()
+                .HasForeignKey(r => r.BlocoHorarioPostoEscalaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BlocoHorarioPostoEscala>()
+                .HasOne(b => b.BlocoHorarioEscala)
+                .WithMany()
+                .HasForeignKey(b => b.BlocoHorarioEscalaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BlocoHorarioPostoEscala>()
+                .HasOne(p => p.PostoEscala)
+                .WithMany()
+                .HasForeignKey(p => p.PostoEscalaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBaseItem>()
+                .HasOne(i => i.BlocoHorarioPostoEscala)
+                .WithMany()
+                .HasForeignKey(i => i.BlocoHorarioPostoEscalaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBaseItem>()
+                .HasOne(i => i.Usuario)
+                .WithMany()
+                .HasForeignKey(i => i.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBaseRegraRotacao>()
+                .HasOne(r => r.RegraRotacao)
+                .WithMany()
+                .HasForeignKey(r => r.RegraRotacaoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBaseRegraRotacao>()
+                .HasOne(r => r.Usuario)
+                .WithMany()
+                .HasForeignKey(r => r.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaGeradaItem>()
+                .HasOne(i => i.Usuario)
+                .WithMany()
+                .HasForeignKey(i => i.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PostoEscala>()
+                .HasOne(p => p.Departamento)
+                .WithMany(d => d.PostosEscalas)
+                .HasForeignKey(p => p.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<BlocoHorarioEscala>()
+                .HasOne(b => b.Departamento)
+                .WithMany(d => d.BlocosHoarioEscala)
+                .HasForeignKey(b => b.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<RegraRotacao>()
+                .HasOne(r => r.Departamento)
+                .WithMany()
+                .HasForeignKey(r => r.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<DataEspecialEscala>()
+                .HasOne(d => d.Departamento)
+                .WithMany(dep => dep.DatasEspeciaisEscalas)
+                .HasForeignKey(d => d.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<ApoioPlantonistaEscala>()
+                .HasOne(a => a.Departamento)
+                .WithMany()
+                .HasForeignKey(a => a.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaBase>()
+                .HasOne(e => e.Departamento)
+                .WithMany()
+                .HasForeignKey(e => e.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<EscalaGerada>()
+                .HasOne(e => e.Departamento)
+                .WithMany()
+                .HasForeignKey(e => e.DepartamentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            /* AUDITORIA ESCALA */
+            ConfigurarAuditoria<PostoEscala>(modelBuilder);
+            ConfigurarAuditoria<BlocoHorarioEscala>(modelBuilder);
+            ConfigurarAuditoria<BlocoHorarioPostoEscala>(modelBuilder);
+            ConfigurarAuditoria<RegraRotacao>(modelBuilder);
+            ConfigurarAuditoria<RegraRotacaoHorario>(modelBuilder);
+            ConfigurarAuditoria<DataEspecialEscala>(modelBuilder);
+            ConfigurarAuditoria<ApoioPlantonistaEscala>(modelBuilder);
+            ConfigurarAuditoria<EscalaBase>(modelBuilder);
+            ConfigurarAuditoria<EscalaBaseItem>(modelBuilder);
+            ConfigurarAuditoria<EscalaBaseRegraRotacao>(modelBuilder);
+            ConfigurarAuditoria<EscalaGerada>(modelBuilder);
+            ConfigurarAuditoria<EscalaGeradaItem>(modelBuilder);
+            ConfigurarAuditoria<HistoricoAlteracaoEscala>(modelBuilder);
+        }
+
+        private static void ConfigurarAuditoria<T>(ModelBuilder modelBuilder)
+    where T : EntidadeBase
+        {
+            modelBuilder.Entity<T>()
+                .HasOne(e => e.UsuarioInsert)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioInsertId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<T>()
+                .HasOne(e => e.UsuarioUpdate)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioUpdateId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<T>()
+                .HasOne(e => e.UsuarioInativacao)
+                .WithMany()
+                .HasForeignKey(e => e.UsuarioInativacaoId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

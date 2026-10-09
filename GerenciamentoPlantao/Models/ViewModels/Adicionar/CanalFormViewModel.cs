@@ -9,6 +9,6 @@ namespace GerenciamentoPlantao.Models.ViewModels.Adicionar
         [StringLength(150, MinimumLength = 3, ErrorMessage = "O nome do canal deve ter entre 3 e 150 caracteres.")]
         public string Nome { get; set; } = string.Empty;
         public int DepartamentoId { get; set; }
-        public IEnumerable<SelectListItem> Departamentos { get; set; } = null!;
+        public IEnumerable<SelectListItem> Departamentos { get; set; } = Enumerable.Empty<SelectListItem>();
     }
 }

@@ -63,6 +63,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = e.Id.ToString(),
                     Text = e.Nome
                 });
+                return View(vm);
             }
 
             await _setorService.InserirSetorAsync(vm);
@@ -112,6 +113,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = e.Id.ToString(),
                     Text = e.Nome
                 });
+                return View(vm);
             }
 
             await _setorService.AlterarSetorAsync(vm);

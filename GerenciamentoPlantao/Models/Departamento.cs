@@ -1,4 +1,5 @@
 ﻿using GerenciamentoPlantao.Exceptions;
+using GerenciamentoPlantao.Models.Escala;
 
 namespace GerenciamentoPlantao.Models
 {
@@ -10,6 +11,9 @@ namespace GerenciamentoPlantao.Models
         public ICollection<CategoriaAcionamento> CategoriasAcionamentos { get; set; } = new List<CategoriaAcionamento>();
         public ICollection<Solucao> Solucoes { get; set; } = new List<Solucao>();
         public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
+        public ICollection<PostoEscala> PostosEscalas { get; set; } = new List<PostoEscala>();
+        public ICollection<BlocoHorarioEscala> BlocosHoarioEscala { get; set; } = new List<BlocoHorarioEscala>();
+        public ICollection<DataEspecialEscala> DatasEspeciaisEscalas { get; set; } = new List<DataEspecialEscala>();
 
         public Departamento(string nome, string usuarioId)
         {
@@ -39,7 +43,7 @@ namespace GerenciamentoPlantao.Models
         {
             if (Canais.Any(c => c.Nome.Equals(canal.Nome, StringComparison.OrdinalIgnoreCase)))
             {
-                throw new BusinessException("Já existe um setor com esse nome.");
+                throw new BusinessException("Já existe um canal com esse nome.");
             }
 
             Canais.Add(canal);
@@ -63,6 +67,35 @@ namespace GerenciamentoPlantao.Models
             }
 
             Solucoes.Add(solucao);
+        }
+
+        public void AddPostoEscala(PostoEscala posto)
+        {
+            if (PostosEscalas.Any(p => p.Nome.Equals(posto.Nome, StringComparison.OrdinalIgnoreCase)))
+            {
+                throw new BusinessException("Já existe um posto com esse nome.");
+            }
+
+            PostosEscalas.Add(posto);
+        }
+
+        public void AddBlocoHorarioEscala(BlocoHorarioEscala bloco)
+        {
+            if (BlocosHoarioEscala.Any(b => b.Nome.Equals(bloco.Nome, StringComparison.OrdinalIgnoreCase) && b.DiaSemana == bloco.DiaSemana))
+            {
+                throw new BusinessException("Já existe um bloco com esse nome neste dia da semana.");
+            }
+
+            BlocosHoarioEscala.Add(bloco);
+        }
+
+        public void AddDataEspecialEscala(DataEspecialEscala dataEspecial)
+        {
+            if (DatasEspeciaisEscalas.Any(d => d.Data == dataEspecial.Data))
+            {
+                throw new BusinessException("Já existe uma data especial com essa data.");
+            }
+            DatasEspeciaisEscalas.Add(dataEspecial);
         }
     }
 }

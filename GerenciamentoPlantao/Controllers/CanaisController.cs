@@ -61,6 +61,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = d.Id.ToString(),
                     Text = d.Nome
                 });
+                return View(vm);
             }
 
             await _canalService.CriarCanalAsync(vm);
@@ -110,6 +111,7 @@ namespace GerenciamentoPlantao.Controllers
                     Value = d.Id.ToString(),
                     Text = d.Nome
                 });
+                return View(vm);
             }
 
             await _canalService.AlterarCanalAsync(vm);
