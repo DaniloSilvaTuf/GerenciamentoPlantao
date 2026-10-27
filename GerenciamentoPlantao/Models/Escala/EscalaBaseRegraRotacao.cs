@@ -5,7 +5,7 @@
         public int Id { get; set; }
         public EscalaBase EscalaBase { get; set; } = null!;
         public int EscalaBaseId { get; set; }
-        public RegraRotacao RegraRotacao { get; set; } = null!;
+        public RegraRotacaoEscala RegraRotacao { get; set; } = null!;
         public int RegraRotacaoId { get; set; }
 
         public EscalaBaseRegraRotacao(int escalaBaseId, int regraRotacaoId, string usuarioCriacaoId)

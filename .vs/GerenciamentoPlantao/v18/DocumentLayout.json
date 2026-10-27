@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\escalabaseregrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\escalabaseregrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\escalas\\regrarotacaohorarioescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\escalas\\regrarotacaohorarioescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\escalabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\escalabase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\regrarotacaohorarioescala.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\regrarotacaohorarioescala.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\regrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\regrarotacao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\viewmodels\\editar\\editarregrarotacaohorarioescalaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\viewmodels\\editar\\editarregrarotacaohorarioescalaviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\models\\escala\\regrarotacaohorario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\models\\escala\\regrarotacaohorario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\escalas\\regrarotacaoescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\escalas\\regrarotacaoescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,58 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "EscalaBaseRegraRotacao.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\EscalaBaseRegraRotacao.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAAA9wA8AAAAJAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "EditarRegraRotacaoHorarioEscalaViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\ViewModels\\Editar\\EditarRegraRotacaoHorarioEscalaViewModel.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\ViewModels\\Editar\\EditarRegraRotacaoHorarioEscalaViewModel.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\ViewModels\\Editar\\EditarRegraRotacaoHorarioEscalaViewModel.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\ViewModels\\Editar\\EditarRegraRotacaoHorarioEscalaViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-09T18:51:23.775Z",
+              "WhenOpened": "2026-10-27T16:58:43.868Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "EscalaBase.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\EscalaBase.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAA0wBwAAAAAAAAAAAAAAA==",
+              "Title": "RegraRotacaoHorarioEscala.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorarioEscala.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorarioEscala.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorarioEscala.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorarioEscala.cs",
+              "ViewState": "AgIAAAcAAAAAAAAAAAAswBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-09T18:50:18.789Z",
+              "WhenOpened": "2026-10-27T16:29:42.457Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "RegraRotacaoHorarioEscalaService.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoHorarioEscalaService.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoHorarioEscalaService.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoHorarioEscalaService.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoHorarioEscalaService.cs",
+              "ViewState": "AgIAAIUAAAAAAAAAAAAQwI8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-16T17:03:07.419Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "RegraRotacaoHorario.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacaoHorario.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAeAAAAAAAAAA==",
+              "Title": "RegraRotacaoEscalaService.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoEscalaService.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoEscalaService.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoEscalaService.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Services\\Escalas\\RegraRotacaoEscalaService.cs",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAuwEsAAABgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-09T17:38:43.773Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RegraRotacao.cs",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
-              "RelativeToolTip": "GerenciamentoPlantao\\Models\\Escala\\RegraRotacao.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-09T17:36:04.852Z",
+              "WhenOpened": "2026-10-14T16:40:18.534Z",
               "EditorCaption": ""
             }
           ]

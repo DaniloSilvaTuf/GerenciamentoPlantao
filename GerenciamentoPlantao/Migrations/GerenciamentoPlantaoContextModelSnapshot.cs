@@ -619,10 +619,6 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<int>("RegraRotacaoId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UsuarioId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<string>("UsuarioInativacaoId")
                         .HasColumnType("nvarchar(450)");
 
@@ -635,8 +631,6 @@ namespace GerenciamentoPlantao.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("RegraRotacaoId");
-
-                    b.HasIndex("UsuarioId");
 
                     b.HasIndex("UsuarioInativacaoId");
 
@@ -889,9 +883,6 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
-                    b.Property<int>("BlocoHorarioPostoEscalaId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime?>("DataInativacao")
                         .HasColumnType("datetime2");
 
@@ -908,10 +899,7 @@ namespace GerenciamentoPlantao.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("Obrigatoria")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Ordem")
+                    b.Property<int>("OrdemExecucao")
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioInativacaoId")
@@ -925,16 +913,13 @@ namespace GerenciamentoPlantao.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BlocoHorarioPostoEscalaId")
-                        .IsUnique();
-
                     b.HasIndex("UsuarioInativacaoId");
 
                     b.HasIndex("UsuarioInsertId");
 
                     b.HasIndex("UsuarioUpdateId");
 
-                    b.HasIndex("DepartamentoId", "Ordem")
+                    b.HasIndex("DepartamentoId", "OrdemExecucao")
                         .IsUnique();
 
                     b.ToTable("RegrasRotacao");
@@ -951,6 +936,9 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<bool>("Ativo")
                         .HasColumnType("bit");
 
+                    b.Property<int>("BlocoHorarioPostoEscalaId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("DataInativacao")
                         .HasColumnType("datetime2");
 
@@ -960,14 +948,8 @@ namespace GerenciamentoPlantao.Migrations
                     b.Property<DateTime?>("DataUpdate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DiaSemana")
+                    b.Property<int>("OrdemRotacao")
                         .HasColumnType("int");
-
-                    b.Property<int>("Duracao")
-                        .HasColumnType("int");
-
-                    b.Property<TimeOnly>("HoraInicio")
-                        .HasColumnType("time");
 
                     b.Property<int>("RegraRotacaoId")
                         .HasColumnType("int");
@@ -983,13 +965,19 @@ namespace GerenciamentoPlantao.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RegraRotacaoId");
+                    b.HasIndex("BlocoHorarioPostoEscalaId");
 
                     b.HasIndex("UsuarioInativacaoId");
 
                     b.HasIndex("UsuarioInsertId");
 
                     b.HasIndex("UsuarioUpdateId");
+
+                    b.HasIndex("RegraRotacaoId", "BlocoHorarioPostoEscalaId")
+                        .IsUnique();
+
+                    b.HasIndex("RegraRotacaoId", "OrdemRotacao")
+                        .IsUnique();
 
                     b.ToTable("RegrasRotacaoHorarios");
                 });
@@ -1600,7 +1588,7 @@ namespace GerenciamentoPlantao.Migrations
             modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.BlocoHorarioEscala", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
-                        .WithMany()
+                        .WithMany("BlocosHoarioEscala")
                         .HasForeignKey("DepartamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1672,7 +1660,7 @@ namespace GerenciamentoPlantao.Migrations
             modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.DataEspecialEscala", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
-                        .WithMany()
+                        .WithMany("DatasEspeciaisEscalas")
                         .HasForeignKey("DepartamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1795,12 +1783,6 @@ namespace GerenciamentoPlantao.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("GerenciamentoPlantao.Models.Usuario", "Usuario")
-                        .WithMany()
-                        .HasForeignKey("UsuarioId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GerenciamentoPlantao.Models.Usuario", "UsuarioInativacao")
                         .WithMany()
                         .HasForeignKey("UsuarioInativacaoId")
@@ -1819,8 +1801,6 @@ namespace GerenciamentoPlantao.Migrations
                     b.Navigation("EscalaBase");
 
                     b.Navigation("RegraRotacao");
-
-                    b.Navigation("Usuario");
 
                     b.Navigation("UsuarioInativacao");
 
@@ -1968,7 +1948,7 @@ namespace GerenciamentoPlantao.Migrations
             modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.PostoEscala", b =>
                 {
                     b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
-                        .WithMany()
+                        .WithMany("PostosEscalas")
                         .HasForeignKey("DepartamentoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
@@ -1999,12 +1979,6 @@ namespace GerenciamentoPlantao.Migrations
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacao", b =>
                 {
-                    b.HasOne("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", "BlocoHorarioPostoEscala")
-                        .WithMany()
-                        .HasForeignKey("BlocoHorarioPostoEscalaId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("GerenciamentoPlantao.Models.Departamento", "Departamento")
                         .WithMany()
                         .HasForeignKey("DepartamentoId")
@@ -2026,8 +2000,6 @@ namespace GerenciamentoPlantao.Migrations
                         .HasForeignKey("UsuarioUpdateId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.Navigation("BlocoHorarioPostoEscala");
-
                     b.Navigation("Departamento");
 
                     b.Navigation("UsuarioInativacao");
@@ -2039,6 +2011,12 @@ namespace GerenciamentoPlantao.Migrations
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Escala.RegraRotacaoHorario", b =>
                 {
+                    b.HasOne("GerenciamentoPlantao.Models.Escala.BlocoHorarioPostoEscala", "BlocoHorarioPostoEscala")
+                        .WithMany()
+                        .HasForeignKey("BlocoHorarioPostoEscalaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("GerenciamentoPlantao.Models.Escala.RegraRotacao", "RegraRotacao")
                         .WithMany("Horarios")
                         .HasForeignKey("RegraRotacaoId")
@@ -2059,6 +2037,8 @@ namespace GerenciamentoPlantao.Migrations
                         .WithMany()
                         .HasForeignKey("UsuarioUpdateId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("BlocoHorarioPostoEscala");
 
                     b.Navigation("RegraRotacao");
 
@@ -2242,9 +2222,15 @@ namespace GerenciamentoPlantao.Migrations
 
             modelBuilder.Entity("GerenciamentoPlantao.Models.Departamento", b =>
                 {
+                    b.Navigation("BlocosHoarioEscala");
+
                     b.Navigation("Canais");
 
                     b.Navigation("CategoriasAcionamentos");
+
+                    b.Navigation("DatasEspeciaisEscalas");
+
+                    b.Navigation("PostosEscalas");
 
                     b.Navigation("Solucoes");
 

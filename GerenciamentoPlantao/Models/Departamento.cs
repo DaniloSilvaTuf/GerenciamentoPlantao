@@ -14,6 +14,7 @@ namespace GerenciamentoPlantao.Models
         public ICollection<PostoEscala> PostosEscalas { get; set; } = new List<PostoEscala>();
         public ICollection<BlocoHorarioEscala> BlocosHoarioEscala { get; set; } = new List<BlocoHorarioEscala>();
         public ICollection<DataEspecialEscala> DatasEspeciaisEscalas { get; set; } = new List<DataEspecialEscala>();
+        public ICollection<RegraRotacaoEscala> RegrasRotacao { get; set; } = new List<RegraRotacaoEscala>();
 
         public Departamento(string nome, string usuarioId)
         {
@@ -96,6 +97,11 @@ namespace GerenciamentoPlantao.Models
                 throw new BusinessException("Já existe uma data especial com essa data.");
             }
             DatasEspeciaisEscalas.Add(dataEspecial);
+        }
+
+        public void AddRegraRotacaoEscala(RegraRotacaoEscala regra)
+        {
+            RegrasRotacao.Add(regra);
         }
     }
 }

@@ -16,18 +16,5 @@
         }
 
         public BlocoHorarioPostoEscala() { }
-
-        public void Ativar(string usuarioId)
-        {
-            Ativo = true;
-            RegistrarInativacao(usuarioId);
-        }
-
-        public void Inativar(string usuarioId)
-        {
-            Ativo = false;
-            RegistrarInativacao(usuarioId);
-        }
-
     }
 }
