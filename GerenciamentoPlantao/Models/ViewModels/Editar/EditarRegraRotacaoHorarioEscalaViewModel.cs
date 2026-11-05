@@ -4,7 +4,7 @@
     {
         public int Id { get; set; }
         public int RegraRotacaoId { get; set; }
-        public int BlocoHorarioPostoEscalaId { get; set; }
+        public int BlocoHorarioEscalaId { get; set; }
         public int OrdemRotacao { get; set; }
     }
 }

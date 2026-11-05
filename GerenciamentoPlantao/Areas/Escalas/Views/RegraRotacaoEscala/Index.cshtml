@@ -1,0 +1,192 @@
+﻿@using GerenciamentoPlantao.Models.Escala
+@using GerenciamentoPlantao.Models.Paginacao
+@model PagedResult<RegraRotacaoEscala>
+
+@{
+    ViewData["Title"] = "Regras de Rotação";
+
+    string? busca = ViewBag.Busca;
+    string? ordenarPor = ViewBag.OrdenarPor;
+    string? direcao = ViewBag.Direcao;
+    int? departamentoId = ViewBag.DepartamentoId;
+    int tamanhoPagina = ViewBag.TamanhoPagina ?? 10;
+}
+
+<div class="container-fluid mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Regras de Rotação</h2>
+
+        <a asp-action="Create"
+           asp-route-departamentoId="@departamentoId"
+           class="btn btn-primary">
+            Nova Regra
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success">
+            @TempData["SuccessMessage"]
+        </div>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["ErrorMessage"]
+        </div>
+    }
+
+    <div class="card mb-4">
+        <div class="card-body">
+
+            <form asp-action="Index" method="get">
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <label class="form-label">Pesquisar</label>
+                        <input type="text"
+                               name="busca"
+                               value="@busca"
+                               class="form-control"
+                               placeholder="Nome da regra" />
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Departamento ID</label>
+                        <input type="number"
+                               name="departamentoId"
+                               value="@departamentoId"
+                               min="1"
+                               class="form-control" />
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Ordenar por</label>
+                        <select name="ordenarPor" class="form-select">
+                            <option value="">Padrão</option>
+                            <option value="nome" selected="@(ordenarPor == "nome")">Nome</option>
+                            <option value="departamento" selected="@(ordenarPor == "departamento")">Departamento</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <label class="form-label">Direção</label>
+                        <select name="direcao" class="form-select">
+                            <option value="asc" selected="@(direcao != "desc")">Crescente</option>
+                            <option value="desc" selected="@(direcao == "desc")">Decrescente</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2 d-flex align-items-end">
+                        <input type="hidden" name="tamanhoPagina" value="@tamanhoPagina" />
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Pesquisar
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-striped table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Departamento</th>
+                            <th>Ordem de Execução</th>
+                            <th class="text-end">Ações</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model.Items.Any())
+                        {
+                            @foreach (var regra in Model.Items)
+                            {
+                                <tr>
+                                    <td>@regra.Id</td>
+                                    <td>@regra.Nome</td>
+                                    <td>@regra.Departamento?.Nome</td>
+                                    <td>@regra.OrdemExecucao</td>
+
+                                    <td class="text-end">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@regra.Id"
+                                           asp-route-departamentoId="@regra.DepartamentoId"
+                                           class="btn btn-sm btn-info text-white">
+                                            Detalhes
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@regra.Id"
+                                           asp-route-departamentoId="@regra.DepartamentoId"
+                                           class="btn btn-sm btn-warning">
+                                            Editar
+                                        </a>
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-4">
+                                    Nenhuma regra de rotação encontrada.
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            @if (Model.TotalPaginas > 1)
+            {
+                <nav aria-label="Paginação">
+                    <ul class="pagination justify-content-center mt-3">
+
+                        @for (int pagina = 1; pagina <= Model.TotalPaginas; pagina++)
+                        {
+                            <li class="page-item @(pagina == Model.PaginaAtual ? "active" : "")">
+
+                                <a class="page-link"
+                                   asp-action="Index"
+                                   asp-route-paginaAtual="@pagina"
+                                   asp-route-tamanhoPagina="@tamanhoPagina"
+                                   asp-route-busca="@busca"
+                                   asp-route-ordenarPor="@ordenarPor"
+                                   asp-route-direcao="@direcao"
+                                   asp-route-departamentoId="@departamentoId">
+                                    @pagina
+                                </a>
+
+                            </li>
+                        }
+
+                    </ul>
+                </nav>
+            }
+
+        </div>
+    </div>
+
+</div>

@@ -29,7 +29,6 @@ namespace GerenciamentoPlantao.Data
         public DbSet<RegraRotacaoEscala> RegrasRotacao { get; set; }
         public DbSet<RegraRotacaoHorarioEscala> RegrasRotacaoHorarios { get; set; }
         public DbSet<BlocoHorarioEscala> BlocosHorarioEscala { get; set; }
-        public DbSet<BlocoHorarioPostoEscala> BlocosHorarioPostosEscala { get; set; }
         public DbSet<DataEspecialEscala> DatasEspeciaisEscala { get; set; }
         public DbSet<ApoioPlantonistaEscala> ApoiosPlantonistasEscala { get; set; }
 
@@ -282,14 +281,6 @@ namespace GerenciamentoPlantao.Data
                 .HasForeignKey(h => h.NovoUsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<BlocoHorarioPostoEscala>()
-                .HasIndex(b => new
-                {
-                    b.BlocoHorarioEscalaId,
-                    b.PostoEscalaId
-                })
-                .IsUnique();
-
             modelBuilder.Entity<DataEspecialEscala>()
                 .HasIndex(d => new
                 {
@@ -302,7 +293,7 @@ namespace GerenciamentoPlantao.Data
                 .HasIndex(e => new
                 {
                     e.EscalaBaseId,
-                    e.BlocoHorarioPostoEscalaId
+                    e.BlocoHorarioEscalaId
                 })
                 .IsUnique();
 
@@ -364,22 +355,10 @@ namespace GerenciamentoPlantao.Data
                 .HasForeignKey(e => e.EscalaBaseId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<BlocoHorarioPostoEscala>()
-                .HasOne(b => b.BlocoHorarioEscala)
-                .WithMany()
-                .HasForeignKey(b => b.BlocoHorarioEscalaId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<BlocoHorarioPostoEscala>()
-                .HasOne(p => p.PostoEscala)
-                .WithMany()
-                .HasForeignKey(p => p.PostoEscalaId)
-                .OnDelete(DeleteBehavior.Restrict);
-
             modelBuilder.Entity<EscalaBaseItem>()
-                .HasOne(i => i.BlocoHorarioPostoEscala)
+                .HasOne(i => i.BlocoHorarioEscala)
                 .WithMany()
-                .HasForeignKey(i => i.BlocoHorarioPostoEscalaId)
+                .HasForeignKey(i => i.BlocoHorarioEscalaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<EscalaBaseItem>()
@@ -407,14 +386,14 @@ namespace GerenciamentoPlantao.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<BlocoHorarioEscala>()
-                .HasOne(b => b.Departamento)
-                .WithMany(d => d.BlocosHoarioEscala)
-                .HasForeignKey(b => b.DepartamentoId)
+                .HasOne(b => b.PostoEscala)
+                .WithMany(p => p.Horarios)
+                .HasForeignKey(b => b.PostoEscalaId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<RegraRotacaoEscala>()
                 .HasOne(r => r.Departamento)
-                .WithMany()
+                .WithMany(d => d.RegrasRotacao)
                 .HasForeignKey(r => r.DepartamentoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -443,16 +422,16 @@ namespace GerenciamentoPlantao.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<RegraRotacaoHorarioEscala>()
-                .HasOne(r => r.BlocoHorarioPostoEscala)
+                .HasOne(r => r.BlocoHorarioEscala)
                 .WithMany()
-                .HasForeignKey(r => r.BlocoHorarioPostoEscalaId)
+                .HasForeignKey(r => r.BlocoHorarioEscalaId)
                 .OnDelete(DeleteBehavior.Restrict);
-            
+
             modelBuilder.Entity<RegraRotacaoHorarioEscala>()
                 .HasIndex(r => new
                 {
                     r.RegraRotacaoId,
-                    r.BlocoHorarioPostoEscalaId
+                    r.BlocoHorarioEscalaId
                 })
                 .IsUnique();
 
@@ -468,7 +447,6 @@ namespace GerenciamentoPlantao.Data
             /* AUDITORIA ESCALA */
             ConfigurarAuditoria<PostoEscala>(modelBuilder);
             ConfigurarAuditoria<BlocoHorarioEscala>(modelBuilder);
-            ConfigurarAuditoria<BlocoHorarioPostoEscala>(modelBuilder);
             ConfigurarAuditoria<RegraRotacaoEscala>(modelBuilder);
             ConfigurarAuditoria<RegraRotacaoHorarioEscala>(modelBuilder);
             ConfigurarAuditoria<DataEspecialEscala>(modelBuilder);

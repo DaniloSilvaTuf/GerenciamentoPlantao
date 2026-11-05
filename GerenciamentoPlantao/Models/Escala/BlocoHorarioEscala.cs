@@ -9,16 +9,16 @@ namespace GerenciamentoPlantao.Models.Escala
         public TimeOnly HoraInicio { get; set; }
         public TimeOnly HoraFim { get; set; }
         public TipoDiaSemana DiaSemana { get; set; }
-        public int DepartamentoId { get; set; }
-        public Departamento Departamento { get; set; } = null!;
+        public int PostoEscalaId { get; set; }
+        public PostoEscala PostoEscala { get; set; } = null!;
 
-        public BlocoHorarioEscala(string nome, TimeOnly horaInicio, TimeOnly horaFim, TipoDiaSemana diaSemana, int departamentoId, string usuarioId)
+        public BlocoHorarioEscala(string nome, TimeOnly horaInicio, TimeOnly horaFim, TipoDiaSemana diaSemana, int postoEscalaId, string usuarioId)
         {
             Nome = nome;
             HoraInicio = horaInicio;
             HoraFim = horaFim;
             DiaSemana = diaSemana;
-            DepartamentoId = departamentoId;
+            PostoEscalaId = postoEscalaId;
             RegistrarCriacao(usuarioId);
         }
 

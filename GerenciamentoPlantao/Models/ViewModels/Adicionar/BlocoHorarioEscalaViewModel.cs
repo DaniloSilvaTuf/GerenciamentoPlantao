@@ -18,5 +18,6 @@ namespace GerenciamentoPlantao.Models.ViewModels.Adicionar
         
         [Range(1, int.MaxValue, ErrorMessage = "Selecione um departamento.")]
         public int DepartamentoId { get; set; }
+        public int PostoEscalaId { get; set; }
     }
 }

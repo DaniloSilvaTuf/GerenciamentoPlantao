@@ -53,7 +53,10 @@ namespace GerenciamentoPlantao.Services.Escalas
                         : query.OrderBy(p => p.Ativo);
                     break;
                 default:
-                    query = query.OrderBy(p => p.Id);
+                    query = query
+                        .OrderBy(p => p.Departamento.Nome)
+                        .ThenBy(p => p.OrdemExecucao)
+                        .ThenBy(p => p.Id);
                     break;
             }
             return await PagedResult<RegraRotacaoEscala>.CriarAsync(query, paginaAtual, tamanhoPagina);

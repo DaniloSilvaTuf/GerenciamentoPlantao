@@ -1,0 +1,102 @@
+﻿@using GerenciamentoPlantao.Models.ViewModels.Adicionar
+@model RegraRotacaoEscalaViewModel
+
+@{
+    ViewData["Title"] = "Nova Regra de Rotação";
+}
+
+<div class="container mt-4">
+
+    <div class="card">
+
+        <div class="card-header">
+            <h4 class="mb-0">Cadastrar Regra de Rotação</h4>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-action="Create" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="DepartamentoId" class="form-label">
+                        Departamento
+                    </label>
+
+                    <select asp-for="DepartamentoId"
+                            asp-items="Model.Departamentos"
+                            class="form-select">
+
+                        <option value="0">Selecione um departamento</option>
+
+                    </select>
+
+                    <span asp-validation-for="DepartamentoId"
+                          class="text-danger">
+                    </span>
+
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Nome" class="form-label">
+                        Nome da Regra
+                    </label>
+
+                    <input asp-for="Nome"
+                           class="form-control"
+                           placeholder="Ex.: Rotação Noturna" />
+
+                    <span asp-validation-for="Nome"
+                          class="text-danger">
+                    </span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="OrdemExecucao" class="form-label">
+                        Ordem de Execução
+                    </label>
+
+                    <input asp-for="OrdemExecucao"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+
+                    <span asp-validation-for="OrdemExecucao"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Define a posição desta regra na sequência de execução do departamento.
+                    </small>
+                </div>
+
+                <div class="d-flex justify-content-end gap-2">
+
+                    <a asp-action="Index"
+                       asp-route-departamentoId="@Model.DepartamentoId"
+                       class="btn btn-secondary">
+                        Cancelar
+                    </a>
+
+                    <button type="submit" class="btn btn-success">
+                        Salvar Regra
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

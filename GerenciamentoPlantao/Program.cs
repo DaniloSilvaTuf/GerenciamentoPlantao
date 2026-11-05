@@ -54,6 +54,7 @@ builder.Services.AddScoped<PostoEscalaService>();
 builder.Services.AddScoped<BlocoHorarioEscalaService>();
 builder.Services.AddScoped<DataEspecialEscalaService>();
 builder.Services.AddScoped<RegraRotacaoEscalaService>();
+builder.Services.AddScoped<RegraRotacaoHorarioEscalaService>();
 
 var app = builder.Build();
 

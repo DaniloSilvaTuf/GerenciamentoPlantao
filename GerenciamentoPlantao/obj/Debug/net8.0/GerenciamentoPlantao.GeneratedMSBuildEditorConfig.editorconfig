@@ -59,16 +59,28 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xQb3N0b0VzY2FsYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotaçãoEscala/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGHDp8Ojb0VzY2FsYVxDcmVhdGUuY3NodG1s
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoEscala/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Fc2NhbGFcQ3JlYXRlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotaçãoEscala/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGHDp8Ojb0VzY2FsYVxFZGl0LmNzaHRtbA==
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoEscala/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Fc2NhbGFcRGV0YWlscy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotaçãoEscala/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGHDp8Ojb0VzY2FsYVxJbmRleC5jc2h0bWw=
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoEscala/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Fc2NhbGFcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoEscala/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Fc2NhbGFcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoHorarioEscala/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Ib3JhcmlvRXNjYWxhXENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/RegraRotacaoHorarioEscala/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcRXNjYWxhc1xWaWV3c1xSZWdyYVJvdGFjYW9Ib3JhcmlvRXNjYWxhXEVkaXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/nilo_/source/repos/GerenciamentoPlantao/GerenciamentoPlantao/Areas/Escalas/Views/_ViewImports.cshtml]

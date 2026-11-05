@@ -12,7 +12,6 @@ namespace GerenciamentoPlantao.Models
         public ICollection<Solucao> Solucoes { get; set; } = new List<Solucao>();
         public ICollection<Usuario> Usuarios { get; set; } = new List<Usuario>();
         public ICollection<PostoEscala> PostosEscalas { get; set; } = new List<PostoEscala>();
-        public ICollection<BlocoHorarioEscala> BlocosHoarioEscala { get; set; } = new List<BlocoHorarioEscala>();
         public ICollection<DataEspecialEscala> DatasEspeciaisEscalas { get; set; } = new List<DataEspecialEscala>();
         public ICollection<RegraRotacaoEscala> RegrasRotacao { get; set; } = new List<RegraRotacaoEscala>();
 
@@ -78,16 +77,6 @@ namespace GerenciamentoPlantao.Models
             }
 
             PostosEscalas.Add(posto);
-        }
-
-        public void AddBlocoHorarioEscala(BlocoHorarioEscala bloco)
-        {
-            if (BlocosHoarioEscala.Any(b => b.Nome.Equals(bloco.Nome, StringComparison.OrdinalIgnoreCase) && b.DiaSemana == bloco.DiaSemana))
-            {
-                throw new BusinessException("Já existe um bloco com esse nome neste dia da semana.");
-            }
-
-            BlocosHoarioEscala.Add(bloco);
         }
 
         public void AddDataEspecialEscala(DataEspecialEscala dataEspecial)

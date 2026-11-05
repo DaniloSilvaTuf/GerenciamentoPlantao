@@ -6,6 +6,7 @@
         public string Nome { get; set; } = string.Empty;
         public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; } = null!;
+        public ICollection<BlocoHorarioEscala> Horarios { get; set; } = new List<BlocoHorarioEscala>();
 
         public PostoEscala(string nome, int departamentoId, string usuarioId)
         {
@@ -15,6 +16,11 @@
         }
 
         public PostoEscala() { }
+
+        public void AddBlocoHorarioEscala(BlocoHorarioEscala horario)
+        {
+            Horarios.Add(horario);
+        }
 
         public void Atualizar(string novoNome, string usuarioId)
         {

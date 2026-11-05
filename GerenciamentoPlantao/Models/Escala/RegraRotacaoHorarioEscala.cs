@@ -4,26 +4,36 @@
     {
         public int Id { get; set; }
         public int OrdemRotacao { get; set; }
+
         public RegraRotacaoEscala RegraRotacao { get; set; } = null!;
         public int RegraRotacaoId { get; set; }
-        public BlocoHorarioPostoEscala BlocoHorarioPostoEscala { get; set; } = null!;
-        public int BlocoHorarioPostoEscalaId { get; set; }
 
+        public BlocoHorarioEscala BlocoHorarioEscala { get; set; } = null!;
+        public int BlocoHorarioEscalaId { get; set; }
 
-        public RegraRotacaoHorarioEscala(int ordemRotacao, int regraRotacaoId, int blocoHorarioPostoEscalaId, string usuarioId)
+        public RegraRotacaoHorarioEscala(
+            int ordemRotacao,
+            int regraRotacaoId,
+            int blocoHorarioEscalaId,
+            string usuarioId)
         {
             OrdemRotacao = ordemRotacao;
             RegraRotacaoId = regraRotacaoId;
-            BlocoHorarioPostoEscalaId = blocoHorarioPostoEscalaId;
+            BlocoHorarioEscalaId = blocoHorarioEscalaId;
+
             RegistrarCriacao(usuarioId);
         }
 
         public RegraRotacaoHorarioEscala() { }
 
-        public void AtualizarRegraRotacaoHorarioEscala(int ordemRotacao, int blocoHorarioPostoEscalaId, string usuarioId)
+        public void AtualizarRegraRotacaoHorarioEscala(
+            int ordemRotacao,
+            int blocoHorarioEscalaId,
+            string usuarioId)
         {
             OrdemRotacao = ordemRotacao;
-            BlocoHorarioPostoEscalaId = blocoHorarioPostoEscalaId;
+            BlocoHorarioEscalaId = blocoHorarioEscalaId;
+
             RegistrarAtualizacao(usuarioId);
         }
     }

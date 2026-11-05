@@ -1,0 +1,127 @@
+﻿```cshtml
+@using GerenciamentoPlantao.Models.ViewModels.Adicionar
+@model RegraRotacaoHorarioEscalaViewModel
+
+@{
+    ViewData["Title"] = "Adicionar Horário de Rotação";
+    int departamentoId = ViewBag.DepartamentoId;
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">
+                <i class="bi bi-clock-history"></i>
+                Adicionar Horário à Regra de Rotação
+            </h4>
+        </div>
+
+        <div class="card-body">
+
+            <form asp-area="Escalas"
+                  asp-controller="RegraRotacaoHorarioEscala"
+                  asp-action="Create"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <div asp-validation-summary="ModelOnly"
+                     class="text-danger mb-3">
+                </div>
+
+                <input asp-for="RegraRotacaoId" type="hidden" />
+
+                <input type="hidden"
+                       name="departamentoId"
+                       value="@departamentoId" />
+
+                <!-- ORDEM DE ROTAÇÃO -->
+                <div class="mb-3">
+
+                    <label asp-for="OrdemRotacao"
+                           class="form-label fw-bold">
+                        Ordem de Rotação
+                    </label>
+
+                    <input asp-for="OrdemRotacao"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+
+                    <span asp-validation-for="OrdemRotacao"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Define a posição deste horário na sequência de rotação.
+                    </small>
+
+                </div>
+
+                <!-- HORÁRIO DO POSTO -->
+                <div class="mb-3">
+
+                    <label asp-for="BlocoHorarioEscalaId"
+                           class="form-label fw-bold">
+                        Horário / Posto
+                    </label>
+
+                    <select asp-for="BlocoHorarioEscalaId"
+                            asp-items="ViewBag.BlocosHorario"
+                            class="form-select">
+
+                        <option value="0">
+                            Selecione um horário
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="BlocoHorarioEscalaId"
+                          class="text-danger">
+                    </span>
+
+                    <small class="text-muted">
+                        Serão apresentados apenas os horários dos postos
+                        pertencentes ao departamento desta regra.
+                    </small>
+
+                </div>
+
+                <!-- BOTÕES -->
+                <div class="d-flex justify-content-end gap-2">
+
+                    <a asp-area="Escalas"
+                       asp-controller="RegraRotacaoEscala"
+                       asp-action="Details"
+                       asp-route-id="@Model.RegraRotacaoId"
+                       asp-route-departamentoId="@departamentoId"
+                       class="btn btn-outline-secondary">
+
+                        <i class="bi bi-arrow-left"></i>
+                        Cancelar
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-success">
+
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar Horário
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+```

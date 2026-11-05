@@ -7,6 +7,7 @@
     string busca = ViewBag.Busca as string ?? "";
     string ordenarPor = ViewBag.OrdenarPor as string ?? "";
     string direcao = ViewBag.Direcao as string ?? "";
+
     int? departamentoId = ViewBag.DepartamentoId;
     TipoDiaSemana? diaSemana = ViewBag.DiaSemana;
 
@@ -72,6 +73,23 @@
         </div>
 
         <div class="card-body">
+
+            <!-- MENSAGENS -->
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">
+                    <i class="bi bi-check-circle"></i>
+                    @TempData["SuccessMessage"]
+                </div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">
+                    <i class="bi bi-exclamation-triangle"></i>
+                    @TempData["ErrorMessage"]
+                </div>
+            }
 
             <!-- FILTROS -->
             <form asp-area="Escalas"
@@ -174,7 +192,8 @@
 
                 <!-- BOTÃO LIMPAR -->
                 @if (!string.IsNullOrWhiteSpace(busca) ||
-                     departamentoId != null || diaSemana != null)
+                     departamentoId != null ||
+                     diaSemana != null)
                 {
                     <div class="col-auto">
 
@@ -183,6 +202,7 @@
                            asp-action="Index"
                            class="btn btn-outline-secondary">
 
+                            <i class="bi bi-x-circle"></i>
                             Limpar
 
                         </a>
@@ -242,6 +262,29 @@
                                     Departamento
 
                                     <i class="bi @IconeOrdenacao("departamento") @(ordenarPor == "departamento" ? "" : "text-muted")"></i>
+
+                                </a>
+
+                            </th>
+
+                            <!-- POSTO -->
+                            <th>
+
+                                <a asp-area="Escalas"
+                                   asp-controller="BlocoHorarioEscala"
+                                   asp-action="Index"
+                                   asp-route-busca="@busca"
+                                   asp-route-departamentoId="@departamentoId"
+                                   asp-route-diaSemana="@diaSemana"
+                                   asp-route-ordenarPor="posto"
+                                   asp-route-direcao="@ProximaDirecao("posto")"
+                                   asp-route-paginaAtual="1"
+                                   class="text-decoration-none text-dark"
+                                   title="Clique para ordenar">
+
+                                    Posto
+
+                                    <i class="bi @IconeOrdenacao("posto") @(ordenarPor == "posto" ? "" : "text-muted")"></i>
 
                                 </a>
 
@@ -313,8 +356,10 @@
                         {
                             <tr>
 
-                                <td colspan="6"
+                                <td colspan="7"
                                     class="text-center text-muted py-4">
+
+                                    <i class="bi bi-calendar-x fs-4 d-block mb-2"></i>
 
                                     Nenhum bloco de horário encontrado.
 
@@ -330,12 +375,17 @@
 
                                     <!-- NOME -->
                                     <td>
-                                        @item.Nome
+                                        <strong>@item.Nome</strong>
                                     </td>
 
                                     <!-- DEPARTAMENTO -->
                                     <td>
-                                        @item.Departamento?.Nome
+                                        @item.PostoEscala.Departamento.Nome
+                                    </td>
+
+                                    <!-- POSTO -->
+                                    <td>
+                                        @item.PostoEscala.Nome
                                     </td>
 
                                     <!-- DIA -->
@@ -371,17 +421,21 @@
                                     <!-- AÇÕES -->
                                     <td class="text-end">
 
-                                        <a asp-area="Escalas"
-                                           asp-controller="BlocoHorarioEscala"
-                                           asp-action="Edit"
-                                           asp-route-id="@item.Id"
-                                           asp-route-departamentoId="@item.DepartamentoId"
-                                           class="btn btn-outline-primary btn-sm">
+                                        <div class="d-flex justify-content-end gap-2">
 
-                                            <i class="bi bi-pencil-square"></i>
-                                            Editar
+                                            <a asp-area="Escalas"
+                                               asp-controller="BlocoHorarioEscala"
+                                               asp-action="Edit"
+                                               asp-route-id="@item.Id"
+                                               asp-route-departamentoId="@item.PostoEscala.DepartamentoId"
+                                               class="btn btn-outline-primary btn-sm">
 
-                                        </a>
+                                                <i class="bi bi-pencil-square"></i>
+                                                Editar
+
+                                            </a>
+
+                                        </div>
 
                                     </td>
 
@@ -395,6 +449,7 @@
 
             </div>
 
+            <!-- PAGINAÇÃO -->
             <partial name="_Paginacao"
                      model="paginacao" />
 
