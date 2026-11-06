@@ -1,4 +1,5 @@
-﻿using GerenciamentoPlantao.Data;
+﻿
+using GerenciamentoPlantao.Data;
 using GerenciamentoPlantao.Exceptions;
 using GerenciamentoPlantao.Models.Enums;
 using GerenciamentoPlantao.Models.Escala;
@@ -22,6 +23,9 @@ namespace GerenciamentoPlantao.Services.Escalas
             _usuarioLogado = usuarioLogado;
         }
 
+        // =====================================================
+        // LISTAGEM
+        // =====================================================
         public async Task<PagedResult<BlocoHorarioEscala>> FindAllAsync(
             int paginaAtual,
             int tamanhoPagina,
@@ -39,18 +43,21 @@ namespace GerenciamentoPlantao.Services.Escalas
 
             if (!string.IsNullOrWhiteSpace(busca))
             {
-                query = query.Where(b => b.Nome.Contains(busca));
+                query = query.Where(b =>
+                    b.Nome.Contains(busca));
             }
 
             if (departamentoId.HasValue)
             {
                 query = query.Where(b =>
-                    b.PostoEscala.DepartamentoId == departamentoId.Value);
+                    b.PostoEscala.DepartamentoId ==
+                    departamentoId.Value);
             }
 
             if (diaSemana.HasValue)
             {
-                query = query.Where(b => b.DiaSemana == diaSemana.Value);
+                query = query.Where(b =>
+                    b.DiaSemana == diaSemana.Value);
             }
 
             switch (ordenarPor)
@@ -63,14 +70,18 @@ namespace GerenciamentoPlantao.Services.Escalas
 
                 case "departamento":
                     query = direcao == "desc"
-                        ? query.OrderByDescending(b => b.PostoEscala.Departamento.Nome)
-                        : query.OrderBy(b => b.PostoEscala.Departamento.Nome);
+                        ? query.OrderByDescending(
+                            b => b.PostoEscala.Departamento.Nome)
+                        : query.OrderBy(
+                            b => b.PostoEscala.Departamento.Nome);
                     break;
 
                 case "posto":
                     query = direcao == "desc"
-                        ? query.OrderByDescending(b => b.PostoEscala.Nome)
-                        : query.OrderBy(b => b.PostoEscala.Nome);
+                        ? query.OrderByDescending(
+                            b => b.PostoEscala.Nome)
+                        : query.OrderBy(
+                            b => b.PostoEscala.Nome);
                     break;
 
                 case "dia":
@@ -87,19 +98,24 @@ namespace GerenciamentoPlantao.Services.Escalas
 
                 default:
                     query = query
-                        .OrderBy(b => b.PostoEscala.Departamento.Nome)
+                        .OrderBy(b =>
+                            b.PostoEscala.Departamento.Nome)
                         .ThenBy(b => b.PostoEscala.Nome)
                         .ThenBy(b => b.DiaSemana)
                         .ThenBy(b => b.HoraInicio);
                     break;
             }
 
-            return await PagedResult<BlocoHorarioEscala>.CriarAsync(
-                query,
-                paginaAtual,
-                tamanhoPagina);
+            return await PagedResult<BlocoHorarioEscala>
+                .CriarAsync(
+                    query,
+                    paginaAtual,
+                    tamanhoPagina);
         }
 
+        // =====================================================
+        // BUSCAR POR ID
+        // =====================================================
         public async Task<BlocoHorarioEscala> FindByIdAsync(
             int id,
             int departamentoId)
@@ -109,7 +125,8 @@ namespace GerenciamentoPlantao.Services.Escalas
                     .ThenInclude(p => p.Departamento)
                 .FirstOrDefaultAsync(b =>
                     b.Id == id &&
-                    b.PostoEscala.DepartamentoId == departamentoId);
+                    b.PostoEscala.DepartamentoId ==
+                    departamentoId);
 
             if (bloco == null)
             {
@@ -120,6 +137,9 @@ namespace GerenciamentoPlantao.Services.Escalas
             return bloco;
         }
 
+        // =====================================================
+        // BUSCAR POR ID COM AUDITORIA
+        // =====================================================
         public async Task<BlocoHorarioEscala> FindByIdWithAuditAsync(
             int id,
             int departamentoId)
@@ -133,7 +153,8 @@ namespace GerenciamentoPlantao.Services.Escalas
                 .Include(b => b.UsuarioInativacao)
                 .FirstOrDefaultAsync(b =>
                     b.Id == id &&
-                    b.PostoEscala.DepartamentoId == departamentoId);
+                    b.PostoEscala.DepartamentoId ==
+                    departamentoId);
 
             if (bloco == null)
             {
@@ -144,24 +165,33 @@ namespace GerenciamentoPlantao.Services.Escalas
             return bloco;
         }
 
+        // =====================================================
+        // BUSCAR HORÁRIOS POR POSTO
+        // =====================================================
         public async Task<List<BlocoHorarioEscala>> FindByPostoAsync(
             int postoEscalaId)
         {
             return await _context.BlocosHorarioEscala
                 .AsNoTracking()
-                .Where(b => b.PostoEscalaId == postoEscalaId)
+                .Where(b =>
+                    b.PostoEscalaId == postoEscalaId)
                 .OrderBy(b => b.DiaSemana)
                 .ThenBy(b => b.HoraInicio)
                 .ToListAsync();
         }
 
+        // =====================================================
+        // INSERIR BLOCO DE HORÁRIO
+        // =====================================================
         public async Task InserirBlocoHorarioAsync(
             BlocoHorarioEscalaViewModel vm)
         {
-            var usuario = await _usuarioLogado.ObterUsuarioLogadoAsync();
+            var usuario = await _usuarioLogado
+                .ObterUsuarioLogadoAsync();
 
             var posto = await _context.PostosEscalas
-                .FirstOrDefaultAsync(p => p.Id == vm.PostoEscalaId);
+                .FirstOrDefaultAsync(p =>
+                    p.Id == vm.PostoEscalaId);
 
             if (posto == null)
             {
@@ -175,28 +205,47 @@ namespace GerenciamentoPlantao.Services.Escalas
                     "Informe o nome do bloco de horário.");
             }
 
-            if (vm.DiasSemana == null || !vm.DiasSemana.Any())
+            var nome = vm.Nome.Trim();
+
+            if (nome.Length < 3 || nome.Length > 150)
+            {
+                throw new BusinessException(
+                    "O nome do horário deve ter entre " +
+                    "3 e 150 caracteres.");
+            }
+
+            if (vm.DiasSemana == null ||
+                !vm.DiasSemana.Any())
             {
                 throw new BusinessException(
                     "Selecione pelo menos um dia da semana.");
             }
 
-            var nome = vm.Nome.Trim();
+            var dias = vm.DiasSemana
+                .Distinct()
+                .ToList();
 
-            var dias = vm.DiasSemana.Distinct().ToList();
+            if (dias.Any(d =>
+                !Enum.IsDefined(typeof(TipoDiaSemana), d)))
+            {
+                throw new BusinessException(
+                    "Um dos dias da semana selecionados é inválido.");
+            }
 
-            var diasExistentes = await _context.BlocosHorarioEscala
-                .Where(b =>
-                    b.PostoEscalaId == vm.PostoEscalaId &&
-                    b.Nome == nome &&
-                    dias.Contains(b.DiaSemana))
-                .Select(b => b.DiaSemana)
-                .ToListAsync();
+            var diasExistentes =
+                await _context.BlocosHorarioEscala
+                    .Where(b =>
+                        b.PostoEscalaId == vm.PostoEscalaId &&
+                        b.Nome == nome &&
+                        dias.Contains(b.DiaSemana))
+                    .Select(b => b.DiaSemana)
+                    .ToListAsync();
 
             if (diasExistentes.Any())
             {
                 throw new BusinessException(
-                    "Já existe um bloco com esse nome em um dos dias selecionados para este posto.");
+                    "Já existe um bloco com esse nome em " +
+                    "um dos dias selecionados para este posto.");
             }
 
             foreach (var dia in dias)
@@ -216,29 +265,46 @@ namespace GerenciamentoPlantao.Services.Escalas
             await _context.SaveChangesAsync();
         }
 
+        // =====================================================
+        // ATUALIZAR BLOCO DE HORÁRIO
+        // =====================================================
         public async Task AtualizarBlocoHorarioAsync(
             EditarBlocoHorarioEscalaViewModel vm)
         {
-            var usuario = await _usuarioLogado.ObterUsuarioLogadoAsync();
+            var usuario = await _usuarioLogado
+                .ObterUsuarioLogadoAsync();
 
             var bloco = await FindByIdAsync(
                 vm.Id,
                 vm.DepartamentoId);
 
+            // Validação do nome.
             if (string.IsNullOrWhiteSpace(vm.Nome))
             {
                 throw new BusinessException(
                     "Informe o nome do bloco de horário.");
             }
 
-            if (!vm.DiaSemana.HasValue)
-            {
-                throw new BusinessException(
-                    "Selecione um dia da semana.");
-            }
-
             var nome = vm.Nome.Trim();
 
+            if (nome.Length < 3 || nome.Length > 150)
+            {
+                throw new BusinessException(
+                    "O nome do horário deve ter entre " +
+                    "3 e 150 caracteres.");
+            }
+
+            // Validação do dia.
+            if (!vm.DiaSemana.HasValue ||
+                !Enum.IsDefined(
+                    typeof(TipoDiaSemana),
+                    vm.DiaSemana.Value))
+            {
+                throw new BusinessException(
+                    "Selecione um dia da semana válido.");
+            }
+
+            // Verifica duplicidade dentro do posto.
             var nomeExiste = await _context.BlocosHorarioEscala
                 .AnyAsync(b =>
                     b.Nome == nome &&
@@ -249,9 +315,41 @@ namespace GerenciamentoPlantao.Services.Escalas
             if (nomeExiste)
             {
                 throw new BusinessException(
-                    "Já existe um bloco com esse nome neste posto e dia da semana.");
+                    "Já existe um bloco com esse nome " +
+                    "neste posto e dia da semana.");
             }
 
+            // Identifica se houve alteração em campos protegidos.
+            var alterouDia =
+                bloco.DiaSemana != vm.DiaSemana.Value;
+
+            var alterouInicio =
+                bloco.HoraInicio != vm.HoraInicio;
+
+            var alterouFim =
+                bloco.HoraFim != vm.HoraFim;
+
+            // Nome pode ser alterado mesmo quando o bloco
+            // estiver vinculado.
+            //
+            // Dia, hora inicial e hora final só podem
+            // ser alterados quando não houver vínculos.
+            if (alterouDia || alterouInicio || alterouFim)
+            {
+                var possuiVinculo =
+                    await PossuiVinculosAsync(bloco.Id);
+
+                if (possuiVinculo)
+                {
+                    throw new BusinessException(
+                        $"O horário '{bloco.Nome}' do dia " +
+                        $"{bloco.DiaSemana} está vinculado " +
+                        "a uma regra de rotação ou escala-base. " +
+                        "Somente o nome pode ser alterado.");
+                }
+            }
+
+            // Atualiza somente após passar por todas as validações.
             bloco.Atualizar(
                 nome,
                 vm.HoraInicio,
@@ -263,11 +361,15 @@ namespace GerenciamentoPlantao.Services.Escalas
             await _context.SaveChangesAsync();
         }
 
+        // =====================================================
+        // ATIVAR BLOCO DE HORÁRIO
+        // =====================================================
         public async Task AtivarBlocoHorarioEscalaAsync(
             int id,
             int departamentoId)
         {
-            var usuario = await _usuarioLogado.ObterUsuarioLogadoAsync();
+            var usuario = await _usuarioLogado
+                .ObterUsuarioLogadoAsync();
 
             var bloco = await FindByIdAsync(
                 id,
@@ -278,21 +380,41 @@ namespace GerenciamentoPlantao.Services.Escalas
             await _context.SaveChangesAsync();
         }
 
+        // =====================================================
+        // INATIVAR BLOCO DE HORÁRIO
+        // =====================================================
         public async Task InativarBlocoHorarioEscalaAsync(
             int id,
             int departamentoId)
         {
-            var usuario = await _usuarioLogado.ObterUsuarioLogadoAsync();
+            var usuario = await _usuarioLogado
+                .ObterUsuarioLogadoAsync();
 
             var bloco = await FindByIdAsync(
                 id,
                 departamentoId);
+
+            // Não permite inativar horários vinculados
+            // a regras de rotação ou escalas-base.
+            var possuiVinculo =
+                await PossuiVinculosAsync(bloco.Id);
+
+            if (possuiVinculo)
+            {
+                throw new BusinessException(
+                    $"O horário '{bloco.Nome}' não pode ser " +
+                    "inativado, pois está vinculado a uma " +
+                    "regra de rotação ou escala-base.");
+            }
 
             bloco.Inativar(usuario.Id);
 
             await _context.SaveChangesAsync();
         }
 
+        // =====================================================
+        // EXCLUIR BLOCO DE HORÁRIO
+        // =====================================================
         public async Task ExcluirBlocoHorarioAsync(
             int id,
             int departamentoId)
@@ -301,21 +423,49 @@ namespace GerenciamentoPlantao.Services.Escalas
                 id,
                 departamentoId);
 
-            var utilizadoEmRotacao = await _context.RegrasRotacaoHorarios
-                .AnyAsync(r => r.BlocoHorarioEscalaId == id);
+            // Não permite excluir horários vinculados.
+            var possuiVinculo =
+                await PossuiVinculosAsync(bloco.Id);
 
-            var utilizadoEmEscalaBase = await _context.EscalasBaseItems
-                .AnyAsync(e => e.BlocoHorarioEscalaId == id);
-
-            if (utilizadoEmRotacao || utilizadoEmEscalaBase)
+            if (possuiVinculo)
             {
                 throw new BusinessException(
-                    "Este horário está sendo utilizado por uma regra de rotação ou escala-base e não pode ser excluído.");
+                    $"O horário '{bloco.Nome}' não pode ser " +
+                    "excluído, pois está vinculado a uma " +
+                    "regra de rotação ou escala-base.");
             }
 
             _context.BlocosHorarioEscala.Remove(bloco);
 
             await _context.SaveChangesAsync();
+        }
+
+        // =====================================================
+        // MÉTODOS PRIVADOS
+        // =====================================================
+
+        /// <summary>
+        /// Verifica se um bloco de horário está associado
+        /// a alguma regra de rotação ou item de escala-base.
+        /// </summary>
+        private async Task<bool> PossuiVinculosAsync(int blocoId)
+        {
+            var utilizadoEmRotacao =
+                await _context.RegrasRotacaoHorarios
+                    .AnyAsync(r =>
+                        r.BlocoHorarioEscalaId == blocoId);
+
+            if (utilizadoEmRotacao)
+            {
+                return true;
+            }
+
+            var utilizadoEmEscalaBase =
+                await _context.EscalasBaseItems
+                    .AnyAsync(e =>
+                        e.BlocoHorarioEscalaId == blocoId);
+
+            return utilizadoEmEscalaBase;
         }
     }
 }

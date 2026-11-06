@@ -1,35 +1,42 @@
 ﻿@using GerenciamentoPlantao.Models.ViewModels.Adicionar
+@using GerenciamentoPlantao.Models.Enums
 @model PostoEscalaFormViewModel
 
 @{
     ViewData["Title"] = "Cadastrar Posto";
+    var diasSemana = Enum.GetValues<TipoDiaSemana>();
 }
 
 <div class="container mt-4">
-
     <div class="card shadow-sm">
 
         <div class="card-header bg-primary text-white">
             <h3 class="mb-0">
-                <i class="bi bi-person-workspace"></i> Cadastrar Posto
+                <i class="bi bi-person-workspace me-2"></i>
+                Cadastrar Posto de Escala
             </h3>
         </div>
 
         <div class="card-body">
-
-            <form asp-action="Create" method="post">
+            <form asp-area="Escalas"
+                  asp-controller="PostoEscala"
+                  asp-action="Create"
+                  method="post"
+                  id="formPosto">
 
                 @Html.AntiForgeryToken()
 
                 <div asp-validation-summary="ModelOnly"
-                     class="alert alert-danger">
-                </div>
+                     class="text-danger mb-3"></div>
 
-                <!-- NOME -->
+                <!-- DADOS DO POSTO -->
+                <h5 class="border-bottom pb-2 mb-3">
+                    <i class="bi bi-building"></i>
+                    Dados do Posto
+                </h5>
+
                 <div class="mb-3">
-
-                    <label asp-for="Nome"
-                           class="form-label fw-bold">
+                    <label asp-for="Nome" class="form-label fw-bold">
                         Nome do Posto
                     </label>
 
@@ -39,14 +46,10 @@
                            placeholder="Digite o nome do posto" />
 
                     <span asp-validation-for="Nome"
-                          class="text-danger">
-                    </span>
-
+                          class="text-danger"></span>
                 </div>
 
-                <!-- DEPARTAMENTO -->
-                <div class="mb-3">
-
+                <div class="mb-4">
                     <label asp-for="DepartamentoId"
                            class="form-label fw-bold">
                         Departamento
@@ -55,56 +58,806 @@
                     <select asp-for="DepartamentoId"
                             asp-items="Model.Departamentos"
                             class="form-select">
-
-                        <option value="">
+                        <option value="0">
                             Selecione um departamento
                         </option>
-
                     </select>
 
                     <span asp-validation-for="DepartamentoId"
-                          class="text-danger">
-                    </span>
+                          class="text-danger"></span>
 
-                    <span class="form-text">
-                        O departamento do posto não poderá ser alterado posteriormente.
-                    </span>
+                    <div class="form-text">
+                        O departamento do posto não poderá ser
+                        alterado posteriormente.
+                    </div>
+                </div>
 
+                <!-- HORÁRIOS -->
+                <div class="card border-primary mb-4">
+
+                    <div class="card-header bg-light d-flex
+                        justify-content-between align-items-center
+                        flex-wrap gap-2">
+
+                        <h5 class="mb-0">
+                            <i class="bi bi-clock-history text-primary"></i>
+                            Horários do Posto
+                            <span id="contadorHorarios"
+                                  class="badge bg-secondary ms-1">0</span>
+                        </h5>
+
+                        <button type="button"
+                                class="btn btn-success btn-sm btn-adicionar-horario">
+                            <i class="bi bi-plus-circle"></i>
+                            Adicionar Horário
+                        </button>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="alert alert-info">
+                            <i class="bi bi-info-circle"></i>
+                            Informe o horário uma única vez e selecione
+                            todos os dias em que será utilizado.
+                            Clique no título de um horário para
+                            expandir ou recolher sua configuração.
+                        </div>
+
+                        <div id="listaHorarios">
+
+                            @for (int i = 0; i < Model.Horarios.Count; i++)
+                            {
+                                <div class="card shadow-sm mb-3 horario-card">
+
+                                    <!-- CABEÇALHO DO HORÁRIO -->
+                                    <div class="card-header bg-white">
+                                        <div class="d-flex justify-content-between
+                                            align-items-center gap-2">
+
+                                            <button type="button"
+                                                    class="btn btn-link text-decoration-none
+                                                text-start flex-grow-1
+                                                btn-alternar-horario p-0"
+                                                    aria-expanded="true">
+
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <i class="bi bi-chevron-down icone-expansao"></i>
+
+                                                    <strong class="titulo-horario text-primary">
+                                                        Novo horário
+                                                    </strong>
+                                                </div>
+
+                                                <small class="text-muted d-block ms-4 resumo-horario">
+                                                    Preencha a configuração
+                                                </small>
+                                            </button>
+
+                                            <button type="button"
+                                                    class="btn btn-outline-danger btn-sm
+                                                btn-remover-horario"
+                                                    title="Remover horário">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- CONTEÚDO EXPANSÍVEL -->
+                                    <div class="card-body horario-conteudo">
+
+                                        <div class="mb-3">
+                                            <label asp-for="Horarios[i].Nome"
+                                                   class="form-label fw-bold">
+                                                Nome do Horário
+                                            </label>
+
+                                            <input asp-for="Horarios[i].Nome"
+                                                   class="form-control campo-nome"
+                                                   autocomplete="off"
+                                                   placeholder="Ex.: Plantão Madrugada" />
+
+                                            <span asp-validation-for="Horarios[i].Nome"
+                                                  class="text-danger small"></span>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-6 mb-3">
+                                                <label asp-for="Horarios[i].HoraInicio"
+                                                       class="form-label fw-bold">
+                                                    Hora Inicial
+                                                </label>
+
+                                                <input asp-for="Horarios[i].HoraInicio"
+                                                       type="time"
+                                                       class="form-control campo-inicio" />
+
+                                                <span asp-validation-for="Horarios[i].HoraInicio"
+                                                      class="text-danger small"></span>
+                                            </div>
+
+                                            <div class="col-md-6 mb-3">
+                                                <label asp-for="Horarios[i].HoraFim"
+                                                       class="form-label fw-bold">
+                                                    Hora Final
+                                                </label>
+
+                                                <input asp-for="Horarios[i].HoraFim"
+                                                       type="time"
+                                                       class="form-control campo-fim" />
+
+                                                <span asp-validation-for="Horarios[i].HoraFim"
+                                                      class="text-danger small"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- DIAS -->
+                                        <div class="mb-2">
+                                            <label class="form-label fw-bold">
+                                                Dias da Semana
+                                            </label>
+
+                                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                                <button type="button"
+                                                        class="btn btn-outline-primary btn-sm btn-todos">
+                                                    Todos os dias
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn btn-outline-primary btn-sm btn-uteis">
+                                                    Segunda a sexta
+                                                </button>
+
+                                                <button type="button"
+                                                        class="btn btn-outline-secondary btn-sm btn-limpar">
+                                                    Limpar
+                                                </button>
+                                            </div>
+
+                                            <div class="border rounded p-3">
+                                                <div class="d-flex flex-wrap gap-3 dias-semana">
+
+                                                    @foreach (var dia in diasSemana)
+                                                    {
+                                                        <div class="form-check">
+                                                            <input type="checkbox"
+                                                                   class="form-check-input checkbox-dia"
+                                                                   name="Horarios[@i].DiasSemana"
+                                                                   id="horario-@i-dia-@((int)dia)"
+                                                                   value="@((int)dia)"
+                                                                   checked="@(Model.Horarios[i].DiasSemana?.Contains(dia) == true)" />
+
+                                                            <label class="form-check-label"
+                                                                   for="horario-@i-dia-@((int)dia)">
+                                                                @dia
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            <span class="text-danger small erro-dias"
+                                                  data-valmsg-for="Horarios[@i].DiasSemana"></span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div id="mensagemSemHorarios"
+                             class="alert alert-warning d-none">
+                            <i class="bi bi-exclamation-triangle"></i>
+                            Adicione pelo menos um horário ao posto.
+                        </div>
+
+                        <!-- BOTÃO NO FINAL DA LISTA -->
+                        <div class="d-grid mt-3">
+                            <button type="button"
+                                    class="btn btn-outline-success btn-adicionar-horario">
+                                <i class="bi bi-plus-circle me-1"></i>
+                                Adicionar outro horário
+                            </button>
+                        </div>
+
+                    </div>
                 </div>
 
                 <!-- BOTÕES -->
-                <div class="d-flex gap-2">
-
-                    <button type="submit"
-                            class="btn btn-primary">
-
-                        <i class="bi bi-floppy-fill"></i>
-                        Salvar
-
-                    </button>
-
-                    <a asp-action="Index"
+                <div class="d-flex justify-content-between gap-2">
+                    <a asp-area="Escalas"
+                       asp-controller="PostoEscala"
+                       asp-action="Index"
                        class="btn btn-outline-secondary">
-
                         <i class="bi bi-arrow-left"></i>
                         Voltar
-
                     </a>
 
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-floppy-fill"></i>
+                        Salvar Posto e Horários
+                    </button>
                 </div>
 
             </form>
+        </div>
+    </div>
+</div>
 
+<!-- TEMPLATE PARA NOVOS HORÁRIOS -->
+<template id="templateHorario">
+
+    <div class="card shadow-sm mb-3 horario-card">
+
+        <div class="card-header bg-white">
+            <div class="d-flex justify-content-between
+                align-items-center gap-2">
+
+                <button type="button"
+                        class="btn btn-link text-decoration-none
+                    text-start flex-grow-1
+                    btn-alternar-horario p-0"
+                        aria-expanded="true">
+
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="bi bi-chevron-down icone-expansao"></i>
+
+                        <strong class="titulo-horario text-primary">
+                            Novo horário
+                        </strong>
+                    </div>
+
+                    <small class="text-muted d-block ms-4 resumo-horario">
+                        Preencha a configuração
+                    </small>
+                </button>
+
+                <button type="button"
+                        class="btn btn-outline-danger btn-sm
+                    btn-remover-horario"
+                        title="Remover horário">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
         </div>
 
-    </div>
+        <div class="card-body horario-conteudo">
 
-</div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">
+                    Nome do Horário
+                </label>
+
+                <input type="text"
+                       name="Horarios[__index__].Nome"
+                       class="form-control campo-nome"
+                       autocomplete="off"
+                       placeholder="Ex.: Plantão Madrugada"
+                       maxlength="150"
+                       data-val="true"
+                       data-val-required="Informe o nome do horário."
+                       data-val-length="O nome deve ter entre 3 e 150 caracteres."
+                       data-val-length-min="3"
+                       data-val-length-max="150" />
+
+                <span class="text-danger small"
+                      data-valmsg-for="Horarios[__index__].Nome"
+                      data-valmsg-replace="true"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">
+                        Hora Inicial
+                    </label>
+
+                    <input type="time"
+                           name="Horarios[__index__].HoraInicio"
+                           class="form-control campo-inicio"
+                           data-val="true"
+                           data-val-required="Informe a hora inicial." />
+
+                    <span class="text-danger small"
+                          data-valmsg-for="Horarios[__index__].HoraInicio"
+                          data-valmsg-replace="true"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="form-label fw-bold">
+                        Hora Final
+                    </label>
+
+                    <input type="time"
+                           name="Horarios[__index__].HoraFim"
+                           class="form-control campo-fim"
+                           data-val="true"
+                           data-val-required="Informe a hora final." />
+
+                    <span class="text-danger small"
+                          data-valmsg-for="Horarios[__index__].HoraFim"
+                          data-valmsg-replace="true"></span>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <label class="form-label fw-bold">
+                    Dias da Semana
+                </label>
+
+                <div class="d-flex flex-wrap gap-2 mb-3">
+                    <button type="button"
+                            class="btn btn-outline-primary btn-sm btn-todos">
+                        Todos os dias
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-primary btn-sm btn-uteis">
+                        Segunda a sexta
+                    </button>
+
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm btn-limpar">
+                        Limpar
+                    </button>
+                </div>
+
+                <div class="border rounded p-3">
+                    <div class="d-flex flex-wrap gap-3 dias-semana">
+
+                        @foreach (var dia in diasSemana)
+                        {
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input checkbox-dia"
+                                       name="Horarios[__index__].DiasSemana"
+                                       value="@((int)dia)" />
+
+                                <label class="form-check-label">
+                                    @dia
+                                </label>
+                            </div>
+                        }
+
+                    </div>
+                </div>
+
+                <span class="text-danger small erro-dias"
+                      data-valmsg-for="Horarios[__index__].DiasSemana"></span>
+            </div>
+
+        </div>
+    </div>
+</template>
 
 @section Scripts {
 
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const lista = document.getElementById("listaHorarios");
+            const template = document.getElementById("templateHorario");
+            const mensagem = document.getElementById("mensagemSemHorarios");
+            const contador = document.getElementById("contadorHorarios");
+            const form = document.getElementById("formPosto");
+
+            // Normaliza nomes dos dias, inclusive acentos.
+            function normalizar(texto) {
+                return texto.normalize("NFD")
+                    .replace(/[\u0300-\u036f]/g, "")
+                    .trim()
+                    .toLowerCase();
+            }
+
+            function obterCards() {
+                return Array.from(
+                    lista.querySelectorAll(".horario-card")
+                );
+            }
+
+            function atualizarContador() {
+                const quantidade = obterCards().length;
+
+                contador.textContent = quantidade;
+
+                mensagem.classList.toggle(
+                    "d-none",
+                    quantidade > 0
+                );
+            }
+
+            // Monta o resumo exibido com o card recolhido.
+            function atualizarResumo(card) {
+
+                const nome = card.querySelector(".campo-nome").value.trim();
+                const inicio = card.querySelector(".campo-inicio").value;
+                const fim = card.querySelector(".campo-fim").value;
+
+                const titulo = card.querySelector(".titulo-horario");
+                const resumo = card.querySelector(".resumo-horario");
+
+                titulo.textContent = nome || "Novo horário";
+
+                const selecionados = Array.from(
+                    card.querySelectorAll(".checkbox-dia:checked")
+                );
+
+                let descricaoDias = "Nenhum dia selecionado";
+
+                if (selecionados.length === 7) {
+                    descricaoDias = "Todos os dias";
+                }
+                else if (selecionados.length > 0) {
+
+                    const nomes = selecionados.map(c => {
+                        return c.closest(".form-check")
+                            .querySelector("label")
+                            .textContent.trim();
+                    });
+
+                    descricaoDias = nomes.join(", ");
+                }
+
+                const horas = inicio && fim
+                    ? `${inicio} às ${fim}`
+                    : "Horário não informado";
+
+                resumo.textContent = `${horas} · ${descricaoDias}`;
+            }
+
+            // Abre ou recolhe um horário.
+            function definirExpandido(card, expandido) {
+
+                const conteudo = card.querySelector(".horario-conteudo");
+                const botao = card.querySelector(".btn-alternar-horario");
+                const icone = card.querySelector(".icone-expansao");
+
+                conteudo.classList.toggle("d-none", !expandido);
+
+                botao.setAttribute(
+                    "aria-expanded",
+                    expandido ? "true" : "false"
+                );
+
+                icone.classList.toggle(
+                    "bi-chevron-down",
+                    expandido
+                );
+
+                icone.classList.toggle(
+                    "bi-chevron-right",
+                    !expandido
+                );
+
+                if (!expandido) {
+                    atualizarResumo(card);
+                }
+            }
+
+            function recolherTodos() {
+                obterCards().forEach(card => {
+                    definirExpandido(card, false);
+                });
+            }
+
+            // Mantém os índices contínuos para o Model Binder.
+            function reindexar() {
+
+                const cards = obterCards();
+
+                cards.forEach((card, indice) => {
+
+                    card.querySelectorAll("[name]").forEach(campo => {
+                        campo.name = campo.name.replace(
+                            /Horarios\[\d+\]/g,
+                            `Horarios[${indice}]`
+                        );
+                    });
+
+                    card.querySelectorAll("[id]").forEach(campo => {
+                        campo.id = campo.id.replace(
+                            /Horarios_\d+_/g,
+                            `Horarios_${indice}_`
+                        );
+                    });
+
+                    card.querySelectorAll("[data-valmsg-for]").forEach(elemento => {
+
+                        const nome = elemento.getAttribute("data-valmsg-for");
+
+                        elemento.setAttribute(
+                            "data-valmsg-for",
+                            nome.replace(
+                                /Horarios\[\d+\]/g,
+                                `Horarios[${indice}]`
+                            )
+                        );
+                    });
+
+                    card.querySelectorAll(".checkbox-dia").forEach(checkbox => {
+
+                        const id = `horario-${indice}-dia-${checkbox.value}`;
+
+                        checkbox.id = id;
+
+                        const label = checkbox.closest(".form-check")
+                            .querySelector("label");
+
+                        label.htmlFor = id;
+                    });
+
+                });
+
+                atualizarContador();
+            }
+
+            // Recria a validação dos campos dinâmicos.
+            function atualizarValidacao() {
+
+                if (window.jQuery &&
+                    jQuery.validator &&
+                    jQuery.validator.unobtrusive) {
+
+                    const $form = jQuery(form);
+
+                    $form.removeData("validator");
+                    $form.removeData("unobtrusiveValidation");
+
+                    jQuery.validator.unobtrusive.parse($form);
+                }
+            }
+
+            function adicionarHorario() {
+
+                // Recolhe os horários anteriores.
+                recolherTodos();
+
+                const indice = obterCards().length;
+
+                const html = template.innerHTML.replaceAll(
+                    "__index__",
+                    indice
+                );
+
+                lista.insertAdjacentHTML("beforeend", html);
+
+                const novoCard = obterCards().at(-1);
+
+                reindexar();
+                atualizarValidacao();
+
+                definirExpandido(novoCard, true);
+                atualizarResumo(novoCard);
+
+                // Posiciona a tela no formulário recém-criado.
+                requestAnimationFrame(() => {
+                    novoCard.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
+                });
+            }
+
+            // Os dois botões adicionam horários.
+            document.querySelectorAll(".btn-adicionar-horario")
+                .forEach(botao => {
+                    botao.addEventListener(
+                        "click",
+                        adicionarHorario
+                    );
+                });
+
+            // Ações dos cards.
+            lista.addEventListener("click", function (event) {
+
+                const remover = event.target.closest(
+                    ".btn-remover-horario"
+                );
+
+                if (remover) {
+
+                    remover.closest(".horario-card").remove();
+
+                    reindexar();
+                    atualizarValidacao();
+
+                    return;
+                }
+
+                const card = event.target.closest(".horario-card");
+
+                if (!card) return;
+
+                const alternar = event.target.closest(
+                    ".btn-alternar-horario"
+                );
+
+                if (alternar) {
+
+                    const expandido =
+                        alternar.getAttribute("aria-expanded") === "true";
+
+                    definirExpandido(card, !expandido);
+
+                    return;
+                }
+
+                const checkboxes = card.querySelectorAll(".checkbox-dia");
+
+                if (event.target.closest(".btn-todos")) {
+                    checkboxes.forEach(c => c.checked = true);
+                }
+
+                if (event.target.closest(".btn-limpar")) {
+                    checkboxes.forEach(c => c.checked = false);
+                }
+
+                if (event.target.closest(".btn-uteis")) {
+
+                    checkboxes.forEach(c => {
+
+                        const label = c.closest(".form-check")
+                            .querySelector("label");
+
+                        const dia = normalizar(label.textContent);
+
+                        c.checked =
+                            dia.startsWith("seg") ||
+                            dia.startsWith("ter") ||
+                            dia.startsWith("qua") ||
+                            dia.startsWith("qui") ||
+                            dia.startsWith("sex");
+                    });
+                }
+
+                const erro = card.querySelector(".erro-dias");
+
+                if (erro && card.querySelector(".checkbox-dia:checked")) {
+                    erro.textContent = "";
+                }
+
+                atualizarResumo(card);
+            });
+
+            // Atualiza o resumo conforme o preenchimento.
+            lista.addEventListener("input", function (event) {
+
+                const card = event.target.closest(".horario-card");
+
+                if (card) {
+                    atualizarResumo(card);
+                }
+            });
+
+            lista.addEventListener("change", function (event) {
+
+                const card = event.target.closest(".horario-card");
+
+                if (card) {
+                    atualizarResumo(card);
+                }
+            });
+
+            // Validação antes do envio.
+            form.addEventListener("submit", function (event) {
+
+                const cards = obterCards();
+
+                if (cards.length === 0) {
+
+                    event.preventDefault();
+
+                    mensagem.classList.remove("d-none");
+
+                    return;
+                }
+
+                let temErro = false;
+                let primeiroErro = null;
+
+                cards.forEach(card => {
+
+                    const selecionados = card.querySelectorAll(
+                        ".checkbox-dia:checked"
+                    );
+
+                    const erro = card.querySelector(".erro-dias");
+
+                    if (selecionados.length === 0) {
+
+                        temErro = true;
+                        primeiroErro ??= card;
+
+                        erro.textContent =
+                            "Selecione pelo menos um dia da semana.";
+
+                        definirExpandido(card, true);
+                    }
+                    else {
+                        erro.textContent = "";
+                    }
+                });
+
+                // Também expande os cards com erros de validação.
+                cards.forEach(card => {
+
+                    const possuiErro = card.querySelector(
+                        ".field-validation-error, .input-validation-error"
+                    );
+
+                    if (possuiErro) {
+                        definirExpandido(card, true);
+                        primeiroErro ??= card;
+                    }
+                });
+
+                if (temErro) {
+
+                    event.preventDefault();
+
+                    if (primeiroErro) {
+                        primeiroErro.scrollIntoView({
+                            behavior: "smooth",
+                            block: "start"
+                        });
+                    }
+                }
+            });
+
+            // Inicialização.
+            if (obterCards().length === 0) {
+                adicionarHorario();
+            }
+            else {
+
+                const cards = obterCards();
+
+                cards.forEach((card, indice) => {
+
+                    atualizarResumo(card);
+
+                    // Começa com o último horário aberto.
+                    definirExpandido(
+                        card,
+                        indice === cards.length - 1
+                    );
+
+                    // Preserva a visualização dos erros após um POST.
+                    if (card.querySelector(
+                        ".field-validation-error, .input-validation-error"
+                    )) {
+                        definirExpandido(card, true);
+                    }
+                });
+            }
+
+            reindexar();
+            atualizarValidacao();
+
+        });
+    </script>
+}
+
+<style>
+    .horario-card {
+        scroll-margin-top: 24px;
+        transition: border-color 0.2s ease;
     }
 
-}
+        .horario-card:hover {
+            border-color: #86b7fe;
+        }
+
+    .btn-alternar-horario {
+        min-width: 0;
+    }
+
+    .titulo-horario,
+    .resumo-horario {
+        overflow-wrap: anywhere;
+    }
+
+    .horario-card .card-header {
+        padding: 14px 16px;
+    }
+</style>

@@ -3,12 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\areas\\escalas\\views\\blocohorarioescala\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\areas\\escalas\\views\\blocohorarioescala\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\areas\\escalas\\controllers\\postoescalacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\areas\\escalas\\controllers\\postoescalacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\areas\\escalas\\views\\regrarotacaoescala\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\areas\\escalas\\views\\regrarotacaoescala\\details.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\escalas\\postoescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\escalas\\postoescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\services\\escalas\\blocohorarioescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\services\\escalas\\blocohorarioescalaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|c:\\users\\nilo_\\source\\repos\\gerenciamentoplantao\\gerenciamentoplantao\\areas\\escalas\\views\\postoescala\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{7B4D3512-D68F-49B0-9489-1FB0CF8C51F2}|GerenciamentoPlantao\\GerenciamentoPlantao.csproj|solutionrelative:gerenciamentoplantao\\areas\\escalas\\views\\postoescala\\edit.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -23,27 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\BlocoHorarioEscala\\Index.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\BlocoHorarioEscala\\Index.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\BlocoHorarioEscala\\Index.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\BlocoHorarioEscala\\Index.cshtml",
-              "ViewState": "AgIAAKgBAAAAAAAAAAAkwMIBAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-11-05T17:21:23.367Z",
+              "Title": "PostoEscalaController.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Controllers\\PostoEscalaController.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Areas\\Escalas\\Controllers\\PostoEscalaController.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Controllers\\PostoEscalaController.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Areas\\Escalas\\Controllers\\PostoEscalaController.cs",
+              "ViewState": "AgIAADcAAAAAAAAAAAAkwEUAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-06T15:32:49.562Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "BlocoHorarioEscalaService.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\BlocoHorarioEscalaService.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\Escalas\\BlocoHorarioEscalaService.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\BlocoHorarioEscalaService.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Services\\Escalas\\BlocoHorarioEscalaService.cs",
+              "ViewState": "AgIAAL0BAAAAAAAAAAAIwMsBAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-06T15:25:40.222Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Details.cshtml",
-              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\RegraRotacaoEscala\\Details.cshtml",
-              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\RegraRotacaoEscala\\Details.cshtml",
-              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\RegraRotacaoEscala\\Details.cshtml",
-              "RelativeToolTip": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\RegraRotacaoEscala\\Details.cshtml",
-              "ViewState": "AgIAAP0AAAAAAAAAAAAkwBUBAAAZAAAAAAAAAA==",
+              "Title": "PostoEscalaService.cs",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\PostoEscalaService.cs",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Services\\Escalas\\PostoEscalaService.cs",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Services\\Escalas\\PostoEscalaService.cs",
+              "RelativeToolTip": "GerenciamentoPlantao\\Services\\Escalas\\PostoEscalaService.cs",
+              "ViewState": "AgIAAEQAAAAAAAAAAAAUwFAAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-11-06T15:16:57.43Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Edit.cshtml",
+              "DocumentMoniker": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\PostoEscala\\Edit.cshtml",
+              "RelativeDocumentMoniker": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\PostoEscala\\Edit.cshtml",
+              "ToolTip": "C:\\Users\\nilo_\\source\\repos\\GerenciamentoPlantao\\GerenciamentoPlantao\\Areas\\Escalas\\Views\\PostoEscala\\Edit.cshtml",
+              "RelativeToolTip": "GerenciamentoPlantao\\Areas\\Escalas\\Views\\PostoEscala\\Edit.cshtml",
+              "ViewState": "AgIAAIMDAAAAAAAAAAAkwI8DAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-11-05T17:10:09.666Z",
+              "WhenOpened": "2026-11-06T15:14:14.033Z",
               "EditorCaption": ""
             }
           ]
